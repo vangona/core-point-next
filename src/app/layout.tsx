@@ -1,8 +1,8 @@
 import React from 'react';
 import '@/app/globals.css';
-import { ThemeProvider, createTheme } from '@mui/material';
 import { Noto_Sans_KR } from 'next/font/google';
 import { GeneralLayout } from '@/components/layout/general-layout';
+import ThemeRegistry from './ThemeRegistry';
 import type { Metadata } from 'next';
 
 const notoSansKr = Noto_Sans_KR({ subsets: ['latin'] });
@@ -17,14 +17,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = createTheme();
-
   return (
     <html lang='ko'>
       <body className={notoSansKr.className}>
-        <ThemeProvider theme={theme}>
+        <ThemeRegistry>
           <GeneralLayout>{children}</GeneralLayout>
-        </ThemeProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );
