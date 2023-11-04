@@ -1,5 +1,6 @@
 import React from 'react';
 import '@/app/globals.css';
+import { ThemeProvider, createTheme } from '@mui/material';
 import { Noto_Sans_KR } from 'next/font/google';
 import { GeneralLayout } from '@/components/layout/general-layout';
 import type { Metadata } from 'next';
@@ -16,10 +17,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const theme = createTheme();
+
   return (
     <html lang='ko'>
       <body className={notoSansKr.className}>
-        <GeneralLayout>{children}</GeneralLayout>
+        <ThemeProvider theme={theme}>
+          <GeneralLayout>{children}</GeneralLayout>
+        </ThemeProvider>
       </body>
     </html>
   );
