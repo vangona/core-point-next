@@ -1,5 +1,5 @@
 import "@/app/globals.css"
-import GeneralLayout from '@/components/layout/GeneralLayout'
+import { GeneralLayout } from '@/components/layout/general-layout'
 import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 
