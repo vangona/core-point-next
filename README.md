@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 코어창업 웹사이트
 
-## Getting Started
+## 디자인 
+- [Figma](https://www.figma.com/file/jrU15eXwfCea7TSMY1uzz2/Core-Point-1%EC%B0%A8-%EB%94%94%EC%9E%90%EC%9D%B8?type=design&node-id=13%3A2173&mode=design&t=FPkR1UbAbt51x4iY-1)
+- 
 
-First, run the development server:
+## 기술스택
+### FE
+#### Typescript, eslint, prettier
+- 코드 퀄리티 향상을 위한 정적 테스트 도구들
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+#### Nextjs
+- 이후 Admin 패널 등의 개발 시, 세션 유지와 보안성을 높이기 위함
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### MUI
+- 복잡한 기능이 없기 때문에 성능보다 생선성에 포커스를 두었음.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### React Query
+- fetch 데이터 관리를 용이하게 하기 위해 사용함.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### React Form
+- form 데이터가 많기 때문에 조작이 쉽도록 사용함.
 
-## Learn More
+### BE
+#### Supabase
+- 1인, 풀스택 개발이며 
+- PostgreSQL에 대한 마이그레이션도 지원해주기 때문에 좋은 선택이라고 판단하였음.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 배포 
+#### EC2
+- Nextjs의 BFF를 위해서 EC2를 이용해 배포함.
