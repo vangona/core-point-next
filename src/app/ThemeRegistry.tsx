@@ -16,7 +16,22 @@ interface ThemeRegistryProps {
 }
 export default function ThemeRegistry(props: ThemeRegistryProps) {
   const { options = { key: 'core-point-theme-cache' }, children } = props;
-  const theme = createTheme();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#01B2EA',
+        light: '#85D9FF',
+        dark: '#00A3D7',
+        contrastText: '#fcfcfc',
+      },
+      secondary: {
+        main: '#00DEB7',
+        light: '#B4F4ED',
+        dark: '#00C89C',
+        contrastText: '#fcfcfc',
+      },
+    },
+  });
 
   const [{ cache, flush }] = React.useState(() => {
     const cache = createCache(options);
