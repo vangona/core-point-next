@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, useTheme } from '@mui/material';
 import Image from 'next/image';
 import type { SxProps } from '@mui/material';
