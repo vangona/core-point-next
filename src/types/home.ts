@@ -1,10 +1,6 @@
-export interface MainHeroData {
-  title: string;
-  description: string;
-  imgSrc: string;
-}
+import { HeroData } from './metadata';
 
-export type MainHeroCaroselData = MainHeroData[];
+export type MainHeroCaroselData = HeroData[];
 
 export interface SuccessExample {
   title: string;
