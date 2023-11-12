@@ -1,7 +1,18 @@
 'use client';
 
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardMedia,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { CorePointRoutes } from '@/constants/routes';
 import { Store } from '@/types/store';
 import {
   DEFAULT_STORE_CARD_HEIGHT,
@@ -17,6 +28,7 @@ export interface StoreCardProps {
 const StoreCard = (props: StoreCardProps) => {
   const { storeData, sx } = props;
   const theme = useTheme();
+  const router = useRouter();
 
   const defaultImgSrc = '/logo.png';
   const firstImgSrc = Array.isArray(storeData?.storeImgSrcArr)
@@ -38,9 +50,16 @@ const StoreCard = (props: StoreCardProps) => {
     position: 'relative',
     width: DEFAULT_STORE_CARD_HEIGHT,
     height: DEFAULT_STORE_CARD_HEIGHT,
+    borderRight: '1px solid',
+    borderColor: 'divider',
   };
 
-  const infoWrapperSx: SxProps = { flexGrow: 1, padding: 3 };
+  const infoWrapperSx: SxProps = {
+    flexGrow: 1,
+    padding: 3,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  };
 
   const titleSx: SxProps = {
     width: '100%',
@@ -60,47 +79,61 @@ const StoreCard = (props: StoreCardProps) => {
 
   const managerWrapperSx: SxProps = {
     maxWidth: 200,
-    padding: 4,
+    padding: 3,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
     borderLeft: '1px solid',
     borderColor: theme.palette.divider,
   };
 
+  const handleCardClick = (storeId?: string) => {
+    if (!storeId) return;
+    router.push(CorePointRoutes.STORE + '/' + storeId);
+  };
+
   return (
-    <Box sx={containerSx}>
-      <Box sx={imgWrapperSx}>
-        <Image src={imgSrc} fill objectFit='contain' alt='store image' />
-      </Box>
-      <Box sx={infoWrapperSx}>
-        <Typography
-          sx={titleSx}
-          variant='subtitle1'
-          fontWeight='bold'
-          component='h4'
-        >
-          {storeData?.storeName}
-        </Typography>
-        <Box sx={infoGridSx}>
-          <BoldLabelValue label='매장 위치' value={storeData?.storeLocation} />
-          <BoldLabelValue
-            label='창업 비용'
-            value={storeData?.storeCost.toLocaleString('ko-KR') + '원'}
-          />
-          <BoldLabelValue label='매장 면적' value={storeData?.storeSize} />
-          <BoldLabelValue
-            label='월 매출'
-            value={storeData?.storeSales.toLocaleString('ko-KR') + '원'}
-          />
-          <BoldLabelValue label='업종' value={storeData?.storeCategory} />
-          <BoldLabelValue
-            label='순이익'
-            value={storeData?.storeRevenue.toLocaleString('ko-KR') + '원'}
-          />
+    <Card sx={containerSx} variant='outlined'>
+      <CardActionArea
+        sx={{ display: 'flex' }}
+        onClick={() => handleCardClick(storeData?.storeId)}
+      >
+        <CardMedia sx={imgWrapperSx}>
+          <Image src={imgSrc} fill objectFit='contain' alt='store image' />
+        </CardMedia>
+        <Box sx={infoWrapperSx}>
+          <Typography
+            sx={titleSx}
+            variant='subtitle1'
+            fontWeight='bold'
+            component='h4'
+          >
+            {storeData?.storeName}
+          </Typography>
+          <Box sx={infoGridSx}>
+            <BoldLabelValue
+              label='매장 위치'
+              value={storeData?.storeLocation}
+            />
+            <BoldLabelValue
+              label='창업 비용'
+              value={storeData?.storeCost.toLocaleString('ko-KR') + '원'}
+            />
+            <BoldLabelValue label='매장 면적' value={storeData?.storeSize} />
+            <BoldLabelValue
+              label='월 매출'
+              value={storeData?.storeSales.toLocaleString('ko-KR') + '원'}
+            />
+            <BoldLabelValue label='업종' value={storeData?.storeCategory} />
+            <BoldLabelValue
+              label='순이익'
+              value={storeData?.storeRevenue.toLocaleString('ko-KR') + '원'}
+            />
+          </Box>
         </Box>
-      </Box>
-      <Box sx={managerWrapperSx}>
+      </CardActionArea>
+      <CardActions sx={managerWrapperSx}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Typography variant='subtitle2' fontWeight='bold'>
             담당자 정보
@@ -108,9 +141,11 @@ const StoreCard = (props: StoreCardProps) => {
           <Typography variant='body2'>{storeData?.manager}</Typography>
           <Typography variant='body2'>{storeData?.managerContact}</Typography>
         </Box>
-        <Button variant='contained'>창업컨설팅 신청</Button>
-      </Box>
-    </Box>
+        <Button variant='contained' sx={{ whiteSpace: 'nowrap' }}>
+          창업컨설팅 신청
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

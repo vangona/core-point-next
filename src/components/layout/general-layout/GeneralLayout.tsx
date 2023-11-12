@@ -2,7 +2,9 @@
 
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
+import { usePathname } from 'next/navigation';
 import { OFF_WHITE_COLOR } from '@/constants/color';
+import { CorePointRoutes } from '@/constants/routes';
 import GeneralFooter from './GeneralFooter';
 import GeneralHeader from './GeneralHeader';
 import GeneralHero from './GeneralHero';
@@ -13,6 +15,9 @@ interface GeneralLayoutInterface {
 const GeneralLayout = (props: GeneralLayoutInterface) => {
   const { children } = props;
   const theme = useTheme();
+  const pathname = usePathname();
+  const disableHero = pathname.includes(CorePointRoutes.STORE + '/');
+
   return (
     <Box
       sx={{
@@ -26,7 +31,7 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
       }}
     >
       <GeneralHeader />
-      <GeneralHero />
+      {!disableHero && <GeneralHero />}
       <Box
         sx={{
           flexGrow: 1,
