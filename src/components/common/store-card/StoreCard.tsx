@@ -94,7 +94,7 @@ const StoreCard = (props: StoreCardProps) => {
   };
 
   return (
-    <Card sx={containerSx} variant='outlined'>
+    <Card sx={containerSx} variant='elevation'>
       <CardActionArea
         sx={{ display: 'flex' }}
         onClick={() => handleCardClick(storeData?.storeId)}
