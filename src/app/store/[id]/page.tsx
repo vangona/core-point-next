@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import Image from 'next/image';
@@ -7,6 +8,7 @@ import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { DIMMED_GRAY } from '@/constants/color';
 import { dummyStoreDetail } from '../dummyStore';
+import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
 interface StoreDetailPageProps {
   params: { id: string };
@@ -20,6 +22,31 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
   const parsedExpenditureData = matchedDummyStoreDetail
     ? Object.entries(matchedDummyStoreDetail.expenditureDetail)
     : [];
+
+  // 최근 조회한 매물에 추가
+  useEffect(() => {
+    const recentStores = localStorage.getItem(LOCALSTORAGE_RECENT_STORE_KEY);
+    if (!recentStores) {
+      const newRecentStores = [params.id];
+      localStorage.setItem(
+        LOCALSTORAGE_RECENT_STORE_KEY,
+        JSON.stringify(newRecentStores),
+      );
+      return;
+    }
+
+    const parsedStores: string[] = JSON.parse(recentStores);
+    if (!parsedStores.includes(params.id)) {
+      const newRecentStores =
+        parsedStores.length === 3 ? parsedStores.slice(1, 3) : parsedStores;
+      newRecentStores.push(params.id);
+      localStorage.setItem(
+        LOCALSTORAGE_RECENT_STORE_KEY,
+        JSON.stringify(newRecentStores),
+      );
+      return;
+    }
+  }, [params.id]);
 
   return (
     <Box
