@@ -12,13 +12,13 @@ export interface Store {
   managerContact: string;
 }
 
-export type ExpenditureDetail = Record<string, string>;
+export type ExpenditureDetail = Record<string, number>;
 
 export interface SalesDetail {
-  monthlySales: string;
-  monthlyExpenditure: string;
-  monthlyRevenue: string;
-  salseReason: string;
+  monthlySales: number;
+  monthlyExpenditure: number;
+  monthlyRevenue: number;
+  salesReason: string;
 }
 
 export interface StoreDetail {
