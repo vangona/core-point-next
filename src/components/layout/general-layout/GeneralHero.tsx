@@ -27,18 +27,35 @@ const GeneralHero = (props: GeneralHeroProps) => {
         setDescription(
           'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
         );
-        setImgSrc(
-          'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        );
+        setImgSrc('https://source.unsplash.com/random?main');
         break;
       case CorePointRoutes.STORE:
         setTitle('매물 정보');
         setDescription(
           'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
         );
-        setImgSrc(
-          'https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8',
+        setImgSrc('https://source.unsplash.com/random?store');
+        break;
+      case CorePointRoutes.OPENING_CONSULTING:
+        setTitle('창업컨설팅 신청');
+        setDescription(
+          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
         );
+        setImgSrc('https://source.unsplash.com/random?contract');
+        break;
+      case CorePointRoutes.TRANSFER_CONSULTING:
+        setTitle('양도컨설팅 신청');
+        setDescription(
+          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
+        );
+        setImgSrc('https://source.unsplash.com/random?sell');
+        break;
+      case CorePointRoutes.PARTNERSHIP:
+        setTitle('협업 신청');
+        setDescription(
+          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
+        );
+        setImgSrc('https://source.unsplash.com/random?partnership');
         break;
       default:
         break;
@@ -96,7 +113,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
               src={
                 imgSrc
                   ? imgSrc
-                  : 'https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
+                  : 'https://source.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
               }
             />
           </Box>
