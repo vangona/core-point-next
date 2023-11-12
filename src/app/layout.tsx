@@ -17,6 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // hero data 여기서 받도록
   return (
     <html lang='ko'>
       <body className={notoSansKr.className}>
