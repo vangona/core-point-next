@@ -1,15 +1,20 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { LIGHT_BEIGE, OFF_WHITE_COLOR } from '@/constants/color';
+import type { SxProps } from '@mui/system';
 
 interface SectionLayoutProps {
   height?: string;
   color?: 'white' | 'beige';
+  disableDivider?: boolean;
   children?: React.ReactNode;
+  sx?: SxProps;
+  innerSx?: SxProps;
 }
 const SectionLayout = (props: SectionLayoutProps) => {
-  const { height = '600px', color, children } = props;
+  const { height, color, disableDivider, children, sx, innerSx } = props;
   return (
     <Box
       sx={{
@@ -26,11 +31,25 @@ const SectionLayout = (props: SectionLayoutProps) => {
           flexDirection: 'column',
           height: height,
           alignItems: 'center',
-          paddingTop: 2,
+          padding: 5,
+          marginBottom: 5,
           maxWidth: DEFAULT_LAYOUT_WIDTH,
+          ...sx,
         }}
       >
-        {children}
+        {!disableDivider && <ParagraphDivider />}
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...innerSx,
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );
