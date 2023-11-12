@@ -1,26 +1,26 @@
 import { Box } from '@mui/material';
-import { ParagraphDivider } from '@/components/common/paragraph-divider';
-import { SuccessExampleCard } from '@/components/common/success-example-card';
-import { dummySuccessExample } from '@/components/common/success-example-card/dummySuccessExample';
-import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import { dummyStore } from './store/dummyStore';
+import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
+import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
+import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
+import { SectionLayout } from '@/components/main/section-layout';
 
 export default function Home() {
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
         marginBottom: 3,
       }}
     >
-      <h1>Home</h1>
-      Home
-      <ParagraphDivider />
-      <VerticalStoreCard storeData={dummyStore[0]} />
-      <SuccessExampleCard successExampleData={dummySuccessExample[0]} />
-      <VerticalStoreCard storeData={dummyStore[1]} size='sm' />
+      <SectionLayout color='white' height='300px'>
+        <h1>Home</h1>
+      </SectionLayout>
+      <RecommendedStore />
+      <SuccessExample />
+      <NewlyAddedStore />
     </Box>
   );
 }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
-import { DEFAULT_LAYOUT_WIDTH, OFF_WHITE_COLOR } from './constants';
+import { OFF_WHITE_COLOR } from '@/constants/color';
 import GeneralFooter from './GeneralFooter';
 import GeneralHeader from './GeneralHeader';
 import GeneralHero from './GeneralHero';
@@ -16,6 +16,7 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
   return (
     <Box
       sx={{
+        width: '100%',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -29,8 +30,9 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
       <Box
         sx={{
           flexGrow: 1,
-          maxWidth: DEFAULT_LAYOUT_WIDTH,
+          display: 'flex',
           width: '100%',
+          justifyContent: 'center',
           [theme.breakpoints.down('lg')]: { padding: 3 },
         }}
       >
