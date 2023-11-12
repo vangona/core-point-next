@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Link as StyledLink } from '@mui/material';
+import { Box, Link as StyledLink, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -48,7 +48,13 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
       }}
     >
       {/* left area */}
-      <Box>코어창업이 열쇠가 되어드리겠습니다.</Box>
+      <Box>
+        {'창업을 위한 '}
+        <Typography fontWeight='bold' display='inline' color='primary'>
+          열쇠
+        </Typography>
+        가 되어드리겠습니다
+      </Box>
       {/* center area */}
       <Box sx={logoSx} onClick={onLogoClick}>
         <Image
