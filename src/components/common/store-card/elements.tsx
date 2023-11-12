@@ -1,14 +1,16 @@
 import { Box, Typography } from '@mui/material';
 import { DEFAULT_BOLD_LABEL_WIDTH } from './constants';
+import type { TypographyVariant } from '@mui/material';
 
 interface BoldLabelProps {
   label?: string;
   value?: string;
+  variant?: TypographyVariant;
 }
 export const BoldLabelValue = (props: BoldLabelProps) => {
-  const { label, value } = props;
+  const { label, value, variant = 'subtitle2' } = props;
   return (
-    <Typography variant='subtitle2'>
+    <Typography variant={variant}>
       <Box sx={{ width: DEFAULT_BOLD_LABEL_WIDTH, display: 'inline' }}>
         <b>{label}</b> :
       </Box>
