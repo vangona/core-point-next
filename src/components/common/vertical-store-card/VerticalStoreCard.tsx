@@ -8,6 +8,8 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { CorePointRoutes } from '@/constants/routes';
 import { Store } from '@/types';
 import { BoldLabelValue } from '../store-card/elements';
 import type { SxProps, TypographyVariant } from '@mui/material';
@@ -18,6 +20,8 @@ interface VerticalStoreCardProps {
 }
 const VerticalStoreCard = (props: VerticalStoreCardProps) => {
   const { size = 'md', storeData } = props;
+  const router = useRouter();
+
   const isSmall = size === 'sm';
   const cardTitleTypo: TypographyVariant = isSmall ? 'subtitle1' : 'h6';
   const cardTypo: TypographyVariant = isSmall ? 'subtitle2' : 'subtitle1';
@@ -34,9 +38,17 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
     justifyContent: 'flex-start',
   };
 
+  const handleCardClick = (storeId?: string) => {
+    if (!storeId) return;
+    router.push(CorePointRoutes.STORE + '/' + storeId);
+  };
+
   return (
     <Card raised sx={containerSx}>
-      <CardActionArea sx={actionAreaSx} onClick={() => alert('clicked!')}>
+      <CardActionArea
+        sx={actionAreaSx}
+        onClick={() => handleCardClick(storeData?.storeId)}
+      >
         <CardMedia
           component='img'
           sx={{
