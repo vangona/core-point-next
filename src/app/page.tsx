@@ -20,8 +20,33 @@ export default function Home() {
         paddingBottom: 10,
       }}
     >
-      <SectionLayout color='white' height='300px' disableDivider>
-        <h1>Home</h1>
+      <SectionLayout
+        color='white'
+        height='300px'
+        disableDivider
+        sx={{ my: 5 }}
+        innerSx={{ gap: 1 }}
+      >
+        <Box>
+          <Typography variant='h4' component='h3' fontWeight='bold'>
+            <Box display='inline' color='primary.main'>
+              코어창업
+            </Box>
+            {'이 '}
+            <Box display='inline' color='primary.main'>
+              창업의 문
+            </Box>
+            을 여는
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant='h4' component='h3' fontWeight='bold'>
+            <Box display='inline' color='primary.main'>
+              열쇠
+            </Box>
+            가 되어 드리겠습니다.
+          </Typography>
+        </Box>
       </SectionLayout>
       <RecommendedStore />
       <SuccessExample />

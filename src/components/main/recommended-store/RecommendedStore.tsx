@@ -7,11 +7,16 @@ import { SectionTitle } from '@/components/common/section-title';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import SectionLayout from '../section-layout/SectionLayout';
 
-const RecommendedStore = () => {
+interface RecommendedStoreProps {
+  ref?: (node?: Element | null) => void;
+}
+const RecommendedStore = (props: RecommendedStoreProps) => {
+  const { ref } = props;
   return (
     <SectionLayout>
       <SectionTitle label='추천 매물' />
       <Box
+        ref={ref}
         sx={{
           display: 'flex',
           gap: 2,
