@@ -3,10 +3,11 @@ export interface Store {
   storeImgSrcArr?: string[];
   storeName: string;
   storeLocation: string;
-  storeCost: string;
+  storeCost: number;
   storeSize: string;
-  storeSales: string;
+  storeSales: number;
   storeCategory: string;
+  storeRevenue: number;
   manager: string;
   managerContact: string;
 }
