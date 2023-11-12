@@ -3,6 +3,7 @@
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
 import { usePathname } from 'next/navigation';
+import FabGroup from '@/components/common/fab-group/FabGroup';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
 import GeneralFooter from './GeneralFooter';
@@ -32,6 +33,7 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
     >
       <GeneralHeader />
       {!disableHero && <GeneralHero />}
+      <FabGroup />
       <Box
         sx={{
           flexGrow: 1,

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import Image from 'next/image';
@@ -7,6 +8,7 @@ import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { DIMMED_GRAY } from '@/constants/color';
 import { dummyStoreDetail } from '../dummyStore';
+import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
 interface StoreDetailPageProps {
   params: { id: string };
@@ -20,6 +22,31 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
   const parsedExpenditureData = matchedDummyStoreDetail
     ? Object.entries(matchedDummyStoreDetail.expenditureDetail)
     : [];
+
+  // 최근 조회한 매물에 추가
+  useEffect(() => {
+    const recentStores = localStorage.getItem(LOCALSTORAGE_RECENT_STORE_KEY);
+    if (!recentStores) {
+      const newRecentStores = [params.id];
+      localStorage.setItem(
+        LOCALSTORAGE_RECENT_STORE_KEY,
+        JSON.stringify(newRecentStores),
+      );
+      return;
+    }
+
+    const parsedStores: string[] = JSON.parse(recentStores);
+    if (!parsedStores.includes(params.id)) {
+      const newRecentStores =
+        parsedStores.length === 3 ? parsedStores.slice(1, 3) : parsedStores;
+      newRecentStores.push(params.id);
+      localStorage.setItem(
+        LOCALSTORAGE_RECENT_STORE_KEY,
+        JSON.stringify(newRecentStores),
+      );
+      return;
+    }
+  }, [params.id]);
 
   return (
     <Box
@@ -63,58 +90,65 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex' }}>
-        <Box>
-          <Typography variant='h5'>지출 세부내역</Typography>
-          <Box>매출 : {matchedDummyStoreDetail?.salesDetail.monthlySales}</Box>
-          {parsedExpenditureData.length > 0 &&
-            parsedExpenditureData.map(([label, value], index) => (
-              <Box key={index + label}>
-                {label} : {value}
-              </Box>
-            ))}
-          <Box>
-            수익 : {matchedDummyStoreDetail?.salesDetail.monthlyRevenue}
-          </Box>
-        </Box>
-        {parsedExpenditureData.length > 0 && (
-          <Box>
-            <PieChart
-              width={300}
-              height={300}
-              series={[
-                {
-                  data: parsedExpenditureData.map(([label, value], index) => ({
-                    id: index + label,
-                    value,
-                    label,
-                  })),
-                  arcLabel: (item) =>
-                    `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
-                  cornerRadius: 4,
-                  highlightScope: { faded: 'global', highlighted: 'item' },
-                  faded: {
-                    innerRadius: 30,
-                    additionalRadius: -30,
-                    color: 'gray',
-                  },
-                },
-              ]}
-              sx={{
-                [`& .${pieArcLabelClasses.root}`]: {
-                  fill: 'white',
-                  fontWeight: 'bold',
-                  fontSize: '14px',
-                },
-              }}
-            />
-          </Box>
-        )}
-      </Box>
       <Box>
-        <Typography variant='h5'>상세 설명</Typography>
-        <Box sx={{ height: '600px', backgroundColor: DIMMED_GRAY }}>
-          {matchedDummyStoreDetail?.description}
+        {/* <StoreDetailWindow /> */}
+        <Box sx={{ display: 'flex' }}>
+          <Box>
+            <Typography variant='h5'>지출 세부내역</Typography>
+            <Box>
+              매출 : {matchedDummyStoreDetail?.salesDetail.monthlySales}
+            </Box>
+            {parsedExpenditureData.length > 0 &&
+              parsedExpenditureData.map(([label, value], index) => (
+                <Box key={index + label}>
+                  {label} : {value}
+                </Box>
+              ))}
+            <Box>
+              수익 : {matchedDummyStoreDetail?.salesDetail.monthlyRevenue}
+            </Box>
+          </Box>
+          {parsedExpenditureData.length > 0 && (
+            <Box>
+              <PieChart
+                width={300}
+                height={300}
+                series={[
+                  {
+                    data: parsedExpenditureData.map(
+                      ([label, value], index) => ({
+                        id: index + label,
+                        value,
+                        label,
+                      }),
+                    ),
+                    arcLabel: (item) =>
+                      `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
+                    cornerRadius: 4,
+                    highlightScope: { faded: 'global', highlighted: 'item' },
+                    faded: {
+                      innerRadius: 30,
+                      additionalRadius: -30,
+                      color: 'gray',
+                    },
+                  },
+                ]}
+                sx={{
+                  [`& .${pieArcLabelClasses.root}`]: {
+                    fill: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                  },
+                }}
+              />
+            </Box>
+          )}
+        </Box>
+        <Box>
+          <Typography variant='h5'>상세 설명</Typography>
+          <Box sx={{ height: '600px', backgroundColor: DIMMED_GRAY }}>
+            {matchedDummyStoreDetail?.description}
+          </Box>
         </Box>
       </Box>
     </Box>
