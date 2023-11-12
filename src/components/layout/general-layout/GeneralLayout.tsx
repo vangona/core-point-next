@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { DEFAULT_LAYOUT_WIDTH, OFF_WHITE_COLOR } from './constants';
 import GeneralFooter from './GeneralFooter';
 import GeneralHeader from './GeneralHeader';
@@ -10,6 +12,7 @@ interface GeneralLayoutInterface {
 }
 const GeneralLayout = (props: GeneralLayoutInterface) => {
   const { children } = props;
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -23,7 +26,16 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
     >
       <GeneralHeader />
       <GeneralHero />
-      <Box sx={{ flexGrow: 1, width: DEFAULT_LAYOUT_WIDTH }}>{children}</Box>
+      <Box
+        sx={{
+          flexGrow: 1,
+          maxWidth: DEFAULT_LAYOUT_WIDTH,
+          width: '100%',
+          [theme.breakpoints.down('lg')]: { padding: 3 },
+        }}
+      >
+        {children}
+      </Box>
       <GeneralFooter />
     </Box>
   );
