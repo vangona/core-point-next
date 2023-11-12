@@ -1,11 +1,7 @@
 import { Box } from '@mui/material';
 import Image from 'next/image';
-import {
-  DEFAULT_FOOTER_HEIGHT,
-  DEFAULT_LAYOUT_WIDTH,
-  DIMMED_GRAY,
-  OFF_WHITE_COLOR,
-} from './constants';
+import { DIMMED_GRAY, OFF_WHITE_COLOR } from '@/constants/color';
+import { DEFAULT_FOOTER_HEIGHT, DEFAULT_LAYOUT_WIDTH } from './constants';
 
 const GeneralFooter = () => {
   return (

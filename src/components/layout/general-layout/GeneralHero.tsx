@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
-import { DEFAULT_HERO_HEIGHT, OFF_WHITE_COLOR } from './constants';
+import { DEFAULT_HERO_HEIGHT } from './constants';
 
 interface GeneralHeroProps {
   heroComponent?: React.ReactNode;
