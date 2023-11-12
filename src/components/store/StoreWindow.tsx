@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Box, Button, Card, Link, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
@@ -8,10 +9,17 @@ import { CorePointRoutes } from '@/constants/routes';
 
 const StoreWindow = () => {
   const router = useRouter();
-  const recentStores = localStorage.getItem(LOCALSTORAGE_RECENT_STORE_KEY);
-  const parsedRecentStores: string[] = recentStores
-    ? JSON.parse(recentStores)
-    : [];
+  const [recentStores, setRecentStores] = useState<string[]>([]);
+
+  useEffect(() => {
+    const localStorageRecentStores = localStorage.getItem(
+      LOCALSTORAGE_RECENT_STORE_KEY,
+    );
+    const parsedRecentStores: string[] = localStorageRecentStores
+      ? JSON.parse(localStorageRecentStores)
+      : [];
+    setRecentStores(parsedRecentStores);
+  }, []);
 
   return (
     <Card
@@ -38,8 +46,8 @@ const StoreWindow = () => {
         최근 조회한 매물
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {parsedRecentStores
-          ? parsedRecentStores.map((storeId, index) => {
+        {recentStores
+          ? recentStores.map((storeId, index) => {
               const dummyDetail = dummyStoreDetail.find(
                 (store) => store.storeData.storeId === storeId,
               );
