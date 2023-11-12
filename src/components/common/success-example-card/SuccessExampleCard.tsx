@@ -16,10 +16,11 @@ const SuccessExampleCard = (props: SuccessExampleCardProps) => {
   return (
     <Card raised sx={containerSx}>
       <CardMedia
-        image={successExampleData?.imgSrc}
         component='img'
+        image={successExampleData?.imgSrc ?? ''}
         alt='success example image'
-        sx={{ width: '400px', height: '400px' }}
+        width='400px'
+        sx={{ aspectRatio: '1/1', objectFit: 'cover' }}
       />
       <CardContent
         sx={{

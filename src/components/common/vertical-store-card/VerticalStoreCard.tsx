@@ -39,7 +39,10 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
       <CardActionArea sx={actionAreaSx} onClick={() => alert('clicked!')}>
         <CardMedia
           component='img'
-          height={isSmall ? '120px' : '180px'}
+          sx={{
+            height: isSmall ? '120px' : '180px',
+            objectFit: 'cover',
+          }}
           image={
             Array.isArray(storeData?.storeImgSrcArr)
               ? storeData?.storeImgSrcArr[0]
