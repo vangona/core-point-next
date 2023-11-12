@@ -61,7 +61,12 @@ export default function Store() {
         ))}
       </Box>
       <Box
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: 5,
+        }}
       >
         <Pagination count={10} size='large' color='primary' />
       </Box>

@@ -101,12 +101,8 @@ const StoreCard = (props: StoreCardProps) => {
         </Box>
       </Box>
       <Box sx={managerWrapperSx}>
-        <Box>
-          <Typography
-            variant='subtitle2'
-            fontWeight='bold'
-            sx={{ marginBottom: 1 }}
-          >
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Typography variant='subtitle2' fontWeight='bold'>
             담당자 정보
           </Typography>
           <Typography variant='body2'>{storeData?.manager}</Typography>
