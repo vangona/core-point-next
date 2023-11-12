@@ -1,8 +1,8 @@
-import React from 'react';
 import { Box, Pagination, Typography } from '@mui/material';
 import { dummyStore } from '@/app/store/dummyStore';
 import { ParagraphDivider } from '../common/paragraph-divider';
 import { StoreCard } from '../common/store-card';
+import StoreWindow from './StoreWindow';
 
 const StoreResult = () => {
   return (
@@ -21,12 +21,28 @@ const StoreResult = () => {
           </Typography>
           <ParagraphDivider sx={{ maxWidth: 600 }} variant='right' />
         </Box>
-        {dummyStore.slice(0, 20).map((store, index) => (
-          <StoreCard
-            key={'store' + index + ', id-' + store.storeId}
-            storeData={store}
-          />
-        ))}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 3,
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+            }}
+          >
+            {dummyStore.slice(0, 20).map((store, index) => (
+              <StoreCard
+                key={'store' + index + ', id-' + store.storeId}
+                storeData={store}
+              />
+            ))}
+          </Box>
+          <StoreWindow />
+        </Box>
       </Box>
       <Box
         sx={{
