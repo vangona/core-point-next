@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/api/supabase';
-import { SupabaseTable } from '@/api/types';
+import { supabase } from '@/app/api/supabase';
+import { SupabaseTable } from '@/app/api/types';
 
 export async function GET(req: NextRequest) {
   const storeId = req.nextUrl.searchParams.get('id');

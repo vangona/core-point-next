@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/api/supabase';
-import { SupabaseTable } from '@/api/types';
+import { supabase } from '@/app/api/supabase';
+import { SupabaseTable } from '@/app/api/types';
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from './constants';
 
 export async function GET(req: NextRequest) {
