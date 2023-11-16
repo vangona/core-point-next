@@ -1,15 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Box, Button, Card, Link, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CircularProgress,
+  Link,
+  Typography,
+} from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { useGetStoreMinimum } from '@/api/store/useGetStoreMinimum';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
-import { dummyStoreDetail } from '@/app/store/dummyStore';
-import { CorePointRoutes } from '@/constants/routes';
 
 const StoreWindow = () => {
   const router = useRouter();
   const [recentStores, setRecentStores] = useState<string[]>([]);
+  const { data, isLoading } = useGetStoreMinimum({ idArr: recentStores });
 
   useEffect(() => {
     const localStorageRecentStores = localStorage.getItem(
@@ -46,23 +53,17 @@ const StoreWindow = () => {
         최근 조회한 매물
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {recentStores
-          ? recentStores.map((storeId, index) => {
-              const dummyDetail = dummyStoreDetail.find(
-                (store) => store.storeData.storeId === storeId,
-              );
-              return (
+        {isLoading && <CircularProgress />}
+        {!isLoading && data.data && data.data.length > 0
+          ? data.data.map((storeData, index) => (
+              <Box key={'recent-store' + storeData.store_id + index}>
                 <Link
-                  key={'recent-store' + index}
-                  onClick={() =>
-                    router.push(CorePointRoutes.STORE + '/' + storeId)
-                  }
-                  sx={{ '&:hover': { cursor: 'pointer' } }}
+                  onClick={() => router.push(`/store/${storeData.store_id}`)}
                 >
-                  {dummyDetail?.storeData.storeName}
+                  {storeData.store_name}
                 </Link>
-              );
-            })
+              </Box>
+            ))
           : '최근 조회한 매물이 없습니다.'}
       </Box>
       <Button size='large' variant='contained'>
