@@ -5,7 +5,10 @@ export interface GetStoreMetadataResponse {
 }
 
 const getStoreMetadata = async (): Promise<GetStoreMetadataResponse> => {
-  const reqUrl = new URL('/api/store/metadata', 'http://localhost:3000');
+  const reqUrl = new URL(
+    '/api/store/metadata',
+    process.env.NEXT_PUBLIC_BASE_URL,
+  );
 
   const res = await fetch(reqUrl);
   const body = await res.json();
