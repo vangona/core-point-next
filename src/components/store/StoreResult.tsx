@@ -1,10 +1,13 @@
 import { Box, Pagination, Typography } from '@mui/material';
-import { dummyStore } from '@/app/store/dummyStore';
+import { Store } from '@/api/store/useGetStore';
 import { ParagraphDivider } from '../common/paragraph-divider';
 import { StoreCard } from '../common/store-card';
 import StoreWindow from './StoreWindow';
 
-const StoreResult = () => {
+interface StoreResultProps {
+  storeData?: Store[];
+}
+const StoreResult = ({ storeData }: StoreResultProps) => {
   return (
     <>
       <Box
@@ -21,28 +24,32 @@ const StoreResult = () => {
           </Typography>
           <ParagraphDivider sx={{ maxWidth: 600 }} variant='right' />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 3,
-          }}
-        >
+        {storeData ? (
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
               gap: 3,
             }}
           >
-            {dummyStore.slice(0, 20).map((store, index) => (
-              <StoreCard
-                key={'store' + index + ', id-' + store.storeId}
-                storeData={store}
-              />
-            ))}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 3,
+              }}
+            >
+              {storeData.map((store, index) => (
+                <StoreCard
+                  key={'store' + index + ', id-' + store.storeId}
+                  storeData={store}
+                />
+              ))}
+            </Box>
+            <StoreWindow />
           </Box>
-          <StoreWindow />
-        </Box>
+        ) : (
+          <Box>해당하는 매물이 없습니다.</Box>
+        )}
       </Box>
       <Box
         sx={{

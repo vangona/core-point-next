@@ -12,8 +12,9 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Store } from '@/api/store/useGetStore';
 import { CorePointRoutes } from '@/constants/routes';
-import { Store } from '@/types/store';
+import { convertMoneyString } from '@/utils';
 import {
   DEFAULT_STORE_CARD_HEIGHT,
   DEFAULT_STORE_CARD_WIDTH,
@@ -31,8 +32,8 @@ const StoreCard = (props: StoreCardProps) => {
   const router = useRouter();
 
   const defaultImgSrc = '/logo.png';
-  const firstImgSrc = Array.isArray(storeData?.storeImgSrcArr)
-    ? storeData?.storeImgSrcArr[0]
+  const firstImgSrc = Array.isArray(storeData?.store_img_src_arr)
+    ? storeData?.store_img_src_arr[0]
     : undefined;
   const imgSrc = firstImgSrc ?? defaultImgSrc;
 
@@ -97,7 +98,7 @@ const StoreCard = (props: StoreCardProps) => {
     <Card sx={containerSx} variant='elevation'>
       <CardActionArea
         sx={{ display: 'flex' }}
-        onClick={() => handleCardClick(storeData?.storeId)}
+        onClick={() => handleCardClick(storeData?.store_id)}
       >
         <CardMedia sx={imgWrapperSx}>
           <Image src={imgSrc} fill objectFit='contain' alt='store image' />
@@ -109,26 +110,31 @@ const StoreCard = (props: StoreCardProps) => {
             fontWeight='bold'
             component='h4'
           >
-            {storeData?.storeName}
+            {storeData?.store_name}
           </Typography>
           <Box sx={infoGridSx}>
             <BoldLabelValue
               label='매장 위치'
-              value={storeData?.storeLocation}
+              value={storeData?.store_location}
             />
             <BoldLabelValue
               label='창업 비용'
-              value={storeData?.storeCost.toLocaleString('ko-KR') + '원'}
+              value={convertMoneyString(storeData?.store_cost)}
             />
-            <BoldLabelValue label='매장 면적' value={storeData?.storeSize} />
+            <BoldLabelValue
+              label='매장 면적'
+              value={
+                `${storeData?.store_size}평` + `(${storeData?.store_size_m2})`
+              }
+            />
             <BoldLabelValue
               label='월 매출'
-              value={storeData?.storeSales.toLocaleString('ko-KR') + '원'}
+              value={convertMoneyString(storeData?.monthly_sales)}
             />
-            <BoldLabelValue label='업종' value={storeData?.storeCategory} />
+            <BoldLabelValue label='업종' value={storeData?.store_category} />
             <BoldLabelValue
-              label='순이익'
-              value={storeData?.storeRevenue.toLocaleString('ko-KR') + '원'}
+              label='월 수악'
+              value={convertMoneyString(storeData?.monthly_revenue)}
             />
           </Box>
         </Box>
@@ -139,7 +145,7 @@ const StoreCard = (props: StoreCardProps) => {
             담당자 정보
           </Typography>
           <Typography variant='body2'>{storeData?.manager}</Typography>
-          <Typography variant='body2'>{storeData?.managerContact}</Typography>
+          <Typography variant='body2'>{storeData?.manager_contact}</Typography>
         </Box>
         <Button variant='contained' sx={{ whiteSpace: 'nowrap' }}>
           창업컨설팅 신청
