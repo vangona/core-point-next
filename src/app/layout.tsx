@@ -1,9 +1,9 @@
 import React from 'react';
 import '@/app/globals.css';
+import { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-import { GeneralLayout } from '@/components/layout/general-layout';
+import ConditionalLayout from './conditionalLayout';
 import ThemeRegistry from './ThemeRegistry';
-import type { Metadata } from 'next';
 
 const notoSansKr = Noto_Sans_KR({ subsets: ['latin'] });
 
@@ -17,12 +17,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // hero data 여기서 받도록
   return (
     <html lang='ko'>
       <body className={notoSansKr.className}>
         <ThemeRegistry>
-          <GeneralLayout>{children}</GeneralLayout>
+          <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeRegistry>
       </body>
     </html>
