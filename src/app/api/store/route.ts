@@ -10,5 +10,6 @@ export async function GET(req: NextRequest) {
     .from(SupabaseTable.STORES)
     .select('*')
     .range(page * limit, (page + 1) * limit);
+
   return NextResponse.json({ data: query.data });
 }
