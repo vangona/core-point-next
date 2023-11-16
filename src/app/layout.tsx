@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import ConditionalLayout from './conditionalLayout';
+import ReactQueryRegistry from './ReactQueryRegistry';
 import ThemeRegistry from './ThemeRegistry';
 
 const notoSansKr = Noto_Sans_KR({ subsets: ['latin'] });
@@ -20,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={notoSansKr.className}>
-        <ThemeRegistry>
-          <ConditionalLayout>{children}</ConditionalLayout>
-        </ThemeRegistry>
+        <ReactQueryRegistry>
+          <ThemeRegistry>
+            <ConditionalLayout>{children}</ConditionalLayout>
+          </ThemeRegistry>
+        </ReactQueryRegistry>
       </body>
     </html>
   );

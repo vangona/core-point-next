@@ -1,5 +1,5 @@
+import { Store } from '@/api/store';
 import { HeroData } from './metadata';
-import { Store } from './store';
 
 export type MainHeroCaroselData = HeroData[];
 

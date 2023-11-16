@@ -1,5 +1,5 @@
 import { Button, Card, Typography } from '@mui/material';
-import { StoreDetail } from '@/types';
+import { StoreDetail } from '@/api/store';
 
 interface StoreDetailWindowProps {
   storeDetailData?: StoreDetail;
@@ -29,7 +29,7 @@ const StoreDetailWindow = (props: StoreDetailWindowProps) => {
         fontWeight='bold'
         sx={{ borderBottom: '1px solid', borderColor: 'divider' }}
       >
-        {storeDetailData?.storeData.storeName}
+        {storeDetailData?.storeData.store_name}
       </Typography>
       <Button size='large' variant='contained'>
         상담 신청하기

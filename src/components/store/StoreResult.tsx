@@ -1,60 +1,39 @@
-import { Box, Pagination, Typography } from '@mui/material';
-import { dummyStore } from '@/app/store/dummyStore';
-import { ParagraphDivider } from '../common/paragraph-divider';
+import { Box } from '@mui/material';
+import { useGetStore } from '@/api/store/useGetStore';
 import { StoreCard } from '../common/store-card';
 import StoreWindow from './StoreWindow';
 
 const StoreResult = () => {
+  const query = useGetStore();
+  const storeData = query.data?.data;
+
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: 3,
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          marginTop: 2,
           gap: 3,
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography sx={{ flexShrink: 0 }} variant='h6' component='h3'>
-            매물 검색 결과
-          </Typography>
-          <ParagraphDivider sx={{ maxWidth: 600 }} variant='right' />
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 3,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 3,
-            }}
-          >
-            {dummyStore.slice(0, 20).map((store, index) => (
-              <StoreCard
-                key={'store' + index + ', id-' + store.storeId}
-                storeData={store}
-              />
-            ))}
-          </Box>
-          <StoreWindow />
-        </Box>
+        {Array.isArray(storeData) && storeData.length > 0 ? (
+          storeData.map((store, index) => (
+            <StoreCard
+              key={'store' + index + ', id-' + store.store_id}
+              storeData={store}
+            />
+          ))
+        ) : (
+          <StoreCard storeData={undefined} />
+        )}
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: 5,
-        }}
-      >
-        <Pagination count={10} size='large' color='primary' />
-      </Box>
-    </>
+      <StoreWindow />
+    </Box>
   );
 };
 

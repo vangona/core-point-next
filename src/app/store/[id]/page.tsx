@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import Image from 'next/image';
+import { useGetStoreDetail } from '@/api/store';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { DIMMED_GRAY } from '@/constants/color';
-import { dummyStoreDetail } from '../dummyStore';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
 interface StoreDetailPageProps {
@@ -15,12 +15,16 @@ interface StoreDetailPageProps {
 }
 const StoreDetailPage = (props: StoreDetailPageProps) => {
   const { params } = props;
-  const matchedDummyStoreDetail = dummyStoreDetail.find(
-    (storeDetail) => storeDetail.storeData.storeId === params.id,
-  );
+  const { data: storeDetailData } = useGetStoreDetail({ id: params.id });
 
-  const parsedExpenditureData = matchedDummyStoreDetail
-    ? Object.entries(matchedDummyStoreDetail.expenditureDetail)
+  const parsedExpenditureData: [string, number][] = storeDetailData?.costDetail
+    ? [
+        ['인건비', storeDetailData.costDetail.personal_cost],
+        ['재료비', storeDetailData.costDetail.material_cost],
+        ['임대료', storeDetailData.costDetail.rent_cost],
+        ['공과금', storeDetailData.costDetail.dues_cost],
+        ['기타잡비', storeDetailData.costDetail.etc_cost],
+      ]
     : [];
 
   // 최근 조회한 매물에 추가
@@ -58,7 +62,7 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
       }}
     >
       <Typography variant='h4' align='center'>
-        {matchedDummyStoreDetail?.storeData.storeName}
+        {storeDetailData?.storeData?.store_name}
       </Typography>
       <ParagraphDivider />
       <Box sx={{ display: 'flex', gap: 4 }}>
@@ -67,8 +71,8 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
             width={450}
             height={300}
             src={
-              matchedDummyStoreDetail?.storeData.storeImgSrcArr
-                ? matchedDummyStoreDetail?.storeData.storeImgSrcArr[0]
+              storeDetailData?.storeData?.store_img_src_arr
+                ? storeDetailData?.storeData?.store_img_src_arr[0]
                 : ''
             }
             alt='image'
@@ -76,18 +80,10 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
         </Box>
         <Box>
           <Typography variant='h5'>매출내역</Typography>
-          <Box>
-            월매출 : {matchedDummyStoreDetail?.salesDetail.monthlySales}
-          </Box>
-          <Box>
-            월지출 : {matchedDummyStoreDetail?.salesDetail.monthlyExpenditure}
-          </Box>
-          <Box>
-            월수익 : {matchedDummyStoreDetail?.salesDetail.monthlyRevenue}
-          </Box>
-          <Box>
-            매출근거 : {matchedDummyStoreDetail?.salesDetail.salesReason}
-          </Box>
+          <Box>월매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
+          <Box>월지출 : {storeDetailData?.storeData?.monthly_cost}</Box>
+          <Box>월수익 : {storeDetailData?.storeData?.monthly_cost}</Box>
+          <Box>매출근거 : {storeDetailData?.storeData?.sales_reason}</Box>
         </Box>
       </Box>
       <Box>
@@ -95,18 +91,14 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
         <Box sx={{ display: 'flex' }}>
           <Box>
             <Typography variant='h5'>지출 세부내역</Typography>
-            <Box>
-              매출 : {matchedDummyStoreDetail?.salesDetail.monthlySales}
-            </Box>
+            <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
             {parsedExpenditureData.length > 0 &&
               parsedExpenditureData.map(([label, value], index) => (
                 <Box key={index + label}>
                   {label} : {value}
                 </Box>
               ))}
-            <Box>
-              수익 : {matchedDummyStoreDetail?.salesDetail.monthlyRevenue}
-            </Box>
+            <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
           </Box>
           {parsedExpenditureData.length > 0 && (
             <Box>
@@ -125,6 +117,7 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
                     arcLabel: (item) =>
                       `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
                     cornerRadius: 4,
+                    arcLabelMinAngle: 45,
                     highlightScope: { faded: 'global', highlighted: 'item' },
                     faded: {
                       innerRadius: 30,
@@ -147,7 +140,7 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
         <Box>
           <Typography variant='h5'>상세 설명</Typography>
           <Box sx={{ height: '600px', backgroundColor: DIMMED_GRAY }}>
-            {matchedDummyStoreDetail?.description}
+            {storeDetailData?.storeData?.description}
           </Box>
         </Box>
       </Box>
