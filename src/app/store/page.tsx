@@ -1,16 +1,22 @@
 'use client';
 
-import { useGetStore } from '@/api/store/useGetStore';
+import { Suspense } from 'react';
+import StorePagination from '@/components/store/StorePagination';
 import StoreResult from '@/components/store/StoreResult';
+import StoreResultLayout from '@/components/store/StoreResultLayout';
+import StoreResultLoading from '@/components/store/StoreResultLoading';
 import StoreSearch from '@/components/store/StoreSearch';
 
 export default function StorePage() {
-  const query = useGetStore();
-
   return (
     <>
       <StoreSearch />
-      <StoreResult storeData={query.data?.data} />
+      <StoreResultLayout>
+        <Suspense fallback={<StoreResultLoading />}>
+          <StoreResult />
+          <StorePagination />
+        </Suspense>
+      </StoreResultLayout>
     </>
   );
 }
