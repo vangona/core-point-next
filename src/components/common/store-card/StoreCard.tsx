@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Store } from '@/api/store/useGetStore';
+import { Store } from '@/api/store';
 import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
 import {

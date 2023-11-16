@@ -9,8 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { Store } from '@/api/store';
 import { CorePointRoutes } from '@/constants/routes';
-import { Store } from '@/types';
+import { convertMoneyString } from '@/utils';
 import { BoldLabelValue } from '../store-card/elements';
 import type { SxProps, TypographyVariant } from '@mui/material';
 
@@ -47,7 +48,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
     <Card raised sx={containerSx}>
       <CardActionArea
         sx={actionAreaSx}
-        onClick={() => handleCardClick(storeData?.storeId)}
+        onClick={() => handleCardClick(storeData?.store_id)}
       >
         <CardMedia
           component='img'
@@ -56,8 +57,8 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
             objectFit: 'cover',
           }}
           image={
-            Array.isArray(storeData?.storeImgSrcArr)
-              ? storeData?.storeImgSrcArr[0]
+            Array.isArray(storeData?.store_img_src_arr)
+              ? storeData?.store_img_src_arr[0]
               : undefined
           }
           alt='store image'
@@ -77,18 +78,18 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
               component='h3'
               sx={{ borderBottom: '1px solid', borderColor: 'divider' }}
             >
-              {storeData?.storeName}
+              {storeData?.store_name}
             </Typography>
           </Box>
           <Box sx={{ width: '100%', padding: 1, marginTop: 2 }}>
             <BoldLabelValue
               label='비용'
-              value={storeData?.storeCost.toLocaleString('ko-KR') + '원'}
+              value={convertMoneyString(storeData?.store_cost)}
               variant={cardTypo}
             />
             <BoldLabelValue
               label='월수익'
-              value={storeData?.storeRevenue.toLocaleString('ko-KR') + '원'}
+              value={convertMoneyString(storeData?.monthly_revenue)}
               variant={cardTypo}
             />
           </Box>

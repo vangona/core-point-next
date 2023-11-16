@@ -30,3 +30,8 @@ export interface CostDetail {
   updated_at: string;
   deleted: boolean;
 }
+
+export interface StoreDetail {
+  storeData: Store;
+  costDetail: CostDetail;
+}
