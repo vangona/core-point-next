@@ -193,31 +193,42 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
               )}
             </Box>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <Box>
-              <Typography variant='h5' fontWeight='bold' sx={{ mt: 6 }}>
-                상세 설명
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-            </Box>
-            <Box
-              sx={{
-                width: '700px',
-                minHeight: '300px',
-                padding: 3,
-                backgroundColor: DIMMED_GRAY,
-              }}
-            >
-              {storeDetailData?.storeData?.description}
-            </Box>
-          </Box>
-          <Box
-            sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-          >
-            <Button sx={{ width: '300px', mt: 4 }} variant='contained'>
-              상담 신청하기
-            </Button>
-          </Box>
+          {storeDetailData?.storeData?.description && (
+            <>
+              <Box
+                sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}
+              >
+                <Box>
+                  <Typography variant='h5' fontWeight='bold' sx={{ mt: 6 }}>
+                    상세 설명
+                  </Typography>
+                  <Divider sx={{ my: 2 }} />
+                </Box>
+                <Box
+                  sx={{
+                    width: '700px',
+                    minHeight: '300px',
+                    padding: 3,
+                    backgroundColor: DIMMED_GRAY,
+                  }}
+                >
+                  {storeDetailData?.storeData?.description}
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              >
+                <Button sx={{ width: '300px', mt: 4 }} variant='contained'>
+                  상담 신청하기
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
         <StoreDetailWindow storeDetailData={storeDetailData} />
       </Box>
