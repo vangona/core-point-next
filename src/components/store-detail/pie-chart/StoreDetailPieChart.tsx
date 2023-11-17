@@ -8,7 +8,7 @@ const StoreDetailPieChart = ({
   parsedExpenditureData,
 }: StoreDetailPieChartProps) => {
   return (
-    <Box>
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <PieChart
         width={300}
         height={300}
@@ -23,6 +23,8 @@ const StoreDetailPieChart = ({
               `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
             cornerRadius: 4,
             arcLabelMinAngle: 45,
+            innerRadius: 30,
+            paddingAngle: 1,
             highlightScope: { faded: 'global', highlighted: 'item' },
             faded: {
               innerRadius: 30,
@@ -31,12 +33,23 @@ const StoreDetailPieChart = ({
             },
           },
         ]}
+        margin={{ bottom: 100 }}
+        slotProps={{
+          legend: {
+            direction: 'row',
+            position: {
+              horizontal: 'left',
+              vertical: 'bottom',
+            },
+          },
+        }}
         sx={{
           [`& .${pieArcLabelClasses.root}`]: {
             fill: 'white',
             fontWeight: 'bold',
             fontSize: '14px',
           },
+          gap: 4,
         }}
       />
     </Box>
