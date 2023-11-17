@@ -9,7 +9,8 @@ export async function GET(req: NextRequest) {
   const query = await supabase
     .from(SupabaseTable.STORES)
     .select('*')
-    .range(page * limit, (page + 1) * limit - 1); // 시작이 0부터 이기 때문에 1을 빼줌
+    .range(page * limit, (page + 1) * limit - 1)
+    .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
 
   return NextResponse.json({ data: query.data });
 }

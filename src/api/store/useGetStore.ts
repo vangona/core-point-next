@@ -1,10 +1,9 @@
 import { QueryKey, useSuspenseQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
 import { Store, CostDetail } from '@/api/store';
 
 interface GetStoreRequest {
-  page: string;
-  limit: string;
+  page?: string;
+  limit?: string;
 }
 
 export interface GetStoreResponse {
@@ -12,9 +11,9 @@ export interface GetStoreResponse {
   cost_details: CostDetail[];
 }
 
-const getStore = async ({
-  page,
-  limit,
+export const getStore = async ({
+  page = '1',
+  limit = '20',
 }: GetStoreRequest): Promise<GetStoreResponse> => {
   const reqUrl = new URL('/api/store', process.env.NEXT_PUBLIC_BASE_URL);
   const parsedPage = String(parseInt(page) - 1);
@@ -26,10 +25,11 @@ const getStore = async ({
   return Promise.resolve(body);
 };
 
-export const useGetStore = () => {
-  const searchParams = useSearchParams();
-  const page = searchParams.get('page') ?? '1';
-  const limit = searchParams.get('limt') ?? '20';
+interface useGetStoreProps {
+  page?: string;
+  limit?: string;
+}
+export const useGetStore = ({ page, limit }: useGetStoreProps) => {
   const queryKey: QueryKey = ['store', page, limit];
   const query = useSuspenseQuery({
     queryKey,
