@@ -2,16 +2,21 @@
 
 import { useEffect } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { StoreDetail, getStoreDetail } from '@/api/store';
+import ContainedListItem from '@/components/common/contained-list/ContainedList';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
+import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import StoreDetailWindow from '@/components/store/StoreDetailWindow';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import { DIMMED_GRAY } from '@/constants/color';
+import { convertMoneyString } from '@/utils';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
 interface StoreDetailPageProps {
@@ -75,50 +80,111 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
+        mb: 10,
       }}
     >
-      <Typography variant='h4' align='center'>
+      <Typography
+        variant='h4'
+        fontWeight='bold'
+        align='center'
+        sx={{ mt: 8, mb: 3 }}
+      >
         {storeDetailData?.storeData?.store_name}
       </Typography>
       <ParagraphDivider />
-      <Box sx={{ display: 'flex', gap: 4 }}>
-        <Box>
-          <Image
-            width={450}
-            height={300}
-            src={
-              storeDetailData?.storeData?.store_img_src_arr
-                ? storeDetailData?.storeData?.store_img_src_arr[0]
-                : ''
-            }
-            alt='image'
+      <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <Card variant='elevation' raised>
+            <Image
+              width={450}
+              height={300}
+              src={
+                storeDetailData?.storeData?.store_img_src_arr
+                  ? storeDetailData?.storeData?.store_img_src_arr[0]
+                  : ''
+              }
+              alt='image'
+            />
+          </Card>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {storeDetailData.storeData?.store_img_src_arr?.map(
+              (imgSrc, index) => (
+                <Card
+                  key={'store-detail-image' + index}
+                  sx={{ position: 'relative', width: '132px', height: '88px' }}
+                >
+                  <Image src={imgSrc} fill alt='store image' />
+                </Card>
+              ),
+            )}
+          </Box>
+        </Box>
+        <Box sx={{ width: '500px' }}>
+          <Typography variant='h5' fontWeight='bold' sx={{ mb: 2 }}>
+            매출내역
+          </Typography>
+          <ContainedListItem
+            label='월 매출'
+            value={convertMoneyString(storeDetailData.storeData?.monthly_sales)}
+          />
+          <ContainedListItem
+            label='월 지출'
+            value={convertMoneyString(storeDetailData?.storeData?.monthly_cost)}
+          />
+          <ContainedListItem
+            label='월 수익'
+            value={convertMoneyString(
+              storeDetailData.storeData?.monthly_revenue,
+            )}
+          />
+          <ContainedListItem
+            label='매출 근거'
+            value={storeDetailData.storeData?.sales_reason}
           />
         </Box>
-        <Box>
-          <Typography variant='h5'>매출내역</Typography>
-          <Box>월매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
-          <Box>월지출 : {storeDetailData?.storeData?.monthly_cost}</Box>
-          <Box>월수익 : {storeDetailData?.storeData?.monthly_cost}</Box>
-          <Box>매출근거 : {storeDetailData?.storeData?.sales_reason}</Box>
-        </Box>
       </Box>
-      <Box sx={{ display: 'flex', gap: 5 }}>
+      <Box sx={{ mt: 5, display: 'flex', gap: 5 }}>
         <Box sx={{ width: '750px' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <Box sx={{ width: '100%' }}>
-              <Typography variant='h5'>지출 세부내역</Typography>
+              <Typography variant='h5' fontWeight='bold'>
+                지출 세부내역
+              </Typography>
               <Divider sx={{ my: 2 }} />
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box>
-                <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}
+            >
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  padding: 3,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: 2,
+                }}
+              >
+                <ContainedListItem
+                  label='매출'
+                  value={convertMoneyString(
+                    storeDetailData?.storeData?.monthly_sales,
+                  )}
+                />
                 {parsedExpenditureData.length > 0 &&
                   parsedExpenditureData.map(([label, value], index) => (
-                    <Box key={index + label}>
-                      {label} : {value}
-                    </Box>
+                    <ContainedListItem
+                      key={index + label}
+                      label={label}
+                      value={'- ' + convertMoneyString(value)}
+                    />
                   ))}
-                <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
+                <ContainedListItem
+                  primary
+                  label='수익'
+                  value={convertMoneyString(
+                    storeDetailData?.storeData?.monthly_revenue,
+                  )}
+                />
               </Box>
               {parsedExpenditureData.length > 0 && (
                 <StoreDetailPieChart
@@ -129,21 +195,42 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <Box>
-              <Typography variant='h5'>상세 설명</Typography>
+              <Typography variant='h5' fontWeight='bold' sx={{ mt: 6 }}>
+                상세 설명
+              </Typography>
               <Divider sx={{ my: 2 }} />
             </Box>
             <Box
               sx={{
                 width: '700px',
                 minHeight: '300px',
+                padding: 3,
                 backgroundColor: DIMMED_GRAY,
               }}
             >
               {storeDetailData?.storeData?.description}
             </Box>
           </Box>
+          <Box
+            sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+          >
+            <Button sx={{ width: '300px', mt: 4 }} variant='contained'>
+              상담 신청하기
+            </Button>
+          </Box>
         </Box>
         <StoreDetailWindow storeDetailData={storeDetailData} />
+      </Box>
+      <Box>
+        <Box>
+          <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
+            지역 매물
+          </Typography>
+          <Divider sx={{ my: 2 }} />
+        </Box>
+        <Box sx={{ mt: 5 }}>
+          <VerticalStoreCard size='sm' />
+        </Box>
       </Box>
     </Box>
   );
