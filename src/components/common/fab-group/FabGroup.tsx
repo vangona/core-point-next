@@ -1,7 +1,7 @@
-import ChatBubbleOutlineRounded from '@mui/icons-material/ChatBubbleOutlineRounded';
 import MessageRounded from '@mui/icons-material/MessageRounded';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
+import Image from 'next/image';
 
 const FabGroup = () => {
   return (
@@ -24,11 +24,29 @@ const FabGroup = () => {
       </Fab>
       <Fab
         size='medium'
-        sx={{ backgroundColor: 'yellow' }}
-        onClick={() => alert('카톡 오픈 채팅방 연결')}
+        sx={{ backgroundColor: '#06BE34' }}
+        href='https://blog.naver.com/corepoint_'
+        target='_blank'
       >
-        <ChatBubbleOutlineRounded />
-        수정 예정
+        <Image
+          src={'/naver-ci.png'}
+          width={30}
+          height={18}
+          alt='네이버 블로그'
+        />
+      </Fab>
+      <Fab
+        size='medium'
+        sx={{ backgroundColor: '#fae100' }}
+        href='https://open.kakao.com/o/stsH1PSf'
+        target='_blank'
+      >
+        <Image
+          src={'/kakao-openchat.png'}
+          width={30}
+          height={18}
+          alt='카카오톡 오픈채팅'
+        />
       </Fab>
     </Box>
   );
