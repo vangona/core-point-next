@@ -4,7 +4,7 @@ import React from 'react';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useServerInsertedHTML } from 'next/navigation';
 import type { Options } from '@emotion/cache';
 

@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Link as StyledLink,
-  Toolbar,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { useTheme } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import StyledLink from '@mui/material/Link';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';

@@ -1,7 +1,9 @@
 'use client';
 
-import { ArrowLeft, ArrowRight } from '@mui/icons-material';
-import { Box, IconButton } from '@mui/material';
+import ArrowLeft from '@mui/icons-material/ArrowLeft';
+import ArrowRight from '@mui/icons-material/ArrowRight';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import { SectionTitle } from '@/components/common/section-title';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import SectionLayout from '../section-layout/SectionLayout';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { LIGHT_BEIGE, OFF_WHITE_COLOR } from '@/constants/color';

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 
 export default function Partnership() {

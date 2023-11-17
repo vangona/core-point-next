@@ -15,7 +15,8 @@
     "@typescript-eslint",
     "react-hooks",
     "prettier",
-    "import"
+    "import",
+    "mui-path-imports"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -45,6 +46,7 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "import/no-unresolved": "off",
+    "mui-path-imports/mui-path-imports": "error",
     "import/order": [
       "warn",
       {

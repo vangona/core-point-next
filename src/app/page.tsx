@@ -1,7 +1,10 @@
 'use client';
 
-import { ArrowUpwardRounded } from '@mui/icons-material';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import ArrowUpwardRounded from '@mui/icons-material/ArrowUpwardRounded';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import { SectionTitle } from '@/components/common/section-title';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';

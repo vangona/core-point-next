@@ -1,5 +1,7 @@
-import { ChatBubbleOutlineRounded, MessageRounded } from '@mui/icons-material';
-import { Box, Fab } from '@mui/material';
+import ChatBubbleOutlineRounded from '@mui/icons-material/ChatBubbleOutlineRounded';
+import MessageRounded from '@mui/icons-material/MessageRounded';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 
 const FabGroup = () => {
   return (
