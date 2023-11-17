@@ -32,6 +32,6 @@ export interface CostDetail {
 }
 
 export interface StoreDetail {
-  storeData: Store;
-  costDetail: CostDetail;
+  storeData?: Store;
+  costDetail?: CostDetail;
 }

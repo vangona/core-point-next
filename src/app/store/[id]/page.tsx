@@ -4,10 +4,12 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
-import { useGetStoreDetail } from '@/api/store';
+import { StoreDetail, getStoreDetail } from '@/api/store';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+import StoreDetailWindow from '@/components/store/StoreDetailWindow';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import { DIMMED_GRAY } from '@/constants/color';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
@@ -15,9 +17,21 @@ import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 interface StoreDetailPageProps {
   params: { id: string };
 }
-const StoreDetailPage = (props: StoreDetailPageProps) => {
-  const { params } = props;
-  const { data: storeDetailData } = useGetStoreDetail({ id: params.id });
+const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
+  const { id } = params;
+  const { data: storeDetailData } = useSuspenseQuery({
+    queryKey: ['store-detail', id],
+    queryFn: async (): Promise<StoreDetail> => {
+      const data = await getStoreDetail({ id });
+      return {
+        storeData: data.data ? data.data[0] : undefined,
+        costDetail:
+          data.data && data.data[0].cost_details
+            ? data.data[0].cost_details[0]
+            : undefined,
+      };
+    },
+  });
 
   const parsedExpenditureData: [string, number][] = storeDetailData?.costDetail
     ? [
@@ -88,38 +102,48 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
           <Box>매출근거 : {storeDetailData?.storeData?.sales_reason}</Box>
         </Box>
       </Box>
-      <Box>
-        {/* <StoreDetailWindow /> */}
-        <Box sx={{ display: 'flex', width: '750px' }}>
-          <Box sx={{ width: '100%' }}>
-            <Typography variant='h5'>지출 세부내역</Typography>
-            <Divider />
-          </Box>
-          <Box>
-            <Box>
-              <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
-              {parsedExpenditureData.length > 0 &&
-                parsedExpenditureData.map(([label, value], index) => (
-                  <Box key={index + label}>
-                    {label} : {value}
-                  </Box>
-                ))}
-              <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
+      <Box sx={{ display: 'flex', gap: 5 }}>
+        <Box sx={{ width: '750px' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <Box sx={{ width: '100%' }}>
+              <Typography variant='h5'>지출 세부내역</Typography>
+              <Divider sx={{ my: 2 }} />
             </Box>
-            {parsedExpenditureData.length > 0 && (
-              <StoreDetailPieChart
-                parsedExpenditureData={parsedExpenditureData}
-              />
-            )}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box>
+                <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
+                {parsedExpenditureData.length > 0 &&
+                  parsedExpenditureData.map(([label, value], index) => (
+                    <Box key={index + label}>
+                      {label} : {value}
+                    </Box>
+                  ))}
+                <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
+              </Box>
+              {parsedExpenditureData.length > 0 && (
+                <StoreDetailPieChart
+                  parsedExpenditureData={parsedExpenditureData}
+                />
+              )}
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <Box>
+              <Typography variant='h5'>상세 설명</Typography>
+              <Divider sx={{ my: 2 }} />
+            </Box>
+            <Box
+              sx={{
+                width: '700px',
+                minHeight: '300px',
+                backgroundColor: DIMMED_GRAY,
+              }}
+            >
+              {storeDetailData?.storeData?.description}
+            </Box>
           </Box>
         </Box>
-        <Box>
-          <Typography variant='h5'>상세 설명</Typography>
-          <Divider />
-          <Box sx={{ height: '600px', backgroundColor: DIMMED_GRAY }}>
-            {storeDetailData?.storeData?.description}
-          </Box>
-        </Box>
+        <StoreDetailWindow storeDetailData={storeDetailData} />
       </Box>
     </Box>
   );
