@@ -2,12 +2,13 @@
 
 import { useEffect } from 'react';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import Image from 'next/image';
 import { useGetStoreDetail } from '@/api/store';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import { DIMMED_GRAY } from '@/constants/color';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
@@ -89,57 +90,32 @@ const StoreDetailPage = (props: StoreDetailPageProps) => {
       </Box>
       <Box>
         {/* <StoreDetailWindow /> */}
-        <Box sx={{ display: 'flex' }}>
-          <Box>
+        <Box sx={{ display: 'flex', width: '750px' }}>
+          <Box sx={{ width: '100%' }}>
             <Typography variant='h5'>지출 세부내역</Typography>
-            <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
-            {parsedExpenditureData.length > 0 &&
-              parsedExpenditureData.map(([label, value], index) => (
-                <Box key={index + label}>
-                  {label} : {value}
-                </Box>
-              ))}
-            <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
+            <Divider />
           </Box>
-          {parsedExpenditureData.length > 0 && (
+          <Box>
             <Box>
-              <PieChart
-                width={300}
-                height={300}
-                series={[
-                  {
-                    data: parsedExpenditureData.map(
-                      ([label, value], index) => ({
-                        id: index + label,
-                        value,
-                        label,
-                      }),
-                    ),
-                    arcLabel: (item) =>
-                      `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
-                    cornerRadius: 4,
-                    arcLabelMinAngle: 45,
-                    highlightScope: { faded: 'global', highlighted: 'item' },
-                    faded: {
-                      innerRadius: 30,
-                      additionalRadius: -30,
-                      color: 'gray',
-                    },
-                  },
-                ]}
-                sx={{
-                  [`& .${pieArcLabelClasses.root}`]: {
-                    fill: 'white',
-                    fontWeight: 'bold',
-                    fontSize: '14px',
-                  },
-                }}
-              />
+              <Box>매출 : {storeDetailData?.storeData?.monthly_sales}</Box>
+              {parsedExpenditureData.length > 0 &&
+                parsedExpenditureData.map(([label, value], index) => (
+                  <Box key={index + label}>
+                    {label} : {value}
+                  </Box>
+                ))}
+              <Box>수익 : {storeDetailData?.storeData?.monthly_revenue}</Box>
             </Box>
-          )}
+            {parsedExpenditureData.length > 0 && (
+              <StoreDetailPieChart
+                parsedExpenditureData={parsedExpenditureData}
+              />
+            )}
+          </Box>
         </Box>
         <Box>
           <Typography variant='h5'>상세 설명</Typography>
+          <Divider />
           <Box sx={{ height: '600px', backgroundColor: DIMMED_GRAY }}>
             {storeDetailData?.storeData?.description}
           </Box>
