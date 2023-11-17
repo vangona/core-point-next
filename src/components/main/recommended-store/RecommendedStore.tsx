@@ -14,7 +14,7 @@ interface RecommendedStoreProps {
 const RecommendedStore = (props: RecommendedStoreProps) => {
   const { ref } = props;
   return (
-    <SectionLayout>
+    <SectionLayout disableDivider>
       <SectionTitle label='추천 매물' />
       <Box
         ref={ref}

@@ -23,7 +23,7 @@ export default function Home() {
         paddingBottom: 10,
       }}
     >
-      <SectionLayout
+      {/* <SectionLayout
         color='white'
         height='300px'
         disableDivider
@@ -50,7 +50,7 @@ export default function Home() {
             가 되어 드리겠습니다.
           </Typography>
         </Box>
-      </SectionLayout>
+      </SectionLayout> */}
       <RecommendedStore />
       <SuccessExample />
       <NewlyAddedStore />
