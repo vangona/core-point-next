@@ -25,6 +25,7 @@ const StoreDetailWindow = (props: StoreDetailWindowProps) => {
         borderRadius: 1,
       }}
       variant='elevation'
+      raised
     >
       <Typography
         variant='subtitle1'

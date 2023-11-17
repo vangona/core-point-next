@@ -33,6 +33,7 @@ const StoreWindow = ({ storeData, isLoading }: StoreWindowProps) => {
         borderRadius: 1,
       }}
       variant='elevation'
+      raised
     >
       <Typography
         variant='subtitle1'
