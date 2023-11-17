@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
 import { usePathname } from 'next/navigation';
 import FabGroup from '@/components/common/fab-group/FabGroup';
 import { OFF_WHITE_COLOR } from '@/constants/color';

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Box, Pagination } from '@mui/material';
+import Box from '@mui/material/Box';
+import Pagination from '@mui/material/Pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useGetStoreMetadata } from '@/api/store/useGetStoreMetadata';
 

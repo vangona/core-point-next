@@ -1,15 +1,12 @@
 'use client';
 
 import React from 'react';
-import {
-  Box,
-  CssBaseline,
-  Link,
-  ThemeProvider,
-  Typography,
-  createTheme,
-  useMediaQuery,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Link from '@mui/material/Link';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdminHeader } from '@/components/admin/header';
 import { AdminNavigator } from '@/components/admin/navigator';
 

@@ -1,32 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CircularProgress,
-  Link,
-  Typography,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Link from '@mui/material/Link';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
-import { useGetStoreMinimum } from '@/api/store/useGetStoreMinimum';
-import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
+import { StoreMinimum } from '@/api/store/getStoreMinimum';
 
-const StoreWindow = () => {
+interface StoreWindowProps {
+  storeData?: StoreMinimum[];
+  isLoading?: boolean;
+}
+const StoreWindow = ({ storeData, isLoading }: StoreWindowProps) => {
   const router = useRouter();
-  const [recentStores, setRecentStores] = useState<string[]>([]);
-  const { data, isLoading } = useGetStoreMinimum({ idArr: recentStores });
-
-  useEffect(() => {
-    const localStorageRecentStores = localStorage.getItem(
-      LOCALSTORAGE_RECENT_STORE_KEY,
-    );
-    const parsedRecentStores: string[] = localStorageRecentStores
-      ? JSON.parse(localStorageRecentStores)
-      : [];
-    setRecentStores(parsedRecentStores);
-  }, []);
+  const isEmptyData = !storeData || storeData.length === 0;
 
   return (
     <Card
@@ -44,6 +33,7 @@ const StoreWindow = () => {
         borderRadius: 1,
       }}
       variant='elevation'
+      raised
     >
       <Typography
         variant='subtitle1'
@@ -53,18 +43,17 @@ const StoreWindow = () => {
         최근 조회한 매물
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {isLoading && <CircularProgress />}
-        {!isLoading && data.data && data.data.length > 0
-          ? data.data.map((storeData, index) => (
-              <Box key={'recent-store' + storeData.store_id + index}>
-                <Link
-                  onClick={() => router.push(`/store/${storeData.store_id}`)}
-                >
-                  {storeData.store_name}
-                </Link>
-              </Box>
-            ))
-          : '최근 조회한 매물이 없습니다.'}
+        {isLoading && <Skeleton variant='text' height='50px' />}
+        {!isLoading &&
+          !isEmptyData &&
+          storeData.map((storeData, index) => (
+            <Box key={'recent-store' + storeData.store_id + index}>
+              <Link onClick={() => router.push(`/store/${storeData.store_id}`)}>
+                {storeData.store_name}
+              </Link>
+            </Box>
+          ))}
+        {!isLoading && isEmptyData && '최근 조회한 매물이 없습니다.'}
       </Box>
       <Button size='large' variant='contained'>
         상담 신청하기

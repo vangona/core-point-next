@@ -1,21 +1,25 @@
 'use client';
 
-import { Suspense } from 'react';
 import StorePagination from '@/components/store/StorePagination';
 import StoreResult from '@/components/store/StoreResult';
 import StoreResultLayout from '@/components/store/StoreResultLayout';
-import StoreResultLoading from '@/components/store/StoreResultLoading';
 import StoreSearch from '@/components/store/StoreSearch';
 
-export default function StorePage() {
+export interface StoreSearchParams {
+  page?: string;
+  limit?: string;
+}
+export default function StorePage({
+  searchParams,
+}: {
+  searchParams: StoreSearchParams;
+}) {
   return (
     <>
       <StoreSearch />
       <StoreResultLayout>
-        <Suspense fallback={<StoreResultLoading />}>
-          <StoreResult />
-          <StorePagination />
-        </Suspense>
+        <StoreResult searchParams={searchParams} />
+        <StorePagination />
       </StoreResultLayout>
     </>
   );

@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { DEFAULT_BOLD_LABEL_WIDTH } from './constants';
 import type { TypographyVariant } from '@mui/material';
 

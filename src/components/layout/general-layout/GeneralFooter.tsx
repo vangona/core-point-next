@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Image from 'next/image';
 import { DIMMED_GRAY, OFF_WHITE_COLOR } from '@/constants/color';
 import { DEFAULT_FOOTER_HEIGHT, DEFAULT_LAYOUT_WIDTH } from './constants';

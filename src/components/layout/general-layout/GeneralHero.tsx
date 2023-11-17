@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { OFF_WHITE_COLOR } from '@/constants/color';
@@ -23,9 +24,9 @@ const GeneralHero = (props: GeneralHeroProps) => {
 
     switch (pathname) {
       case CorePointRoutes.HOME:
-        setTitle('OOO 창업');
+        setTitle('코어 창업');
         setDescription(
-          'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, eum eos? Animi obcaecati neque odio facere autem sapiente fugit, minima, quae ratione rerum omnis ducimus exercitationem facilis, magnam amet similique?',
+          '코어창업이 창업의 문을 여는 열쇠가 되어 드리겠습니다. (스타일 수정 예정)',
         );
         setImgSrc('https://source.unsplash.com/random?main');
         break;

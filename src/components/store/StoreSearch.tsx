@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Button, MenuItem } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 import { Select } from '@/components/common/select';
 import { DEFAULT_SELECT_WIDTH } from '../common/select/constants';
 import { DEFAULT_LAYOUT_WIDTH } from '../layout/general-layout/constants';

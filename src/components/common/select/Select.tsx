@@ -1,12 +1,10 @@
 'use client';
 
 import React from 'react';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select as MuiSelect,
-} from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import MuiSelect from '@mui/material/Select';
 import { DEFAULT_SELECT_WIDTH } from './constants';
 import type {
   SelectProps as MuiSelectProps,

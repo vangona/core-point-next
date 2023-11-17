@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { ParagraphDivider } from '../common/paragraph-divider';
 
 interface StoreResultLayoutProps {
