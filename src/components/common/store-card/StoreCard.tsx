@@ -1,15 +1,15 @@
 'use client';
 
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardMedia,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardActions from '@mui/material/CardActions';
+import CardMedia from '@mui/material/CardMedia';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Store } from '@/api/store';
@@ -30,12 +30,9 @@ const StoreCard = (props: StoreCardProps) => {
   const { storeData, sx } = props;
   const theme = useTheme();
   const router = useRouter();
-
   const defaultImgSrc = '/logo.png';
-  const firstImgSrc = Array.isArray(storeData?.store_img_src_arr)
-    ? storeData?.store_img_src_arr[0]
-    : undefined;
-  const imgSrc = firstImgSrc ?? defaultImgSrc;
+  const [imgSrc, setImgSrc] = useState<undefined | string>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   const containerSx: SxProps = {
     maxWidth: DEFAULT_STORE_CARD_WIDTH,
@@ -94,6 +91,17 @@ const StoreCard = (props: StoreCardProps) => {
     router.push(CorePointRoutes.STORE + '/' + storeId);
   };
 
+  useEffect(() => {
+    if (!storeData) return;
+
+    if (
+      Array.isArray(storeData?.store_img_src_arr) &&
+      storeData.store_img_src_arr.length > 0
+    ) {
+      setImgSrc(storeData?.store_img_src_arr[0]);
+    }
+  }, [storeData]);
+
   return (
     <Card sx={containerSx} variant='elevation'>
       {storeData ? (
@@ -103,7 +111,19 @@ const StoreCard = (props: StoreCardProps) => {
             onClick={() => handleCardClick(storeData?.store_id)}
           >
             <CardMedia sx={imgWrapperSx}>
-              <Image src={imgSrc} fill objectFit='contain' alt='store image' />
+              {!imgSrc && (
+                <Skeleton variant='rounded' animation='wave' height='100%' />
+              )}
+              {imgSrc && (
+                <Image
+                  loading='lazy'
+                  src={imgSrc}
+                  fill
+                  alt='store image'
+                  placeholder='blur'
+                  blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
+                />
+              )}
             </CardMedia>
             <Box sx={infoWrapperSx}>
               <Typography
