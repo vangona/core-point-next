@@ -17,21 +17,9 @@ export interface Store {
   store_size_m2?: string;
   store_img_src_arr?: string[];
   description?: string;
-}
-
-export interface CostDetail {
-  store_id: string;
   personal_cost: number;
   material_cost: number;
   rent_cost: number;
   dues_cost: number;
   etc_cost: number;
-  created_at: string;
-  updated_at: string;
-  deleted: boolean;
-}
-
-export interface StoreDetail {
-  storeData?: Store;
-  costDetail?: CostDetail;
 }

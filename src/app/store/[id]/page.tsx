@@ -8,13 +8,13 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
-import { StoreDetail, getStoreDetail } from '@/api/store';
+import { Store, getStoreDetail } from '@/api/store';
 import ContainedListItem from '@/components/common/contained-list/ContainedList';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
-import StoreDetailWindow from '@/components/store/StoreDetailWindow';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
+import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
 import { DIMMED_GRAY } from '@/constants/color';
 import { convertMoneyString } from '@/utils';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
@@ -26,25 +26,19 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const { id } = params;
   const { data: storeDetailData } = useSuspenseQuery({
     queryKey: ['store-detail', id],
-    queryFn: async (): Promise<StoreDetail> => {
+    queryFn: async (): Promise<Store | undefined> => {
       const data = await getStoreDetail({ id });
-      return {
-        storeData: data.data ? data.data[0] : undefined,
-        costDetail:
-          data.data && data.data[0].cost_details
-            ? data.data[0].cost_details[0]
-            : undefined,
-      };
+      return data.data ? data.data[0] : undefined;
     },
   });
 
-  const parsedExpenditureData: [string, number][] = storeDetailData?.costDetail
+  const parsedExpenditureData: [string, number][] = storeDetailData
     ? [
-        ['인건비', storeDetailData.costDetail.personal_cost],
-        ['재료비', storeDetailData.costDetail.material_cost],
-        ['임대료', storeDetailData.costDetail.rent_cost],
-        ['공과금', storeDetailData.costDetail.dues_cost],
-        ['기타잡비', storeDetailData.costDetail.etc_cost],
+        ['인건비', storeDetailData.personal_cost],
+        ['재료비', storeDetailData.material_cost],
+        ['임대료', storeDetailData.rent_cost],
+        ['공과금', storeDetailData.dues_cost],
+        ['기타잡비', storeDetailData.etc_cost],
       ]
     : [];
 
@@ -89,7 +83,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         align='center'
         sx={{ mt: 8, mb: 3 }}
       >
-        {storeDetailData?.storeData?.store_name}
+        {storeDetailData?.store_name}
       </Typography>
       <ParagraphDivider />
       <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
@@ -99,24 +93,22 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
               width={450}
               height={300}
               src={
-                storeDetailData?.storeData?.store_img_src_arr
-                  ? storeDetailData?.storeData?.store_img_src_arr[0]
+                storeDetailData?.store_img_src_arr
+                  ? storeDetailData?.store_img_src_arr[0]
                   : ''
               }
               alt='image'
             />
           </Card>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            {storeDetailData.storeData?.store_img_src_arr?.map(
-              (imgSrc, index) => (
-                <Card
-                  key={'store-detail-image' + index}
-                  sx={{ position: 'relative', width: '132px', height: '88px' }}
-                >
-                  <Image src={imgSrc} fill alt='store image' />
-                </Card>
-              ),
-            )}
+            {storeDetailData?.store_img_src_arr?.map((imgSrc, index) => (
+              <Card
+                key={'store-detail-image' + index}
+                sx={{ position: 'relative', width: '132px', height: '88px' }}
+              >
+                <Image src={imgSrc} fill alt='store image' />
+              </Card>
+            ))}
           </Box>
         </Box>
         <Box sx={{ width: '500px' }}>
@@ -125,21 +117,19 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
           </Typography>
           <ContainedListItem
             label='월 매출'
-            value={convertMoneyString(storeDetailData.storeData?.monthly_sales)}
+            value={convertMoneyString(storeDetailData?.monthly_sales)}
           />
           <ContainedListItem
             label='월 지출'
-            value={convertMoneyString(storeDetailData?.storeData?.monthly_cost)}
+            value={convertMoneyString(storeDetailData?.monthly_cost)}
           />
           <ContainedListItem
             label='월 수익'
-            value={convertMoneyString(
-              storeDetailData.storeData?.monthly_revenue,
-            )}
+            value={convertMoneyString(storeDetailData?.monthly_revenue)}
           />
           <ContainedListItem
             label='매출 근거'
-            value={storeDetailData.storeData?.sales_reason}
+            value={storeDetailData?.sales_reason}
           />
         </Box>
       </Box>
@@ -166,9 +156,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
               >
                 <ContainedListItem
                   label='매출'
-                  value={convertMoneyString(
-                    storeDetailData?.storeData?.monthly_sales,
-                  )}
+                  value={convertMoneyString(storeDetailData?.monthly_sales)}
                 />
                 {parsedExpenditureData.length > 0 &&
                   parsedExpenditureData.map(([label, value], index) => (
@@ -181,9 +169,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
                 <ContainedListItem
                   primary
                   label='수익'
-                  value={convertMoneyString(
-                    storeDetailData?.storeData?.monthly_revenue,
-                  )}
+                  value={convertMoneyString(storeDetailData?.monthly_revenue)}
                 />
               </Box>
               {parsedExpenditureData.length > 0 && (
@@ -193,7 +179,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
               )}
             </Box>
           </Box>
-          {storeDetailData?.storeData?.description && (
+          {storeDetailData?.description && (
             <>
               <Box
                 sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}
@@ -212,7 +198,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
                     backgroundColor: DIMMED_GRAY,
                   }}
                 >
-                  {storeDetailData?.storeData?.description}
+                  {storeDetailData?.description}
                 </Box>
               </Box>
 
