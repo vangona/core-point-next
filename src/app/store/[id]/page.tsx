@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { Thumbs } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Store, getStoreDetail } from '@/api/store';
 import ContainedListItem from '@/components/common/contained-list/ContainedList';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
@@ -24,6 +26,7 @@ interface StoreDetailPageProps {
 }
 const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const { id } = params;
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { data: storeDetailData } = useSuspenseQuery({
     queryKey: ['store-detail', id],
     queryFn: async (): Promise<Store | undefined> => {
@@ -88,27 +91,16 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
       <ParagraphDivider />
       <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <Card variant='elevation' raised>
-            <Image
-              width={450}
-              height={300}
-              src={
-                storeDetailData?.store_img_src_arr
-                  ? storeDetailData?.store_img_src_arr[0]
-                  : ''
-              }
-              alt='image'
-            />
-          </Card>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            {storeDetailData?.store_img_src_arr?.map((imgSrc, index) => (
-              <Card
-                key={'store-detail-image' + index}
-                sx={{ position: 'relative', width: '132px', height: '88px' }}
-              >
-                <Image src={imgSrc} fill alt='store image' />
-              </Card>
-            ))}
+            <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }} loop>
+              {storeDetailData?.store_img_src_arr?.map((imgSrc, index) => (
+                <SwiperSlide key={'store-detail-image' + index}>
+                  <Card sx={{ position: 'relative' }}>
+                    <Image src={imgSrc} fill alt='store image' />
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </Box>
         </Box>
         <Box sx={{ width: '500px' }}>

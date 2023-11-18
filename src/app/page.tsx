@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { useGetStore } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
@@ -12,6 +13,8 @@ import { SectionLayout } from '@/components/main/section-layout';
 import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
 
 export default function Home() {
+  const { data, isLoading } = useGetStore({ page: '1', limit: '20' });
+
   return (
     <Box
       sx={{
@@ -23,37 +26,9 @@ export default function Home() {
         paddingBottom: 10,
       }}
     >
-      {/* <SectionLayout
-        color='white'
-        height='300px'
-        disableDivider
-        sx={{ my: 5 }}
-        innerSx={{ gap: 1 }}
-      >
-        <Box>
-          <Typography variant='h4' component='h3' fontWeight='bold'>
-            <Box display='inline' color='primary.main'>
-              코어창업
-            </Box>
-            {'이 '}
-            <Box display='inline' color='primary.main'>
-              창업의 문
-            </Box>
-            을 여는
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant='h4' component='h3' fontWeight='bold'>
-            <Box display='inline' color='primary.main'>
-              열쇠
-            </Box>
-            가 되어 드리겠습니다.
-          </Typography>
-        </Box>
-      </SectionLayout> */}
-      <RecommendedStore />
+      <RecommendedStore storeDataArr={data.data} isLoading={isLoading} />
       <SuccessExample />
-      <NewlyAddedStore />
+      <NewlyAddedStore storeDataArr={data.data} isLoading={isLoading} />
       <SectionLayout color='white'>
         <SectionTitle label='협업 브랜드' />
       </SectionLayout>

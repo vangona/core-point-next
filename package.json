@@ -24,7 +24,8 @@
     "@tanstack/react-query-devtools": "^5.8.4",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "swiper": "^11.0.4"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.3",

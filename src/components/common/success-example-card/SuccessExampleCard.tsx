@@ -14,6 +14,7 @@ const SuccessExampleCard = (props: SuccessExampleCardProps) => {
     display: 'flex',
     width: '800px',
     height: '400px',
+    margin: 2,
   };
 
   return (
