@@ -7,7 +7,7 @@ export const SMALL_LAYOUT_WIDTH = 400;
 export const DEFAULT_HERO_HEIGHT = '500px';
 export const DEFAULT_FOOTER_HEIGHT = '200px';
 
-interface NavData {
+export interface NavData {
   label: string;
   href: CorePointRoutes;
 }

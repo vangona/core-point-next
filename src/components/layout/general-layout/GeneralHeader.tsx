@@ -176,7 +176,11 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <NavDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
+        <NavDrawer
+          isOpen={isDrawerOpen}
+          onClose={toggleDrawer}
+          navDataArr={NAV_DATA_ARR}
+        />
       </AppBar>
     </HideOnScroll>
   );
