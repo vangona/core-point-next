@@ -1,7 +1,13 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { Metadata } from 'next';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+
+export const metadata: Metadata = {
+  title: '코어창업 | 양도 컨설팅',
+  description: '코어창업 양도 컨설팅 신청',
+};
 
 export default function Transfer() {
   return (

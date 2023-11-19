@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.core-point.kr
+
+# Sitemaps
+Sitemap: https://www.core-point.kr/sitemap.xml
