@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -16,7 +16,12 @@ import HideOnScroll from '@/components/common/hide-on-scroll/HideOnScroll';
 import { hoverSx } from '@/components/styles/interactionSx';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
-import { DEFAULT_HEADER_HEIGHT, DEFAULT_LAYOUT_WIDTH } from './constants';
+import {
+  DEFAULT_HEADER_HEIGHT,
+  LARGE_LAYOUT_WIDTH,
+  MEDIUM_LAYOUT_WIDTH,
+  SMALL_LAYOUT_WIDTH,
+} from './constants';
 import NavDrawer from './NavDrawer';
 import type { SxProps } from '@mui/material';
 
@@ -29,6 +34,9 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
 
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
 
@@ -47,7 +55,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   };
 
   const toolbarSx: SxProps = {
-    maxWidth: DEFAULT_LAYOUT_WIDTH,
+    maxWidth: layoutWidth,
     width: '100%',
     height: DEFAULT_HEADER_HEIGHT,
     alignItems: 'center',
@@ -92,6 +100,20 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const LinkSx: SxProps = {
     ...hoverSx,
   };
+
+  useEffect(() => {
+    if (isUpLarge) {
+      setLayoutWidth(LARGE_LAYOUT_WIDTH);
+      return;
+    }
+
+    if (isMedium) {
+      setLayoutWidth(MEDIUM_LAYOUT_WIDTH);
+      return;
+    }
+
+    setLayoutWidth(SMALL_LAYOUT_WIDTH);
+  }, [isUpLarge, isMedium]);
 
   return (
     <HideOnScroll>

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -10,7 +11,11 @@ import { Store, getStoreDetail } from '@/api/store';
 import ContainedListItem from '@/components/common/contained-list/ContainedList';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+import {
+  LARGE_LAYOUT_WIDTH,
+  MEDIUM_LAYOUT_WIDTH,
+  SMALL_LAYOUT_WIDTH,
+} from '@/components/layout/general-layout/constants';
 import { ImageSection } from '@/components/store-detail/image-section';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
@@ -23,6 +28,11 @@ interface StoreDetailPageProps {
 }
 const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const { id } = params;
+  const theme = useTheme();
+  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+
   const { data: storeDetailData } = useSuspenseQuery({
     queryKey: ['store-detail', id],
     queryFn: async (): Promise<Store | undefined> => {
@@ -40,6 +50,20 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         ['기타잡비', storeDetailData.etc_cost],
       ]
     : [];
+
+  useEffect(() => {
+    if (isUpLarge) {
+      setLayoutWidth(LARGE_LAYOUT_WIDTH);
+      return;
+    }
+
+    if (isMedium) {
+      setLayoutWidth(MEDIUM_LAYOUT_WIDTH);
+      return;
+    }
+
+    setLayoutWidth(SMALL_LAYOUT_WIDTH);
+  }, [isUpLarge, isMedium]);
 
   // 최근 조회한 매물에 추가
   useEffect(() => {
@@ -69,7 +93,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   return (
     <Box
       sx={{
-        width: DEFAULT_LAYOUT_WIDTH,
+        width: layoutWidth,
         display: 'flex',
         flexDirection: 'column',
         gap: 2,

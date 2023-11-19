@@ -10,7 +10,11 @@ import { Store } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
 import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+import {
+  LARGE_LAYOUT_WIDTH,
+  MEDIUM_LAYOUT_WIDTH,
+  SMALL_LAYOUT_WIDTH,
+} from '@/components/layout/general-layout/constants';
 import SectionLayout from '../section-layout/SectionLayout';
 
 const LARGE_SLIDE_PER_VIEW = 5;
@@ -33,22 +37,26 @@ const NewlyAddedStore = ({ storeDataArr, isLoading }: NewlyAddedStoreProps) => {
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
+  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
 
   useEffect(() => {
     if (isUpLarge) {
       setSlidePerView(LARGE_SLIDE_PER_VIEW);
       setSliderWrapperWidth(LARGE_SWIPER_WRAPPER_WIDTH);
+      setLayoutWidth(LARGE_LAYOUT_WIDTH);
       return;
     }
 
     if (isMedium) {
       setSlidePerView(MEDIUM_SLIDE_PER_VIEW);
       setSliderWrapperWidth(MEDIUM_SWIPER_WRAPPER_WIDTH);
+      setLayoutWidth(MEDIUM_LAYOUT_WIDTH);
       return;
     }
 
     setSlidePerView(SMALL_SLIDE_PER_VIEW);
     setSliderWrapperWidth(SMALL_SWIPER_WRAPPER_WIDTH);
+    setLayoutWidth(SMALL_LAYOUT_WIDTH);
   }, [isUpLarge, isMedium]);
 
   return (
@@ -56,7 +64,7 @@ const NewlyAddedStore = ({ storeDataArr, isLoading }: NewlyAddedStoreProps) => {
       <SectionTitle label='신규 매물' />
       <Box
         sx={{
-          width: DEFAULT_LAYOUT_WIDTH,
+          width: layoutWidth,
           display: 'flex',
           gap: 2,
           alignItems: 'center',
