@@ -31,7 +31,7 @@ const FabGroup = () => {
         <Image
           src={'/naver-ci.png'}
           width={30}
-          height={18}
+          height={30}
           alt='네이버 블로그'
         />
       </Fab>
@@ -44,7 +44,7 @@ const FabGroup = () => {
         <Image
           src={'/kakao-openchat.png'}
           width={30}
-          height={18}
+          height={30}
           alt='카카오톡 오픈채팅'
         />
       </Fab>
