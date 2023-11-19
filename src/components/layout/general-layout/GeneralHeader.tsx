@@ -20,6 +20,7 @@ import {
   DEFAULT_HEADER_HEIGHT,
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
+  NAV_DATA_ARR,
   SMALL_LAYOUT_WIDTH,
 } from './constants';
 import NavDrawer from './NavDrawer';
@@ -143,76 +144,23 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           </Box>
           {/* right area */}
           <Box sx={rightAreaSx}>
-            <Link passHref legacyBehavior href={CorePointRoutes.STORE}>
-              <StyledLink
-                underline='none'
-                sx={LinkSx}
-                color={pathname === CorePointRoutes.STORE ? 'primary' : 'black'}
-                fontWeight={
-                  pathname === CorePointRoutes.STORE ? 'bold' : 'normal'
-                }
+            {NAV_DATA_ARR.map((navData) => (
+              <Link
+                key={'nav' + navData.href}
+                passHref
+                legacyBehavior
+                href={navData.href}
               >
-                매물 정보
-              </StyledLink>
-            </Link>
-            <Link
-              passHref
-              legacyBehavior
-              href={CorePointRoutes.OPENING_CONSULTING}
-            >
-              <StyledLink
-                underline='none'
-                sx={LinkSx}
-                color={
-                  pathname === CorePointRoutes.OPENING_CONSULTING
-                    ? 'primary'
-                    : 'black'
-                }
-                fontWeight={
-                  pathname === CorePointRoutes.OPENING_CONSULTING
-                    ? 'bold'
-                    : 'normal'
-                }
-              >
-                창업 컨설팅
-              </StyledLink>
-            </Link>
-            <Link
-              passHref
-              legacyBehavior
-              href={CorePointRoutes.TRANSFER_CONSULTING}
-            >
-              <StyledLink
-                underline='none'
-                sx={LinkSx}
-                color={
-                  pathname === CorePointRoutes.TRANSFER_CONSULTING
-                    ? 'primary'
-                    : 'black'
-                }
-                fontWeight={
-                  pathname === CorePointRoutes.TRANSFER_CONSULTING
-                    ? 'bold'
-                    : 'normal'
-                }
-              >
-                양도 컨설팅
-              </StyledLink>
-            </Link>
-            <Link passHref legacyBehavior href={CorePointRoutes.PARTNERSHIP}>
-              <StyledLink
-                underline='none'
-                sx={LinkSx}
-                color={
-                  pathname === CorePointRoutes.PARTNERSHIP ? 'primary' : 'black'
-                }
-                fontWeight={
-                  pathname === CorePointRoutes.PARTNERSHIP ? 'bold' : 'normal'
-                }
-              >
-                협업 신청
-              </StyledLink>
-            </Link>
+                <StyledLink
+                  underline='none'
+                  sx={LinkSx}
+                  color={pathname === navData.href ? 'primary' : 'black'}
+                  fontWeight={pathname === navData.href ? 'bold' : 'normal'}
+                >
+                  {navData.label}
+                </StyledLink>
+              </Link>
+            ))}
           </Box>
           <IconButton
             color='inherit'
