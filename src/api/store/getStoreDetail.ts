@@ -1,11 +1,11 @@
-import { CostDetail, Store } from '@/api/store';
+import { Store } from '@/api/store';
 
 interface GetStoreDetailRequest {
   id?: string;
 }
 
 export interface GetStoreDetailResponse {
-  data?: (Store & { cost_details: CostDetail[] })[];
+  data?: Store[];
 }
 
 export const getStoreDetail = async ({

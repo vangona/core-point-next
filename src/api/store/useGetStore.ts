@@ -1,5 +1,5 @@
 import { QueryKey, useSuspenseQuery } from '@tanstack/react-query';
-import { Store, CostDetail } from '@/api/store';
+import { Store } from '@/api/store';
 
 interface GetStoreRequest {
   page?: string;
@@ -8,7 +8,6 @@ interface GetStoreRequest {
 
 export interface GetStoreResponse {
   data: Store[];
-  cost_details: CostDetail[];
 }
 
 export const getStore = async ({
