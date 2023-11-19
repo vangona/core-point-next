@@ -5,8 +5,7 @@ body {
   margin: 0;
 }
 
-swiper-slide {
-  /* Center slide text vertically */
+.swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;

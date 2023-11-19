@@ -1,13 +1,42 @@
+import { useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { EffectCreative, Mousewheel, Navigation } from 'swiper/modules';
+import { EffectFade, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SectionTitle } from '@/components/common/section-title';
 import { SuccessExampleCard } from '@/components/common/success-example-card';
 import { dummySuccessExample } from '@/components/common/success-example-card/dummySuccessExample';
+import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import SectionLayout from '../section-layout/SectionLayout';
 
 const SuccessExampleStore = () => {
+  const theme = useTheme();
+  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const [slideWrapperWidth, setSliderWrapperWidth] = useState(1000);
+  const [cardWidth, setCardWidth] = useState(800);
+  const [cardHeight, setCardHeight] = useState(400);
+
+  useEffect(() => {
+    if (isUpLarge) {
+      setSliderWrapperWidth(1000);
+      setCardWidth(800);
+      setCardHeight(400);
+      return;
+    }
+
+    if (isMedium) {
+      setSliderWrapperWidth(600);
+      setCardWidth(600);
+      setCardHeight(300);
+      return;
+    }
+
+    setSliderWrapperWidth(400);
+    setCardWidth(300);
+    setCardHeight(600);
+  }, [isUpLarge, isMedium]);
   return (
     <SectionLayout color='white'>
       <SectionTitle label='성공 사례' />
@@ -18,31 +47,33 @@ const SuccessExampleStore = () => {
           gap: 2,
           justifyContent: 'center',
           alignItems: 'center',
+          '& .slide-wrapper': {
+            width: slideWrapperWidth,
+          },
         }}
       >
         <Swiper
-          modules={[Navigation, EffectCreative, Mousewheel]}
-          effect={'creative'}
-          creativeEffect={{
-            prev: {
-              shadow: true,
-              translate: [0, 0, -400],
-            },
-            next: {
-              translate: ['100%', 0, 0],
-            },
-          }}
-          navigation
+          modules={[Navigation, EffectFade]}
           grabCursor
           loop
-          mousewheel
+          effect='fade'
         >
+          <SwiperPrevButton />
           <SwiperSlide>
-            <SuccessExampleCard successExampleData={dummySuccessExample[0]} />
+            <SuccessExampleCard
+              successExampleData={dummySuccessExample[0]}
+              width={cardWidth}
+              height={cardHeight}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <SuccessExampleCard successExampleData={dummySuccessExample[1]} />
+            <SuccessExampleCard
+              successExampleData={dummySuccessExample[1]}
+              width={cardWidth}
+              height={cardHeight}
+            />
           </SwiperSlide>
+          <SwiperNextButton />
         </Swiper>
       </Box>
     </SectionLayout>

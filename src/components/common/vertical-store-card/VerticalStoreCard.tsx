@@ -27,8 +27,8 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
   const cardTypo: TypographyVariant = isSmall ? 'subtitle2' : 'subtitle1';
 
   const containerSx: SxProps = {
-    width: isSmall ? '180px' : '270px',
-    height: isSmall ? '240px' : '360px',
+    width: isSmall ? '180px' : '240px',
+    height: isSmall ? '240px' : '320px',
   };
 
   const actionAreaSx: SxProps = {
@@ -78,7 +78,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
                 variant={cardTitleTypo}
                 component='h3'
                 sx={{
-                  width: isSmall ? '150px' : '240px',
+                  width: isSmall ? '150px' : '200px',
                   borderBottom: '1px solid',
                   borderColor: 'divider',
                   whiteSpace: 'nowrap',
@@ -96,6 +96,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
                 width: '100%',
                 height: '100%',
                 justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <BoldLabelValue
