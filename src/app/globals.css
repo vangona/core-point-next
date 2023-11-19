@@ -1,21 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import 'swiper/css';
-@import 'swiper/css/bundle';
-
 body {
   margin: 0;
-}
-
-swiper-container {
-  display: flex;
-  width: 1200px;
-}
-
-swiper-wrapper {
-  width: 1170px;
 }
 
 swiper-slide {
@@ -23,4 +7,19 @@ swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.swiper-gallery__image--container .swiper-slide {
+  box-sizing: border-box;
+  padding: 15px;
+  padding-top: 0;
+}
+
+.swiper-gallery__thumb--container .swiper-slide {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.swiper-gallery__thumb--container .swiper-slide-thumb-active {
+  opacity: 1;
 }
