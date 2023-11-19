@@ -1,9 +1,7 @@
 'use client';
 
-import ArrowUpwardRounded from '@mui/icons-material/ArrowUpwardRounded';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useGetStore } from '@/api/store';
 import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';

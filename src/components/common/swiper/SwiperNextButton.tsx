@@ -1,29 +1,22 @@
 import React from 'react';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 import IconButton from '@mui/material/IconButton';
+import { useSwiper } from 'swiper/react';
 import type { SxProps } from '@mui/material';
-import type { SwiperRef } from 'swiper/react';
 
 interface SwiperNextButtonProps {
-  swiperRef: React.RefObject<SwiperRef>;
   customIcon?: React.ReactNode;
   sx?: SxProps;
 }
-const SwiperNextButton = ({
-  swiperRef,
-  customIcon,
-  sx,
-}: SwiperNextButtonProps) => {
-  const _sx: SxProps = {
-    zIndex: 9,
-    ...sx,
-  };
+const SwiperNextButton = ({ customIcon, sx }: SwiperNextButtonProps) => {
+  const swiper = useSwiper();
 
   return (
     <IconButton
       slot='container-end'
-      onClick={() => swiperRef.current?.swiper.slideNext()}
-      sx={_sx}
+      onClick={() => swiper.slideNext()}
+      sx={sx}
+      size='large'
     >
       {customIcon ? customIcon : <ArrowRight />}
     </IconButton>
