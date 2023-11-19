@@ -8,10 +8,15 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
+import type { TypographyVariant } from '@mui/material';
 
 const LARGE_HERO_HEIGHT = '500px';
 const MEDIUM_HERO_HEIGHT = '400px';
 const SMALL_HERO_HEIGHT = '200px';
+
+const LARGE_TITLE_SIZE = 'h3';
+const MEDIUM_TITLE_SIZE = 'h4';
+const SMALL_TITLE_SIZE = 'h5';
 
 interface GeneralHeroProps {
   heroComponent?: React.ReactNode;
@@ -22,28 +27,29 @@ const GeneralHero = (props: GeneralHeroProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
-  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
   const [imgSrc, setImgSrc] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [titleSize, setTitleSize] =
+    useState<TypographyVariant>(LARGE_TITLE_SIZE);
 
   useEffect(() => {
     if (isUpLarge) {
       setHeroHeight(LARGE_HERO_HEIGHT);
+      setTitleSize(LARGE_TITLE_SIZE);
       return;
     }
 
     if (isMedium) {
       setHeroHeight(MEDIUM_HERO_HEIGHT);
+      setTitleSize(MEDIUM_TITLE_SIZE);
       return;
     }
 
-    if (isDownSmall) {
-      setHeroHeight(SMALL_HERO_HEIGHT);
-      return;
-    }
-  }, [isUpLarge, isMedium, isDownSmall]);
+    setHeroHeight(SMALL_HERO_HEIGHT);
+    setTitleSize(SMALL_TITLE_SIZE);
+  }, [isUpLarge, isMedium]);
 
   useEffect(() => {
     if (!pathname) return;
@@ -106,7 +112,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
             }}
           >
             <Typography
-              variant='h3'
+              variant={titleSize}
               component='h2'
               color={OFF_WHITE_COLOR}
               align='center'
