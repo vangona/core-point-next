@@ -1,13 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
-import { DEFAULT_HERO_HEIGHT } from './constants';
+
+const LARGE_HERO_HEIGHT = '500px';
+const MEDIUM_HERO_HEIGHT = '400px';
+const SMALL_HERO_HEIGHT = '200px';
 
 interface GeneralHeroProps {
   heroComponent?: React.ReactNode;
@@ -15,9 +19,31 @@ interface GeneralHeroProps {
 const GeneralHero = (props: GeneralHeroProps) => {
   const { heroComponent } = props;
   const pathname = usePathname();
+  const theme = useTheme();
+  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
   const [imgSrc, setImgSrc] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (isUpLarge) {
+      setHeroHeight(LARGE_HERO_HEIGHT);
+      return;
+    }
+
+    if (isMedium) {
+      setHeroHeight(MEDIUM_HERO_HEIGHT);
+      return;
+    }
+
+    if (isDownSmall) {
+      setHeroHeight(SMALL_HERO_HEIGHT);
+      return;
+    }
+  }, [isUpLarge, isMedium, isDownSmall]);
 
   useEffect(() => {
     if (!pathname) return;
@@ -64,9 +90,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
   }, [pathname]);
 
   return (
-    <Box
-      sx={{ width: '100%', height: DEFAULT_HERO_HEIGHT, position: 'relative' }}
-    >
+    <Box sx={{ width: '100%', height: heroHeight, position: 'relative' }}>
       {heroComponent ?? (
         <>
           <Box
