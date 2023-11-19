@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 
 const HideScrollTop = () => {
   const trigger = useScrollTrigger({
-    target: window ? window : undefined,
+    target: typeof window !== 'undefined' ? window : undefined,
     disableHysteresis: true,
     threshold: 100,
   });
