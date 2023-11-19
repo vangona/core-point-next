@@ -3,11 +3,17 @@
 import { useState, useEffect } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
+import { Metadata } from 'next';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
+
+export const metadata: Metadata = {
+  title: '코어창업 | 협업 신청',
+  description: '코어창업 협업 브랜드 신청',
+};
 
 export default function Partnership() {
   const theme = useTheme();

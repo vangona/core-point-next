@@ -26,7 +26,7 @@ declare global {
 
 export const metadata: Metadata = {
   title: '코어창업',
-  description: '열쇠가 되겠습니다.',
+  description: '코어창업이 창업을 위한 열쇠가 되어드리겠습니다.',
 };
 
 export default function RootLayout({
