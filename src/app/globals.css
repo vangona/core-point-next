@@ -9,11 +9,16 @@ body {
   margin: 0;
 }
 
-.swiper {
+swiper-container {
+  display: flex;
   width: 1200px;
 }
 
-.swiper-slide {
+swiper-wrapper {
+  width: 1170px;
+}
+
+swiper-slide {
   /* Center slide text vertically */
   display: flex;
   justify-content: center;

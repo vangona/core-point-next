@@ -1,7 +1,7 @@
+import { useRef } from 'react';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { Autoplay, Mousewheel, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { register } from 'swiper/element/bundle';
 import { Store } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
 import SwiperNextButton from '@/components/common/swiper/SwiperNextButton';
@@ -10,6 +10,8 @@ import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import SectionLayout from '../section-layout/SectionLayout';
 
+register();
+
 interface RecommendedStoreProps {
   storeDataArr: Store[];
   isLoading: boolean;
@@ -17,6 +19,7 @@ interface RecommendedStoreProps {
 }
 const RecommendedStore = (props: RecommendedStoreProps) => {
   const { storeDataArr, isLoading, ref } = props;
+  const swiperRef = useRef(null);
 
   return (
     <SectionLayout disableDivider>
@@ -32,23 +35,15 @@ const RecommendedStore = (props: RecommendedStoreProps) => {
       >
         {isLoading && <Skeleton />}
         {!isLoading && (
-          <Swiper
-            modules={[Navigation, Autoplay, Mousewheel]}
-            navigation
-            autoplay
-            loop
-            mousewheel
-            grabCursor
-            slidesPerView={4}
-          >
-            <SwiperPrevButton />
+          <swiper-container slides-per-view={4} ref={swiperRef}>
+            <SwiperPrevButton swiperRef={swiperRef} />
             {storeDataArr.map((storeData, index) => (
-              <SwiperSlide key={'recommended-store-' + index}>
+              <swiper-slide key={'recommended-store-' + index}>
                 <VerticalStoreCard storeData={storeData} />
-              </SwiperSlide>
+              </swiper-slide>
             ))}
-            <SwiperNextButton />
-          </Swiper>
+            <SwiperNextButton swiperRef={swiperRef} />
+          </swiper-container>
         )}
       </Box>
     </SectionLayout>
