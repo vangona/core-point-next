@@ -31,6 +31,15 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
         contrastText: '#fcfcfc',
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 480,
+        md: 800,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   });
 
   const [{ cache, flush }] = React.useState(() => {

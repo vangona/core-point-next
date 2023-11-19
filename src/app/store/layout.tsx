@@ -1,7 +1,6 @@
 import React from 'react';
 import '@/app/globals.css';
 import Box from '@mui/material/Box';
-import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -19,7 +18,6 @@ export default function StoreLayout({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: DEFAULT_LAYOUT_WIDTH,
         gap: 3,
       }}
     >

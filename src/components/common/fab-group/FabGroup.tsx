@@ -1,9 +1,16 @@
+'use client';
+
 import MessageRounded from '@mui/icons-material/MessageRounded';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Image from 'next/image';
 
 const FabGroup = () => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const buttonSize = isDownMedium ? 'small' : 'medium';
+
   return (
     <Box
       sx={{
@@ -13,17 +20,18 @@ const FabGroup = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
+        zIndex: theme.zIndex.fab,
       }}
     >
       <Fab
-        size='medium'
+        size={buttonSize}
         color='primary'
         onClick={() => alert('창업 컨설팅 신청하기 연결')}
       >
         <MessageRounded />
       </Fab>
       <Fab
-        size='medium'
+        size={buttonSize}
         sx={{ backgroundColor: '#06BE34' }}
         href='https://blog.naver.com/corepoint_'
         target='_blank'
@@ -31,12 +39,12 @@ const FabGroup = () => {
         <Image
           src={'/naver-ci.png'}
           width={30}
-          height={18}
+          height={30}
           alt='네이버 블로그'
         />
       </Fab>
       <Fab
-        size='medium'
+        size={buttonSize}
         sx={{ backgroundColor: '#fae100' }}
         href='https://open.kakao.com/o/stsH1PSf'
         target='_blank'
@@ -44,7 +52,7 @@ const FabGroup = () => {
         <Image
           src={'/kakao-openchat.png'}
           width={30}
-          height={18}
+          height={30}
           alt='카카오톡 오픈채팅'
         />
       </Fab>

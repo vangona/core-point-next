@@ -7,12 +7,19 @@ interface BoldLabelProps {
   label?: string;
   value?: string;
   variant?: TypographyVariant;
+  primary?: boolean;
 }
 export const BoldLabelValue = (props: BoldLabelProps) => {
-  const { label, value, variant = 'subtitle2' } = props;
+  const { label, value, variant = 'subtitle2', primary } = props;
   return (
     <Typography variant={variant}>
-      <Box sx={{ width: DEFAULT_BOLD_LABEL_WIDTH, display: 'inline' }}>
+      <Box
+        sx={{
+          width: DEFAULT_BOLD_LABEL_WIDTH,
+          display: 'inline',
+          color: primary ? 'primary.main' : 'inherit',
+        }}
+      >
         <b>{label}</b> :
       </Box>
       <Box sx={{ display: 'inline' }}> {value}</Box>

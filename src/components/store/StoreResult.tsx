@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import {
   HydrationBoundary,
@@ -19,6 +20,8 @@ interface StoreResultProps {
 }
 const StoreResult = ({ searchParams: { page, limit } }: StoreResultProps) => {
   const queryClient = new QueryClient();
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const query = useGetStore({ page, limit });
   const storeData = query.data?.data;
 
@@ -58,10 +61,12 @@ const StoreResult = ({ searchParams: { page, limit } }: StoreResultProps) => {
           <StoreCards storeData={storeData} />
         </HydrationBoundary>
       </Suspense>
-      <StoreWindow
-        storeData={minimumData?.data}
-        isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture
-      />
+      {!isDownMedium && (
+        <StoreWindow
+          storeData={minimumData?.data}
+          isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture
+        />
+      )}
     </Box>
   );
 };

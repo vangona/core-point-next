@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import { Metadata } from 'next';
-import { DEFAULT_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 
 export const metadata: Metadata = {
   title: '코어창업 | 협업 신청',
@@ -11,22 +10,16 @@ export default function Partnership() {
   return (
     <Box
       sx={{
-        width: DEFAULT_LAYOUT_WIDTH,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 5,
+        alignItems: 'flex-start',
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 2,
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 5,
-          alignItems: 'flex-start',
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 2,
-        }}
-      >
-        내용 확인 필요함
-      </Box>
+      내용 확인 필요함
     </Box>
   );
 }

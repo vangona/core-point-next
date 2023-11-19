@@ -7,13 +7,20 @@ import type { SxProps } from '@mui/material';
 
 interface SuccessExampleCardProps {
   successExampleData?: SuccessExample;
+  width: number;
+  height: number;
 }
-const SuccessExampleCard = (props: SuccessExampleCardProps) => {
-  const { successExampleData } = props;
+const SuccessExampleCard = ({
+  successExampleData,
+  width,
+  height,
+}: SuccessExampleCardProps) => {
   const containerSx: SxProps = {
     display: 'flex',
-    width: '800px',
-    height: '400px',
+    flexDirection: height > width ? 'column' : 'row',
+    width,
+    height,
+    margin: 2,
   };
 
   return (
@@ -45,7 +52,7 @@ const SuccessExampleCard = (props: SuccessExampleCardProps) => {
         >
           {successExampleData?.title}
         </Typography>
-        <Typography variant='body1' sx={{ width: '100%' }}>
+        <Typography variant='body1' sx={{ width: '100%', overflow: 'auto' }}>
           {successExampleData?.content}
         </Typography>
       </CardContent>

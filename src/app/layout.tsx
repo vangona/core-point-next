@@ -5,8 +5,24 @@ import { Noto_Sans_KR } from 'next/font/google';
 import ConditionalLayout from './conditionalLayout';
 import ReactQueryRegistry from './ReactQueryRegistry';
 import ThemeRegistry from './ThemeRegistry';
+import type { SwiperProps, SwiperSlideProps } from 'swiper/react';
 
 const notoSansKr = Noto_Sans_KR({ subsets: ['latin'] });
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'swiper-container': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & SwiperProps,
+        HTMLElement
+      >;
+      'swiper-slide': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & SwiperSlideProps,
+        HTMLElement
+      >;
+    }
+  }
+}
 
 export const metadata: Metadata = {
   title: '코어창업',
