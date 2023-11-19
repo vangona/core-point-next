@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useGetStore } from '@/api/store';
+import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { SectionTitle } from '@/components/common/section-title';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
@@ -32,7 +33,7 @@ export default function Home() {
       <SectionLayout color='white'>
         <SectionTitle label='협업 브랜드' />
       </SectionLayout>
-      <SectionLayout color='white' disableDivider innerSx={{ gap: 8 }}>
+      <SectionLayout color='white' innerSx={{ gap: 8 }}>
         <Typography variant='h4' component='h3' fontWeight='bold'>
           {'창업의 문을 여는 열쇠, '}
           <Box display='inline' color='primary.main'>
@@ -43,12 +44,7 @@ export default function Home() {
           상담 신청하기
         </Button>
       </SectionLayout>
-      <IconButton
-        sx={{ alignSelf: 'center' }}
-        onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <ArrowUpwardRounded />
-      </IconButton>
+      <HideScrollTop />
     </Box>
   );
 }
