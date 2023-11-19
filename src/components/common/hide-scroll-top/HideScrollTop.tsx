@@ -27,6 +27,7 @@ const HideScrollTop = () => {
           bottom: 16,
           right: '50%',
           left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 99,
         }}
         size='large'
