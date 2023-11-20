@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { Autoplay, Mousewheel } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
 import SwiperNextButton from '@/components/common/swiper/SwiperNextButton';
@@ -41,6 +41,8 @@ const RecommendedStore = (props: RecommendedStoreProps) => {
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
   const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+
+  const swiperRef = useRef<SwiperClass>();
 
   useEffect(() => {
     if (isUpLarge) {
@@ -79,20 +81,28 @@ const RecommendedStore = (props: RecommendedStoreProps) => {
       >
         {isLoading && <Skeleton />}
         {!isLoading && (
-          <Swiper
-            slidesPerView={slidePerView}
-            modules={[Autoplay, Mousewheel]}
-            autoplay
-            mousewheel
-          >
-            <SwiperPrevButton />
-            {storeDataArr.map((storeData, index) => (
-              <SwiperSlide key={'recommended-store-' + index}>
-                <VerticalStoreCard storeData={storeData} />
-              </SwiperSlide>
-            ))}
-            <SwiperNextButton />
-          </Swiper>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <SwiperPrevButton swiperRef={swiperRef} />
+            <Swiper
+              className='main-swiper'
+              onBeforeInit={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              slidesPerView={slidePerView}
+              modules={[Autoplay, Mousewheel, Navigation, Pagination]}
+              autoplay
+              mousewheel
+              loop
+              pagination={{ clickable: true }}
+            >
+              {storeDataArr.map((storeData, index) => (
+                <SwiperSlide key={'recommended-store-' + index}>
+                  <VerticalStoreCard storeData={storeData} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <SwiperNextButton swiperRef={swiperRef} />
+          </Box>
         )}
       </Box>
     </SectionLayout>

@@ -7,7 +7,7 @@ import {
   dehydrate,
   useQuery,
 } from '@tanstack/react-query';
-import { getStore, useGetStore } from '@/api/store';
+import { useGetStore } from '@/api/store';
 import { getStoreMinimum } from '@/api/store/getStoreMinimum';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
 import { StoreSearchParams } from '@/app/store/page';
@@ -18,25 +18,21 @@ import StoreWindow from './StoreWindow';
 interface StoreResultProps {
   searchParams: StoreSearchParams;
 }
-const StoreResult = ({ searchParams: { page, limit } }: StoreResultProps) => {
+const StoreResult = ({ searchParams }: StoreResultProps) => {
   const queryClient = new QueryClient();
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const query = useGetStore({ page, limit });
+  const query = useGetStore(searchParams);
   const storeData = query.data?.data;
 
   const [recentStores, setRecentStores] = useState<string[] | undefined>(
     undefined,
   );
+
   const { data: minimumData, isLoading: isMinimumLoading } = useQuery({
     queryKey: ['store-minimum', recentStores],
     queryFn: () => getStoreMinimum({ idArr: recentStores }),
     enabled: recentStores !== undefined,
-  });
-
-  queryClient.prefetchQuery({
-    queryKey: ['store', page, limit],
-    queryFn: () => getStore({ page, limit }),
   });
 
   useEffect(() => {
@@ -54,6 +50,8 @@ const StoreResult = ({ searchParams: { page, limit } }: StoreResultProps) => {
       sx={{
         display: 'flex',
         gap: 3,
+        width: '1200px',
+        justifyContent: 'space-between',
       }}
     >
       <Suspense fallback={<StoreResultLoading />}>
