@@ -10,23 +10,27 @@ export async function GET(req: NextRequest) {
   const category = req.nextUrl.searchParams.get(
     'category',
   ) as StoreCategoy | null; // string 타입추론을 위해서 as 사용
+  const budget = req.nextUrl.searchParams.get('budget');
+  const location = req.nextUrl.searchParams.get('location');
+  const search = req.nextUrl.searchParams.get('search');
 
-  if (category) {
-    const query = await supabase
-      .from(SupabaseTable.STORES)
-      .select('*')
-      .eq('store_category', category)
-      .range(page * limit, (page + 1) * limit - 1)
-      .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+  const parsedBudget = budget ? budget.split(',') : undefined;
 
-    return NextResponse.json({ data: query.data });
-  } else {
-    const query = await supabase
-      .from(SupabaseTable.STORES)
-      .select('*')
-      .range(page * limit, (page + 1) * limit - 1)
-      .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+  let query = supabase.from(SupabaseTable.STORES).select('*');
 
-    return NextResponse.json({ data: query.data });
+  if (category) query = query.eq('store_category', category);
+  if (parsedBudget) {
+    query = query.gte('store_cost', parseInt(parsedBudget[0]));
+    query = query.lt('store_cost', parseInt(parsedBudget[1]));
   }
+  if (location) query = query.eq('store_location', location);
+  if (search) query = query.ilike('store_name', `%${search}%`);
+
+  query = query
+    .range(page * limit, (page + 1) * limit - 1)
+    .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+
+  const { data } = await query;
+
+  return NextResponse.json({ data });
 }

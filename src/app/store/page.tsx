@@ -8,6 +8,10 @@ import StoreSearch from '@/components/store/StoreSearch';
 export interface StoreSearchParams {
   page?: string;
   limit?: string;
+  category?: string;
+  budget?: string;
+  location?: string;
+  search?: string;
 }
 export default function StorePage({
   searchParams,

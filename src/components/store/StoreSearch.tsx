@@ -62,10 +62,12 @@ const StoreSearch = () => {
       searchKeyword?: string;
     }) => {
       const params = new URLSearchParams(searchParams);
-      category && params.set('category', category);
-      budget && params.set('budget', budget);
-      location && params.set('location', location);
-      searchKeyword && params.set('search', searchKeyword);
+      category ? params.set('category', category) : params.delete('category');
+      budget ? params.set('budget', budget) : params.delete('budget');
+      location ? params.set('location', location) : params.delete('location');
+      searchKeyword
+        ? params.set('search', searchKeyword)
+        : params.delete('search');
 
       return params.toString();
     },
