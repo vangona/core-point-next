@@ -1,6 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  SyntheticEvent,
+  ChangeEvent,
+} from 'react';
 import Search from '@mui/icons-material/Search';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -14,7 +20,12 @@ import {
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '../layout/general-layout/constants';
-import { STORE_CATEGORY_DATA_ARR, STORE_LOCATION_DATA_ARR } from './constants';
+import {
+  STORE_BUDGET_DATA_ARR,
+  STORE_CATEGORY_DATA_ARR,
+  STORE_LOCATION_DATA_ARR,
+  StoreBudgetData,
+} from './constants';
 
 const StoreSearch = () => {
   const router = useRouter();
@@ -30,22 +41,60 @@ const StoreSearch = () => {
   const [storeCategory, setStoreCategory] = useState<string | undefined>(
     undefined,
   );
+  const [storeBudget, setStoreBudget] = useState<StoreBudgetData | undefined>(
+    undefined,
+  );
+  const [storeLocation, setStoreLocation] = useState<string | undefined>(
+    undefined,
+  );
+  const [storeSearchKeyword, setStoreSearchKeyword] = useState('');
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    ({
+      category,
+      budget,
+      location,
+      searchKeyword,
+    }: {
+      category?: string;
+      budget?: string;
+      location?: string;
+      searchKeyword?: string;
+    }) => {
       const params = new URLSearchParams(searchParams);
-      params.set(name, value);
+      category && params.set('category', category);
+      budget && params.set('budget', budget);
+      location && params.set('location', location);
+      searchKeyword && params.set('search', searchKeyword);
 
       return params.toString();
     },
     [searchParams],
   );
 
+  const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
+    setStoreCategory(value ?? undefined);
+  };
+  const handleBudgetChange = (
+    _: SyntheticEvent,
+    value: StoreBudgetData | null,
+  ) => {
+    setStoreBudget(value ?? undefined);
+  };
+  const handleLocationChange = (_: SyntheticEvent, value: string | null) => {
+    setStoreLocation(value ?? undefined);
+  };
+  const handleSearchKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setStoreSearchKeyword(event.target.value);
+  };
+
   const handleSearchClick = () => {
-    let queryString = '';
-    queryString = storeCategory
-      ? createQueryString('category', storeCategory)
-      : '';
+    const queryString = createQueryString({
+      category: storeCategory,
+      budget: storeBudget?.value,
+      location: storeLocation,
+      searchKeyword: storeSearchKeyword,
+    });
     router.push(pathname + '?' + queryString);
   };
 
@@ -94,21 +143,25 @@ const StoreSearch = () => {
           fullWidth
           value={storeCategory}
           options={STORE_CATEGORY_DATA_ARR}
-          onChange={(_, value) => {
-            setStoreCategory(value ?? undefined);
-          }}
+          onChange={handleCategoryChange}
           renderInput={(params) => (
             <TextField {...params} label='업종' placeholder='전체 업종' />
           )}
         />
         <Autocomplete
+          key={'store-budget--' + storeBudget}
+          value={storeBudget}
+          onChange={handleBudgetChange}
           fullWidth
-          options={STORE_CATEGORY_DATA_ARR}
+          options={STORE_BUDGET_DATA_ARR}
           renderInput={(params) => (
             <TextField {...params} label='예산' placeholder='전체 예산' />
           )}
         />
         <Autocomplete
+          key={'store-location--' + storeLocation}
+          value={storeLocation}
+          onChange={handleLocationChange}
           fullWidth
           options={STORE_LOCATION_DATA_ARR}
           renderInput={(params) => (
@@ -118,6 +171,8 @@ const StoreSearch = () => {
       </Box>
       <Box sx={{ display: 'flex', gap: 3, justifyContent: 'space-between' }}>
         <TextField
+          value={storeSearchKeyword}
+          onChange={handleSearchKeywordChange}
           fullWidth
           variant='filled'
           label='매물 이름'

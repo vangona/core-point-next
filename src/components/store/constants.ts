@@ -18,44 +18,53 @@ export const STORE_CATEGORY_DATA_ARR: StoreCategoy[] = [
 ];
 
 export enum StoreLocation {
-  SEOUL = 'seoul',
-  BUSAN = 'busan',
-  DAEGU = 'daegu',
-  INCHEON = 'incheon',
-  GWANGJU = 'gwangju',
-  DAEJEON = 'daejeon',
-  ULSAN = 'ulsan',
-  SEJONG = 'sejong',
-  GYEONGGI = 'gyeonggi',
-  GANGWON = 'gangwon',
-  CHUNGBUK = 'chungbuk',
-  CHUNGNAM = 'chungnam',
-  JEONBUK = 'jeonbuk',
-  JEONNAM = 'jeonnam',
-  GYEONGBUK = 'gyeongbuk',
-  GYEONGNAM = 'gyeongnam',
-  JEJU = 'jeju',
+  SEOUL = '서울',
+  BUSAN = '부산',
+  DAEGU = '대구',
+  INCHEON = '인천',
+  GWANGJU = '광주',
+  DAEJEON = '대전',
+  ULSAN = '울산',
+  SEJONG = '세종',
+  GYEONGGI = '경기',
+  GANGWON = '강원',
+  CHUNGBUK = '충북',
+  CHUNGNAM = '충남',
+  JEONBUK = '전북',
+  JEONNAM = '전남',
+  GYEONGBUK = '경북',
+  GYEONGNAM = '경남',
+  JEJU = '제주',
 }
-export interface StoreLocationData {
+
+export const STORE_LOCATION_DATA_ARR: StoreLocation[] = [
+  StoreLocation.SEOUL,
+  StoreLocation.BUSAN,
+  StoreLocation.DAEGU,
+  StoreLocation.INCHEON,
+  StoreLocation.GWANGJU,
+  StoreLocation.DAEJEON,
+  StoreLocation.ULSAN,
+  StoreLocation.SEJONG,
+  StoreLocation.GYEONGGI,
+  StoreLocation.GANGWON,
+  StoreLocation.CHUNGBUK,
+  StoreLocation.CHUNGNAM,
+  StoreLocation.JEONBUK,
+  StoreLocation.JEONNAM,
+  StoreLocation.GYEONGBUK,
+  StoreLocation.GYEONGNAM,
+  StoreLocation.JEJU,
+];
+
+export interface StoreBudgetData {
   label: string;
-  value: StoreLocation;
+  value: string;
 }
-export const STORE_LOCATION_DATA_ARR: StoreLocationData[] = [
-  { label: '서울', value: StoreLocation.SEOUL },
-  { label: '부산', value: StoreLocation.BUSAN },
-  { label: '대구', value: StoreLocation.DAEGU },
-  { label: '인천', value: StoreLocation.INCHEON },
-  { label: '광주', value: StoreLocation.GWANGJU },
-  { label: '대전', value: StoreLocation.DAEJEON },
-  { label: '울산', value: StoreLocation.ULSAN },
-  { label: '세종', value: StoreLocation.SEJONG },
-  { label: '경기', value: StoreLocation.GYEONGGI },
-  { label: '강원', value: StoreLocation.GANGWON },
-  { label: '충북', value: StoreLocation.CHUNGBUK },
-  { label: '충남', value: StoreLocation.CHUNGNAM },
-  { label: '전북', value: StoreLocation.JEONBUK },
-  { label: '전남', value: StoreLocation.JEONNAM },
-  { label: '경북', value: StoreLocation.GYEONGBUK },
-  { label: '경남', value: StoreLocation.GYEONGNAM },
-  { label: '제주', value: StoreLocation.JEJU },
+export const STORE_BUDGET_DATA_ARR: StoreBudgetData[] = [
+  { label: '5,000만 원 이하', value: '0,5000' },
+  { label: '5,000만 원 ~ 1억 원', value: '5000,10000' },
+  { label: '1억 원 ~ 2억 원', value: '10000,20000' },
+  { label: '2억 원 ~ 3억 원', value: '20000,30000' },
+  { label: '3억 원 이상', value: '30000,0' },
 ];
