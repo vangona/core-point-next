@@ -1,20 +1,23 @@
 import React from 'react';
 import ArrowLeft from '@mui/icons-material/ArrowLeft';
 import IconButton from '@mui/material/IconButton';
-import { useSwiper } from 'swiper/react';
+import { SwiperClass } from 'swiper/react';
 import type { SxProps } from '@mui/material';
 
 interface SwiperPrevButtonProps {
   customIcon?: React.ReactNode;
   sx?: SxProps;
+  swiperRef?: React.MutableRefObject<SwiperClass | undefined>;
 }
-const SwiperPrevButton = ({ customIcon, sx }: SwiperPrevButtonProps) => {
-  const swiper = useSwiper();
-
+const SwiperPrevButton = ({
+  customIcon,
+  sx,
+  swiperRef,
+}: SwiperPrevButtonProps) => {
   return (
     <IconButton
+      onClick={() => swiperRef?.current?.slidePrev()}
       slot='container-start'
-      onClick={() => swiper.slidePrev()}
       sx={sx}
       size='large'
     >
@@ -23,4 +26,4 @@ const SwiperPrevButton = ({ customIcon, sx }: SwiperPrevButtonProps) => {
   );
 };
 
-export default SwiperPrevButton;
+export default React.forwardRef(SwiperPrevButton);
