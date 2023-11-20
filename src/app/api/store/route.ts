@@ -19,9 +19,12 @@ export async function GET(req: NextRequest) {
   let query = supabase.from(SupabaseTable.STORES).select('*');
 
   if (category) query = query.eq('store_category', category);
-  if (parsedBudget) {
+  if (parsedBudget && parsedBudget[0] !== '30000') {
     query = query.gte('store_cost', parseInt(parsedBudget[0]));
     query = query.lt('store_cost', parseInt(parsedBudget[1]));
+  }
+  if (parsedBudget && parsedBudget[0] === '30000') {
+    query = query.gte('store_cost', parseInt(parsedBudget[0]));
   }
   if (location) query = query.eq('store_location', location);
   if (search) query = query.ilike('store_name', `%${search}%`);
