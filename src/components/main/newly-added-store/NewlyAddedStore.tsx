@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { Mousewheel } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
 import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
@@ -38,6 +38,8 @@ const NewlyAddedStore = ({ storeDataArr, isLoading }: NewlyAddedStoreProps) => {
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
   const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+
+  const swiperRef = useRef<SwiperClass>();
 
   useEffect(() => {
     if (isUpLarge) {
@@ -75,24 +77,31 @@ const NewlyAddedStore = ({ storeDataArr, isLoading }: NewlyAddedStoreProps) => {
       >
         {isLoading && <Skeleton />}
         {!isLoading && (
-          <Swiper
-            modules={[Mousewheel]}
-            slidesPerView={slidePerView}
-            grabCursor
-            loop
-            mousewheel
-          >
-            {storeDataArr.map((store, index) => (
-              <SwiperSlide key={'newly-added-store' + index}>
-                <VerticalStoreCard
-                  storeData={store}
-                  size={isDownMedium ? 'md' : 'sm'}
-                />
-              </SwiperSlide>
-            ))}
-            <SwiperPrevButton />
-            <SwiperNextButton />
-          </Swiper>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <SwiperPrevButton swiperRef={swiperRef} />
+            <Swiper
+              className='main-swiper'
+              onBeforeInit={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              modules={[Mousewheel, Pagination]}
+              slidesPerView={slidePerView}
+              grabCursor
+              loop
+              mousewheel
+              pagination={{ clickable: true }}
+            >
+              {storeDataArr.map((store, index) => (
+                <SwiperSlide key={'newly-added-store' + index}>
+                  <VerticalStoreCard
+                    storeData={store}
+                    size={isDownMedium ? 'md' : 'sm'}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <SwiperNextButton swiperRef={swiperRef} />
+          </Box>
         )}
       </Box>
     </SectionLayout>

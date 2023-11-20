@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { Autoplay, Mousewheel, Navigation } from 'swiper/modules';
+import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store } from '@/api/store';
 import { SectionTitle } from '@/components/common/section-title';
@@ -81,17 +81,19 @@ const RecommendedStore = (props: RecommendedStoreProps) => {
       >
         {isLoading && <Skeleton />}
         {!isLoading && (
-          <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <SwiperPrevButton swiperRef={swiperRef} />
             <Swiper
+              className='main-swiper'
               onBeforeInit={(swiper) => {
                 swiperRef.current = swiper;
               }}
               slidesPerView={slidePerView}
-              modules={[Autoplay, Mousewheel, Navigation]}
+              modules={[Autoplay, Mousewheel, Navigation, Pagination]}
               autoplay
               mousewheel
               loop
+              pagination={{ clickable: true }}
             >
               {storeDataArr.map((storeData, index) => (
                 <SwiperSlide key={'recommended-store-' + index}>

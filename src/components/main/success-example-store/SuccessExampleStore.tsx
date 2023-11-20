@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { EffectFade, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { SectionTitle } from '@/components/common/section-title';
 import { SuccessExampleCard } from '@/components/common/success-example-card';
 import { dummySuccessExample } from '@/components/common/success-example-card/dummySuccessExample';
@@ -24,6 +24,8 @@ const SuccessExampleStore = () => {
   const [cardWidth, setCardWidth] = useState(800);
   const [cardHeight, setCardHeight] = useState(400);
   const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+
+  const swiperRef = useRef<SwiperClass>();
 
   useEffect(() => {
     if (isUpLarge) {
@@ -58,34 +60,41 @@ const SuccessExampleStore = () => {
           gap: 2,
           justifyContent: 'center',
           alignItems: 'center',
-          '& .slide-wrapper': {
+          '& .swiper-wrapper': {
             width: slideWrapperWidth,
           },
         }}
       >
-        <Swiper
-          modules={[Navigation, EffectFade]}
-          grabCursor
-          loop
-          effect='fade'
-        >
-          <SwiperPrevButton />
-          <SwiperSlide>
-            <SuccessExampleCard
-              successExampleData={dummySuccessExample[0]}
-              width={cardWidth}
-              height={cardHeight}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SuccessExampleCard
-              successExampleData={dummySuccessExample[1]}
-              width={cardWidth}
-              height={cardHeight}
-            />
-          </SwiperSlide>
-          <SwiperNextButton />
-        </Swiper>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <SwiperPrevButton swiperRef={swiperRef} />
+          <Swiper
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            className='main-swiper'
+            modules={[Navigation, EffectFade, Pagination]}
+            grabCursor
+            loop
+            pagination={{ clickable: true }}
+            effect='fade'
+          >
+            <SwiperSlide>
+              <SuccessExampleCard
+                successExampleData={dummySuccessExample[0]}
+                width={cardWidth}
+                height={cardHeight}
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <SuccessExampleCard
+                successExampleData={dummySuccessExample[1]}
+                width={cardWidth}
+                height={cardHeight}
+              />
+            </SwiperSlide>
+          </Swiper>
+          <SwiperNextButton swiperRef={swiperRef} />
+        </Box>
       </Box>
     </SectionLayout>
   );

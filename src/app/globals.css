@@ -32,3 +32,12 @@ body {
 .swiper-gallery__thumb--container .swiper-slide-thumb-active {
   opacity: 1;
 }
+
+.swiper.main-swiper {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.main-swiper .swiper-wrapper {
+  margin-bottom: 30px;
+}
