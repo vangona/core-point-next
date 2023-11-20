@@ -1,24 +1,20 @@
-export enum StoreCategory {
-  CAFE = 'cafe',
-  BAKERY = 'bakery',
-  CHICKEN = 'chicken',
-  FASTFOOD = 'fastfood',
-  FOOD = 'food',
-  ICECREAM = 'icecream',
-  SPORTS = 'sports',
+export enum StoreCategoy {
+  CAFE = '카페 / 디저트',
+  BAKERY = '베이커리',
+  CHICKEN = '치킨 / 호프',
+  FASTFOOD = '패스트푸드',
+  FOOD = '일반음식점',
+  ICECREAM = '아이스크림',
+  SPORTS = '시설스포츠',
 }
-export interface StoreCategoryData {
-  label: string;
-  value: StoreCategory;
-}
-export const STORE_CATEGORY_DATA_ARR: StoreCategoryData[] = [
-  { label: '카페 / 디저트', value: StoreCategory.CAFE },
-  { label: '베이커리', value: StoreCategory.BAKERY },
-  { label: '치킨 / 호프', value: StoreCategory.CHICKEN },
-  { label: '패스트푸드', value: StoreCategory.FASTFOOD },
-  { label: '일반음식점', value: StoreCategory.FOOD },
-  { label: '아이스크림', value: StoreCategory.ICECREAM },
-  { label: '시설스포츠', value: StoreCategory.SPORTS },
+export const STORE_CATEGORY_DATA_ARR: StoreCategoy[] = [
+  StoreCategoy.CAFE,
+  StoreCategoy.BAKERY,
+  StoreCategoy.CHICKEN,
+  StoreCategoy.FASTFOOD,
+  StoreCategoy.FOOD,
+  StoreCategoy.ICECREAM,
+  StoreCategoy.SPORTS,
 ];
 
 export enum StoreLocation {
