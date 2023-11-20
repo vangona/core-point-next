@@ -22,16 +22,15 @@ import {
 } from '../layout/general-layout/constants';
 import {
   STORE_BUDGET_DATA_ARR,
+  STORE_BUDGET_MAPPER,
   STORE_CATEGORY_DATA_ARR,
   STORE_LOCATION_DATA_ARR,
-  StoreBudgetData,
 } from './constants';
 
 const StoreSearch = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const category = searchParams.get('category');
 
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
@@ -41,9 +40,7 @@ const StoreSearch = () => {
   const [storeCategory, setStoreCategory] = useState<string | undefined>(
     undefined,
   );
-  const [storeBudget, setStoreBudget] = useState<StoreBudgetData | undefined>(
-    undefined,
-  );
+  const [storeBudget, setStoreBudget] = useState<string | undefined>(undefined);
   const [storeLocation, setStoreLocation] = useState<string | undefined>(
     undefined,
   );
@@ -77,10 +74,7 @@ const StoreSearch = () => {
   const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
     setStoreCategory(value ?? undefined);
   };
-  const handleBudgetChange = (
-    _: SyntheticEvent,
-    value: StoreBudgetData | null,
-  ) => {
+  const handleBudgetChange = (_: SyntheticEvent, value: string | null) => {
     setStoreBudget(value ?? undefined);
   };
   const handleLocationChange = (_: SyntheticEvent, value: string | null) => {
@@ -93,7 +87,7 @@ const StoreSearch = () => {
   const handleSearchClick = () => {
     const queryString = createQueryString({
       category: storeCategory,
-      budget: storeBudget?.value,
+      budget: storeBudget,
       location: storeLocation,
       searchKeyword: storeSearchKeyword,
     });
@@ -115,10 +109,16 @@ const StoreSearch = () => {
   }, [isUpLarge, isMedium]);
 
   useEffect(() => {
-    if (category) {
-      setStoreCategory(category);
-    }
-  }, [category]);
+    const category = searchParams.get('category');
+    const budget = searchParams.get('budget');
+    const location = searchParams.get('location');
+    const searchKeyword = searchParams.get('search');
+
+    category && setStoreCategory(category);
+    budget && setStoreBudget(budget);
+    location && setStoreLocation(location);
+    searchKeyword && setStoreSearchKeyword(searchKeyword);
+  }, [searchParams]);
 
   return (
     <Box
@@ -155,6 +155,7 @@ const StoreSearch = () => {
           value={storeBudget}
           onChange={handleBudgetChange}
           fullWidth
+          getOptionLabel={(option) => STORE_BUDGET_MAPPER[option]}
           options={STORE_BUDGET_DATA_ARR}
           renderInput={(params) => (
             <TextField {...params} label='예산' placeholder='전체 예산' />

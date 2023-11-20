@@ -187,22 +187,20 @@ const StoreCard = (props: StoreCardProps) => {
               </Box>
             </Box>
           </CardActionArea>
-          {isUpLarge && (
-            <CardActions sx={managerWrapperSx}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant='subtitle2' fontWeight='bold'>
-                  담당자 정보
-                </Typography>
-                <Typography variant='body2'>{storeData?.manager}</Typography>
-                <Typography variant='body2'>
-                  {storeData?.manager_contact}
-                </Typography>
-              </Box>
-              <Button variant='contained' sx={{ whiteSpace: 'nowrap' }}>
-                창업컨설팅 신청
-              </Button>
-            </CardActions>
-          )}
+          <CardActions sx={managerWrapperSx}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography variant='subtitle2' fontWeight='bold'>
+                담당자 정보
+              </Typography>
+              <Typography variant='body2'>{storeData?.manager}</Typography>
+              <Typography variant='body2'>
+                {storeData?.manager_contact}
+              </Typography>
+            </Box>
+            <Button variant='contained' sx={{ whiteSpace: 'nowrap' }}>
+              창업컨설팅 신청
+            </Button>
+          </CardActions>
         </>
       ) : (
         <Box

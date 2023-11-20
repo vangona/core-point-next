@@ -50,6 +50,8 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
       sx={{
         display: 'flex',
         gap: 3,
+        width: '1200px',
+        justifyContent: 'space-between',
       }}
     >
       <Suspense fallback={<StoreResultLoading />}>
