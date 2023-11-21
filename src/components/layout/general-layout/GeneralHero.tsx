@@ -8,9 +8,8 @@ import Image from 'next/image';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { TypographyVariant } from '@mui/material';
 
-const LARGE_HERO_HEIGHT = '500px';
-const MEDIUM_HERO_HEIGHT = '400px';
-const SMALL_HERO_HEIGHT = '200px';
+export const LARGE_HERO_HEIGHT = '400px';
+export const SMALL_HERO_HEIGHT = '250px';
 
 const LARGE_TITLE_SIZE = 'h3';
 const MEDIUM_TITLE_SIZE = 'h4';
@@ -27,6 +26,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('sm'));
   const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
   const [titleSize, setTitleSize] =
     useState<TypographyVariant>(LARGE_TITLE_SIZE);
@@ -39,13 +39,14 @@ const GeneralHero = (props: GeneralHeroProps) => {
     }
 
     if (isMedium) {
-      setHeroHeight(MEDIUM_HERO_HEIGHT);
       setTitleSize(MEDIUM_TITLE_SIZE);
-      return;
     }
 
-    setHeroHeight(SMALL_HERO_HEIGHT);
-    setTitleSize(SMALL_TITLE_SIZE);
+    if (isDownMedium) {
+      setHeroHeight(SMALL_HERO_HEIGHT);
+      setTitleSize(SMALL_TITLE_SIZE);
+      return;
+    }
   }, [isUpLarge, isMedium]);
 
   return (

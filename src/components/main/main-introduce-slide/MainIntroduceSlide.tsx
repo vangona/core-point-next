@@ -4,7 +4,7 @@ import React from 'react';
 
 const MainIntroduceSlide = () => {
   const theme = useTheme();
-  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
@@ -26,10 +26,10 @@ const MainIntroduceSlide = () => {
           zIndex: 9,
           color: 'primary.contrastText',
           gap: 2,
-          padding: isDownLarge ? 3 : undefined,
+          padding: isDownMedium ? 3 : undefined,
         }}
       >
-        {isDownLarge ? (
+        {isDownMedium ? (
           <Typography
             variant={'h5'}
             component='p'
