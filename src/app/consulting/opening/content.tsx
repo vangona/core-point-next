@@ -93,8 +93,8 @@ const OpeningConsultingContent = () => {
             gap: 2,
           }}
         >
-          <TextField fullWidth label='성함' variant='outlined' />
-          <TextField fullWidth label='연락처' variant='outlined' />
+          <TextField required fullWidth label='성함' variant='outlined' />
+          <TextField required fullWidth label='연락처' variant='outlined' />
         </Box>
         <Box
           sx={{
@@ -112,7 +112,12 @@ const OpeningConsultingContent = () => {
             options={STORE_CATEGORY_DATA_ARR}
             onChange={handleCategoryChange}
             renderInput={(params) => (
-              <TextField {...params} label='업종' placeholder='전체 업종' />
+              <TextField
+                required
+                {...params}
+                label='업종'
+                placeholder='전체 업종'
+              />
             )}
           />
           <Autocomplete
@@ -123,7 +128,12 @@ const OpeningConsultingContent = () => {
             getOptionLabel={(option) => STORE_BUDGET_MAPPER[option]}
             options={STORE_BUDGET_DATA_ARR}
             renderInput={(params) => (
-              <TextField {...params} label='예산' placeholder='전체 예산' />
+              <TextField
+                required
+                {...params}
+                label='예산'
+                placeholder='전체 예산'
+              />
             )}
           />
           <Autocomplete
@@ -133,7 +143,12 @@ const OpeningConsultingContent = () => {
             fullWidth
             options={STORE_LOCATION_DATA_ARR}
             renderInput={(params) => (
-              <TextField {...params} label='지역' placeholder='지역 전체' />
+              <TextField
+                required
+                {...params}
+                label='지역'
+                placeholder='지역 전체'
+              />
             )}
           />
         </Box>
