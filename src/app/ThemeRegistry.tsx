@@ -34,7 +34,7 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
     breakpoints: {
       values: {
         xs: 0,
-        sm: 480,
+        sm: 500,
         md: 800,
         lg: 1200,
         xl: 1536,

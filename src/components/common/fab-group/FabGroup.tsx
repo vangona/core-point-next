@@ -5,8 +5,12 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Image from 'next/image';
+import React from 'react';
 
-const FabGroup = () => {
+interface FabGroupProps {
+  onMessageClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+const FabGroup = ({ onMessageClick }: FabGroupProps) => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const buttonSize = isDownMedium ? 'small' : 'medium';
@@ -26,7 +30,11 @@ const FabGroup = () => {
       <Fab
         size={buttonSize}
         color='primary'
-        onClick={() => alert('창업 컨설팅 신청하기 연결')}
+        onClick={(e) =>
+          onMessageClick
+            ? onMessageClick(e)
+            : alert('창업 컨설팅 신청하기 연결')
+        }
       >
         <MessageRounded />
       </Fab>
