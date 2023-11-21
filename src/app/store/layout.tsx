@@ -1,6 +1,5 @@
 import React from 'react';
 import '@/app/globals.css';
-import Box from '@mui/material/Box';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,15 +12,5 @@ export default function StoreLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return children;
 }

@@ -1,24 +1,20 @@
-'use client';
-
-import React from 'react';
-import { useTheme } from '@mui/material';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import { usePathname } from 'next/navigation';
+import { ConsultingModal } from '@/components/common/consulting-modal';
 import FabGroup from '@/components/common/fab-group/FabGroup';
 import { OFF_WHITE_COLOR } from '@/constants/color';
-import { CorePointRoutes } from '@/constants/routes';
 import GeneralFooter from './GeneralFooter';
 import GeneralHeader from './GeneralHeader';
-import GeneralHero from './GeneralHero';
 
 interface GeneralLayoutInterface {
   children: React.ReactNode;
 }
 const GeneralLayout = (props: GeneralLayoutInterface) => {
   const { children } = props;
-  const theme = useTheme();
-  const pathname = usePathname();
-  const disableHero = pathname.includes(CorePointRoutes.STORE + '/');
+  const [isConsultingModalOpen, setIsConsultingModalOpen] = useState(false);
+  const onConsultingModalClose = () => {
+    setIsConsultingModalOpen(false);
+  };
 
   return (
     <Box
@@ -33,15 +29,18 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
       }}
     >
       <GeneralHeader />
-      {!disableHero && <GeneralHero />}
-      <FabGroup />
+      <FabGroup onMessageClick={() => setIsConsultingModalOpen(true)} />
+      <ConsultingModal
+        open={isConsultingModalOpen}
+        onClose={onConsultingModalClose}
+      />
       <Box
         sx={{
           flexGrow: 1,
           display: 'flex',
+          flexDirection: 'column',
           width: '100%',
-          justifyContent: 'center',
-          [theme.breakpoints.down('lg')]: { padding: 3 },
+          alignItems: 'center',
         }}
       >
         {children}
