@@ -1,5 +1,8 @@
 'use client';
 
+import Box from '@mui/material/Box';
+import { LARGE_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
+import GeneralHero from '@/components/layout/general-layout/GeneralHero';
 import StorePagination from '@/components/store/StorePagination';
 import StoreResult from '@/components/store/StoreResult';
 import StoreResultLayout from '@/components/store/StoreResultLayout';
@@ -20,11 +23,14 @@ export default function StorePage({
 }) {
   return (
     <>
-      <StoreSearch />
-      <StoreResultLayout>
-        <StoreResult searchParams={searchParams} />
-        <StorePagination />
-      </StoreResultLayout>
+      <GeneralHero />
+      <Box sx={{ width: LARGE_LAYOUT_WIDTH }}>
+        <StoreSearch />
+        <StoreResultLayout>
+          <StoreResult searchParams={searchParams} />
+          <StorePagination />
+        </StoreResultLayout>
+      </Box>
     </>
   );
 }

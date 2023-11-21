@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { useGetStore } from '@/api/store';
 import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { SectionTitle } from '@/components/common/section-title';
+import GeneralHero from '@/components/layout/general-layout/GeneralHero';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
 import { SectionLayout } from '@/components/main/section-layout';
@@ -28,6 +29,7 @@ export default function Home() {
         paddingBottom: 10,
       }}
     >
+      <GeneralHero />
       <RecommendedStore storeDataArr={data.data} isLoading={isLoading} />
       <SuccessExample />
       <NewlyAddedStore storeDataArr={data.data} isLoading={isLoading} />
