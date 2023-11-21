@@ -4,10 +4,12 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Image from 'next/image';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { useGetStore } from '@/api/store';
 import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { SectionTitle } from '@/components/common/section-title';
-import GeneralHero from '@/components/layout/general-layout/GeneralHero';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
 import { SectionLayout } from '@/components/main/section-layout';
@@ -29,7 +31,66 @@ export default function Home() {
         paddingBottom: 10,
       }}
     >
-      <GeneralHero />
+      <Box
+        sx={{
+          '& .swiper': {
+            width: '100%',
+            height: '400px',
+          },
+        }}
+      >
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          loop
+          grabCursor
+          pagination={{ clickable: true }}
+        >
+          <SwiperSlide>
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: 9,
+                  color: 'primary.contrastText',
+                }}
+              >
+                <Typography variant='h4'>코어창업</Typography>
+                <Typography>코어창업이</Typography>
+              </Box>
+              <Box
+                sx={{
+                  '&:after': {
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    content: '""',
+                    background: 'rgba(0, 0, 0, 0.5)',
+                  },
+                }}
+              >
+                <Image fill src={'/logo.png'} alt='hero image' />
+              </Box>
+            </Box>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image fill src={'/logo.png'} alt='hero image' />
+          </SwiperSlide>
+        </Swiper>
+      </Box>
       <RecommendedStore storeDataArr={data.data} isLoading={isLoading} />
       <SuccessExample />
       <NewlyAddedStore storeDataArr={data.data} isLoading={isLoading} />
