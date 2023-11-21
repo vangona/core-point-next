@@ -7,17 +7,31 @@ import Typography from '@mui/material/Typography';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
+  SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
-import { Autocomplete, Checkbox, Divider, Link } from '@mui/material';
+import {
+  Autocomplete,
+  Checkbox,
+  Divider,
+  Link,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import {
   STORE_CATEGORY_DATA_ARR,
   STORE_BUDGET_MAPPER,
   STORE_BUDGET_DATA_ARR,
   STORE_LOCATION_DATA_ARR,
 } from '@/components/store/constants';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 
 const OpeningConsultingContent = () => {
+  const theme = useTheme();
+  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
+  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const [layoutWidth, setLayoutWidth] = useState<string | number>(
+    MEDIUM_LAYOUT_WIDTH,
+  );
   const [storeCategory, setStoreCategory] = useState<string | undefined>(
     undefined,
   );
@@ -36,14 +50,24 @@ const OpeningConsultingContent = () => {
     setStoreLocation(value ?? undefined);
   };
 
+  useEffect(() => {
+    if (isUpLarge) {
+      setLayoutWidth(MEDIUM_LAYOUT_WIDTH);
+      return;
+    }
+
+    setLayoutWidth('100%');
+  }, [isUpLarge, isDownLarge]);
+
   return (
     <Box
       sx={{
-        width: MEDIUM_LAYOUT_WIDTH,
+        width: layoutWidth,
         display: 'flex',
         flexDirection: 'column',
         gap: 1,
         padding: 3,
+        mt: 2,
       }}
     >
       <Typography variant='h5' component='h3' whiteSpace='nowrap'>
@@ -56,12 +80,14 @@ const OpeningConsultingContent = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 1,
+          gap: 2,
+          py: 2,
         }}
       >
         <Box
           sx={{
             display: 'flex',
+            flexDirection: isDownLarge ? 'column' : 'row',
             width: '100%',
             justifyContent: 'space-between',
             gap: 2,
@@ -73,6 +99,7 @@ const OpeningConsultingContent = () => {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: isDownLarge ? 'column' : 'row',
             width: '100%',
             justifyContent: 'space-between',
             gap: 2,
