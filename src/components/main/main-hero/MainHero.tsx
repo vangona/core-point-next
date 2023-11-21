@@ -1,11 +1,10 @@
+import { useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MainIntroduceSlide } from '../main-introduce-slide';
-import { useMediaQuery, useTheme } from '@mui/material';
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
+import { MainIntroduceSlide } from '../main-introduce-slide';
 
 export const LARGE_HERO_HEIGHT = '400px';
 export const SMALL_HERO_HEIGHT = '250px';
@@ -17,7 +16,7 @@ const MainHero = () => {
 
   useEffect(() => {
     setHeroHeight(isDownMedium ? SMALL_HERO_HEIGHT : LARGE_HERO_HEIGHT);
-  });
+  }, [isDownMedium]);
 
   return (
     <Box

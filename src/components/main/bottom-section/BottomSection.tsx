@@ -1,11 +1,8 @@
-import {
-  Box,
-  Typography,
-  Button,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
 import React from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { SectionLayout } from '../section-layout';
 
 const BottomSection = () => {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import { ConsultingModal } from '@/components/common/consulting-modal';
 import FabGroup from '@/components/common/fab-group/FabGroup';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import GeneralFooter from './GeneralFooter';
 import GeneralHeader from './GeneralHeader';
-import { ConsultingModal } from '@/components/common/consulting-modal';
 
 interface GeneralLayoutInterface {
   children: React.ReactNode;

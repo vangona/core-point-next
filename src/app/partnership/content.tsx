@@ -1,18 +1,15 @@
 'use client';
 
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { MEDIUM_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
-import {
-  Checkbox,
-  Divider,
-  Link,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import { SyntheticEvent, useEffect, useState } from 'react';
 
 const PartnershipContent = () => {
   const theme = useTheme();

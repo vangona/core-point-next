@@ -47,7 +47,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
       setTitleSize(SMALL_TITLE_SIZE);
       return;
     }
-  }, [isUpLarge, isMedium]);
+  }, [isUpLarge, isMedium, isDownMedium]);
 
   return (
     <Box sx={{ width: '100%', height: heroHeight, position: 'relative' }}>

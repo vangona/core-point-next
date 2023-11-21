@@ -1,8 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Image from 'next/image';
 import OpeningConsultingContent from '@/app/consulting/opening/content';
 import { OFF_WHITE_COLOR } from '@/constants/color';
-import { Box, Modal, ModalProps, useMediaQuery, useTheme } from '@mui/material';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import type { ModalProps } from '@mui/material';
 
 const ConsultingModal = (props: Omit<ModalProps, 'children'>) => {
   const theme = useTheme();
@@ -12,7 +15,6 @@ const ConsultingModal = (props: Omit<ModalProps, 'children'>) => {
   const [modalWidth, setModalWidth] = useState<string | undefined>(undefined); // undefined 이면 auto
 
   useEffect(() => {
-    console.log(isUpMedium, isMedium, isDownMedium);
     if (isUpMedium) {
       setModalWidth(undefined);
       return;

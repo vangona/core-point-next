@@ -1,11 +1,12 @@
 'use client';
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { MEDIUM_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
-import { Divider, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import TransferForm from '@/components/consulting/transfer/TransferForm';
+import { MEDIUM_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 
 const TransferConsultingContent = () => {
   const theme = useTheme();

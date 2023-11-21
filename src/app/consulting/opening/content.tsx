@@ -1,29 +1,22 @@
 'use client';
 
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {
-  LARGE_LAYOUT_WIDTH,
-  MEDIUM_LAYOUT_WIDTH,
-  SMALL_LAYOUT_WIDTH,
-} from '@/components/layout/general-layout/constants';
-import {
-  Autocomplete,
-  Checkbox,
-  Divider,
-  Link,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { MEDIUM_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import {
   STORE_CATEGORY_DATA_ARR,
   STORE_BUDGET_MAPPER,
   STORE_BUDGET_DATA_ARR,
   STORE_LOCATION_DATA_ARR,
 } from '@/components/store/constants';
-import { SyntheticEvent, useEffect, useState } from 'react';
 
 const OpeningConsultingContent = () => {
   const theme = useTheme();

@@ -1,13 +1,11 @@
-import { STORE_CATEGORY_DATA_ARR } from '@/components/store/constants';
-import {
-  Box,
-  TextField,
-  Autocomplete,
-  Checkbox,
-  Button,
-  Link,
-} from '@mui/material';
 import React, { SyntheticEvent, useState } from 'react';
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import { STORE_CATEGORY_DATA_ARR } from '@/components/store/constants';
 
 interface TransferFormProps {
   isDownLarge: boolean;
@@ -17,6 +15,7 @@ const TransferForm = ({ isDownLarge }: TransferFormProps) => {
     undefined,
   );
 
+  const [name, setName] = useState();
   const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
     setStoreCategory(value ?? undefined);
   };

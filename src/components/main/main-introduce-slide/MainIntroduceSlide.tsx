@@ -1,6 +1,7 @@
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import React from 'react';
 
 const MainIntroduceSlide = () => {
   const theme = useTheme();
