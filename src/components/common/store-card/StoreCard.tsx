@@ -56,6 +56,7 @@ const StoreCard = (props: StoreCardProps) => {
   const containerSx: SxProps = {
     maxWidth: cardWidth,
     height: cardHeight,
+    display: 'flex',
     borderRadius: '8px',
     border: '1px solid',
     borderColor: theme.palette.divider,
