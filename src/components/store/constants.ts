@@ -7,7 +7,8 @@ export enum StoreCategoy {
   ICECREAM = '아이스크림',
   SPORTS = '시설스포츠',
 }
-export const STORE_CATEGORY_DATA_ARR: StoreCategoy[] = [
+export const STORE_CATEGORY_DATA_ARR: (StoreCategoy | '')[] = [
+  '',
   StoreCategoy.CAFE,
   StoreCategoy.BAKERY,
   StoreCategoy.CHICKEN,
