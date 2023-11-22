@@ -31,6 +31,6 @@ export interface Database {
 }
 
 export const supabase = createClient<Database>(
-  'https://kxaspmdxzvafhksqyboo.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4YXNwbWR4enZhZmhrc3F5Ym9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg4Mzk2NjUsImV4cCI6MjAxNDQxNTY2NX0.NsFAV3ddcRFSu3ghEW3j5i7CikH_KD0tz1yXEopxta8',
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
 );
