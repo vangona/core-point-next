@@ -20,7 +20,6 @@ const SuccessExampleCard = ({
     flexDirection: height > width ? 'column' : 'row',
     width,
     height,
-    margin: 2,
   };
 
   return (

@@ -7,6 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store } from '@/api/store';
+import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import SwiperNextButton from '@/components/common/swiper/SwiperNextButton';
 import SwiperPrevButton from '@/components/common/swiper/SwiperPrevButton';
@@ -66,7 +67,8 @@ const RecommendedStore = (props: RecommendedStoreProps) => {
 
   return (
     <SectionLayout>
-      <SectionTitle label='추천 매물' />
+      <SectionTitle label={'추천 매물'} />
+      <ParagraphDivider />
       <Box
         ref={ref}
         sx={{

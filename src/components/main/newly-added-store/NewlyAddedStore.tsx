@@ -7,6 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { Mousewheel, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store } from '@/api/store';
+import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
@@ -64,6 +65,7 @@ const NewlyAddedStore = ({ storeDataArr, isLoading }: NewlyAddedStoreProps) => {
   return (
     <SectionLayout>
       <SectionTitle label='신규 매물' />
+      <ParagraphDivider />
       <Box
         sx={{
           width: layoutWidth,
