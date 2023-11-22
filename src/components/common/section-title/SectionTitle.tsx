@@ -1,8 +1,9 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 interface SectionTitleProps {
-  label?: string;
+  label?: React.ReactNode;
 }
 const SectionTitle = (props: SectionTitleProps) => {
   const { label } = props;
@@ -14,9 +15,6 @@ const SectionTitle = (props: SectionTitleProps) => {
         sx={{ display: 'inline' }}
         fontWeight='bold'
       >
-        <Box display='inline' sx={{ color: 'primary.main' }}>
-          {'코어창업 '}
-        </Box>
         {label}
       </Typography>
     </Box>

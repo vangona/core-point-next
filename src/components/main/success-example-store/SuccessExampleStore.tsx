@@ -5,6 +5,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import { SuccessExampleCard } from '@/components/common/success-example-card';
 import { dummySuccessExample } from '@/components/common/success-example-card/dummySuccessExample';
@@ -53,6 +54,7 @@ const SuccessExampleStore = () => {
   return (
     <SectionLayout color='white'>
       <SectionTitle label='성공 사례' />
+      <ParagraphDivider />
       <Box
         sx={{
           width: layoutWidth,
