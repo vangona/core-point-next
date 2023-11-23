@@ -9,7 +9,7 @@ const BottomSection = () => {
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <SectionLayout color='white' innerSx={{ gap: 8 }}>
+    <SectionLayout color='white' sx={{ gap: 8 }}>
       {isDownMedium ? (
         <Box
           sx={{
