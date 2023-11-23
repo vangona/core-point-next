@@ -10,9 +10,10 @@ const StoreResultLayout = ({ children }: StoreResultLayoutProps) => {
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        marginTop: 2,
+        marginTop: 5,
         gap: 3,
       }}
     >

@@ -31,7 +31,9 @@ const RecommendedStore = () => {
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
-  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+  const [layoutWidth, setLayoutWidth] = useState<string | number>(
+    LARGE_LAYOUT_WIDTH,
+  );
 
   useEffect(() => {
     if (isUpLarge) {

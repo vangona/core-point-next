@@ -27,10 +27,12 @@ const NewlyAddedStore = () => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
-  const [slideWrapperWidth, setSliderWrapperWidth] = useState(
+  const [slideWrapperWidth, setSliderWrapperWidth] = useState<string | number>(
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
-  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+  const [layoutWidth, setLayoutWidth] = useState<string | number>(
+    LARGE_LAYOUT_WIDTH,
+  );
 
   useEffect(() => {
     if (isUpLarge) {

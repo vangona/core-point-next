@@ -17,7 +17,7 @@ interface StoreResultProps {
 }
 const StoreResult = ({ searchParams }: StoreResultProps) => {
   const theme = useTheme();
-  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
   const { data } = useGetStore(searchParams);
   const storeData = data?.data;
 
@@ -44,16 +44,16 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         gap: 3,
-        width: '1200px',
         justifyContent: 'space-between',
       }}
     >
       <Suspense fallback={<StoreResultLoading />}>
         <StoreCards storeData={storeData} />
       </Suspense>
-      {!isDownMedium && (
+      {!isDownLarge && (
         <StoreWindow
           storeData={minimumData?.data}
           isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture

@@ -16,6 +16,7 @@ const RecommendedStoreSwiper = () => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [slidePerView, setSlidePerView] = useState(LARGE_SLIDE_PER_VIEW);
 
   const { data: recommendedStores, isLoading } = useSuspenseQuery({
@@ -41,7 +42,7 @@ const RecommendedStoreSwiper = () => {
 
   return (
     <>
-      <SwiperPrevButton swiperRef={swiperRef} />
+      {!isDownMedium && <SwiperPrevButton swiperRef={swiperRef} />}
       <Swiper
         className='main-swiper'
         onBeforeInit={(swiper) => {
@@ -62,7 +63,7 @@ const RecommendedStoreSwiper = () => {
             </SwiperSlide>
           ))}
       </Swiper>
-      <SwiperNextButton swiperRef={swiperRef} />
+      {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
     </>
   );
 };

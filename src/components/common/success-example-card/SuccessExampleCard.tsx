@@ -1,3 +1,6 @@
+'use client';
+
+import { useMediaQuery, useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -15,12 +18,30 @@ const SuccessExampleCard = ({
   width,
   height,
 }: SuccessExampleCardProps) => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
   const containerSx: SxProps = {
+    position: 'relative',
+    boxSizing: 'border-box',
     display: 'flex',
-    flexDirection: height > width ? 'column' : 'row',
     width,
     height,
   };
+
+  const smallMediaSx: SxProps = isDownMedium
+    ? {
+        filter: 'brightness(50%)',
+      }
+    : {};
+
+  const smallContentSx: SxProps = isDownMedium
+    ? {
+        height: '100%',
+        position: 'absolute',
+        color: 'primary.contrastText',
+      }
+    : {};
 
   return (
     <Card raised sx={containerSx}>
@@ -29,7 +50,7 @@ const SuccessExampleCard = ({
         image={successExampleData?.imgSrc ?? ''}
         alt='success example image'
         width='400px'
-        sx={{ aspectRatio: '1/1', objectFit: 'cover' }}
+        sx={{ aspectRatio: '1/1', objectFit: 'cover', ...smallMediaSx }}
       />
       <CardContent
         sx={{
@@ -38,6 +59,7 @@ const SuccessExampleCard = ({
           alignItems: 'center',
           gap: 2,
           padding: 3,
+          ...smallContentSx,
         }}
       >
         <Typography

@@ -1,13 +1,13 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Mousewheel, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getNewStore } from '@/api/store';
 import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import { useMediaQuery, useTheme } from '@mui/material';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import React, { useEffect, useRef, useState } from 'react';
-import { Mousewheel, Pagination } from 'swiper/modules';
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 
 const LARGE_SLIDE_PER_VIEW = 5;
 const MEDIUM_SLIDE_PER_VIEW = 3;
@@ -42,7 +42,7 @@ const NewlyAddedStoreSwiper = () => {
 
   return (
     <>
-      <SwiperPrevButton swiperRef={swiperRef} />
+      {!isDownMedium && <SwiperPrevButton swiperRef={swiperRef} />}
       <Swiper
         className='main-swiper'
         onBeforeInit={(swiper) => {
@@ -64,7 +64,7 @@ const NewlyAddedStoreSwiper = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <SwiperNextButton swiperRef={swiperRef} />
+      {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
     </>
   );
 };
