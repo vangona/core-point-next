@@ -21,7 +21,7 @@ const NewlyAddedStoreSwiper = dynamic(() => import('./NewlyAddedStoreSwiper'), {
 
 const LARGE_SWIPER_WRAPPER_WIDTH = 1000;
 const MEDIUM_SWIPER_WRAPPER_WIDTH = 600;
-const SMALL_SWIPER_WRAPPER_WIDTH = 400;
+const SMALL_SWIPER_WRAPPER_WIDTH = '100%';
 
 const NewlyAddedStore = () => {
   const theme = useTheme();

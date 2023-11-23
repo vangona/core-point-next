@@ -22,6 +22,7 @@ const SectionLayout = (props: SectionLayoutProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
@@ -59,8 +60,8 @@ const SectionLayout = (props: SectionLayoutProps) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: 5,
-          marginBottom: 5,
+          padding: isDownMedium ? 2 : 5,
+          marginBottom: isDownMedium ? 2 : 5,
           ...sx,
         }}
       >
