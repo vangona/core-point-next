@@ -31,7 +31,9 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
-  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+  const [layoutWidth, setLayoutWidth] = useState<string | number>(
+    LARGE_LAYOUT_WIDTH,
+  );
 
   const { data: storeDetailData } = useSuspenseQuery({
     queryKey: ['store-detail', id],

@@ -24,7 +24,9 @@ const SuccessExampleStore = () => {
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(1000);
   const [cardWidth, setCardWidth] = useState(800);
   const [cardHeight, setCardHeight] = useState(400);
-  const [layoutWidth, setLayoutWidth] = useState(LARGE_LAYOUT_WIDTH);
+  const [layoutWidth, setLayoutWidth] = useState<string | number>(
+    LARGE_LAYOUT_WIDTH,
+  );
 
   const swiperRef = useRef<SwiperClass>();
 
