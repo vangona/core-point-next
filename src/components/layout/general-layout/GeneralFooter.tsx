@@ -17,9 +17,9 @@ import {
 
 const GeneralFooter = () => {
   const theme = useTheme();
-  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
@@ -42,11 +42,12 @@ const GeneralFooter = () => {
     <Box
       sx={{
         width: '100%',
-        height: DEFAULT_FOOTER_HEIGHT,
+        height: isDownMedium ? 'auto' : DEFAULT_FOOTER_HEIGHT,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'primary.main',
+        padding: 3,
       }}
     >
       <Box
@@ -64,7 +65,6 @@ const GeneralFooter = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center ',
             gap: 1,
@@ -86,6 +86,7 @@ const GeneralFooter = () => {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: isDownMedium ? 'column' : 'row',
             gap: 5,
             justifyContent: 'space-evenly',
           }}
@@ -104,11 +105,16 @@ const GeneralFooter = () => {
               <Typography variant='caption'>대표 | 조석훈</Typography>
             </Box>
           </Box>
-          <Divider
-            orientation='vertical'
-            flexItem
-            sx={{ height: '100%', backgroundColor: 'primary.dark' }}
-          />
+          {!isDownMedium && (
+            <Divider
+              orientation='vertical'
+              flexItem
+              sx={{
+                height: '100%',
+                backgroundColor: 'primary.dark',
+              }}
+            />
+          )}
           <Box
             sx={{
               display: 'flex',
