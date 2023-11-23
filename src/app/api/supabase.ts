@@ -9,8 +9,15 @@ import {
   TransferRequestColumn,
 } from './types';
 
+export enum DbTables {
+  STORES = 'stores',
+  OPENING_REQUEST = 'opening_request',
+  TRANSFER_REQUEST = 'transfer_request',
+  PARTNERSHIP_REQUEST = 'partnership_request',
+}
+
 export interface TableDefinitions {
-  stores: {
+  [DbTables.STORES]: {
     [StoresColumn.STORE_ID]: number;
     [StoresColumn.STORE_NAME]: string;
     [StoresColumn.STORE_LOCATION]: StoreLocation;
@@ -32,7 +39,7 @@ export interface TableDefinitions {
     [StoresColumn.STORE_STATE]: StoreState;
     [StoresColumn.MEMO]: string;
   };
-  ['opening_request']: {
+  [DbTables.OPENING_REQUEST]: {
     [OpeningRequestColumn.ID]: number;
     [OpeningRequestColumn.NAME]: string;
     [OpeningRequestColumn.CONTACT]: string;
@@ -46,7 +53,7 @@ export interface TableDefinitions {
     [OpeningRequestColumn.REQUEST_STATE]: RequestState;
     [OpeningRequestColumn.MEMO]: string;
   };
-  ['transfer_request']: {
+  [DbTables.TRANSFER_REQUEST]: {
     [TransferRequestColumn.ID]: number;
     [TransferRequestColumn.NAME]: string;
     [TransferRequestColumn.CONTACT]: string;
@@ -61,7 +68,7 @@ export interface TableDefinitions {
     [TransferRequestColumn.REQUEST_STATE]: RequestState;
     [TransferRequestColumn.MEMO]: string;
   };
-  ['partnership_request']: {
+  [DbTables.PARTNERSHIP_REQUEST]: {
     [PartnershipRequestColumn.ID]: number;
     [PartnershipRequestColumn.NAME]: string;
     [PartnershipRequestColumn.CONTACT]: string;
@@ -79,7 +86,7 @@ export type TableStores = TableDefinitions['stores'];
 
 export interface Database {
   public: {
-    Tables: TableStores;
+    Tables: TableDefinitions;
   };
 }
 
