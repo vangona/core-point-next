@@ -7,6 +7,7 @@ export async function GET(req: NextRequest) {
   const query = await supabase
     .from(SupabaseTable.STORES)
     .select()
+    .eq('deleted', 'FALSE')
     .eq('store_id', storeId);
 
   return NextResponse.json({ data: query.data });
