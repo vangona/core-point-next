@@ -49,7 +49,7 @@ const SuccessExampleStore = () => {
 
     setSliderWrapperWidth(400);
     setCardWidth(300);
-    setCardHeight(600);
+    setCardHeight(300);
     setLayoutWidth(SMALL_LAYOUT_WIDTH);
   }, [isUpLarge, isMedium]);
 
