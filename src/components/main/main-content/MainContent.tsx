@@ -17,19 +17,11 @@ const MainContent = () => {
     queryKey: ['store-new'],
     queryFn: () => getNewStore(),
   });
-  const { data: recommendedStores, isLoading: isRecommendedStoreLoading } =
-    useSuspenseQuery({
-      queryKey: ['store-recommended'],
-      queryFn: () => getRecommendedStore(),
-    });
 
   return (
     <>
       <MainHero />
-      <RecommendedStore
-        storeDataArr={recommendedStores.data}
-        isLoading={isRecommendedStoreLoading}
-      />
+      <RecommendedStore />
       <SuccessExample />
       <NewlyAddedStore
         storeDataArr={newStores.data}
