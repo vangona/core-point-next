@@ -6,16 +6,15 @@ import {
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
-import { useTheme, useMediaQuery, Box, Skeleton } from '@mui/material';
+import { useTheme, useMediaQuery, Box } from '@mui/material';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import SectionSkeleton from '@/components/main/section-skeleton/SectionSkeleton';
 const RecommendedStoreSwiper = dynamic(
   () => import('./RecommendedStoreSwiper'),
   {
     ssr: false,
-    loading: () => (
-      <Skeleton sx={{ my: 6, mx: 2, width: '100%', height: '300px' }} />
-    ),
+    loading: () => <SectionSkeleton />,
   },
 );
 

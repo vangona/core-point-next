@@ -13,20 +13,12 @@ import { SectionLayout } from '@/components/main/section-layout';
 import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
 
 const MainContent = () => {
-  const { data: newStores, isLoading: isNewStoreLoading } = useSuspenseQuery({
-    queryKey: ['store-new'],
-    queryFn: () => getNewStore(),
-  });
-
   return (
     <>
       <MainHero />
       <RecommendedStore />
       <SuccessExample />
-      <NewlyAddedStore
-        storeDataArr={newStores.data}
-        isLoading={isNewStoreLoading}
-      />
+      <NewlyAddedStore />
       <SectionLayout color='white'>
         <SectionTitle label='협업 브랜드' />
       </SectionLayout>
