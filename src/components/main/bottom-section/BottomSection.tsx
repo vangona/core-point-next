@@ -19,11 +19,11 @@ const BottomSection = () => {
             gap: 2,
           }}
         >
-          <Typography variant='h4' component='h3' fontWeight='bold'>
+          <Typography variant='h5' component='h3' fontWeight='bold'>
             창업의 문을 여는 열쇠
           </Typography>
           <Typography
-            variant='h4'
+            variant='h5'
             component='h3'
             fontWeight='bold'
             color='primary.main'
