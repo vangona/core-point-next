@@ -23,7 +23,7 @@ export default function StorePage({
 }) {
   return (
     <>
-      <GeneralHero />
+      <GeneralHero title='매물 정보' />
       <Box sx={{ width: LARGE_LAYOUT_WIDTH }}>
         <StoreSearch />
         <StoreResultLayout>

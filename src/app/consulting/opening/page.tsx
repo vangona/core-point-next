@@ -4,7 +4,7 @@ import OpeningConsultingContent from './content';
 export default function Opening() {
   return (
     <>
-      <GeneralHero />
+      <GeneralHero title='창업 컨설팅 신청' />
       <OpeningConsultingContent />
     </>
   );
