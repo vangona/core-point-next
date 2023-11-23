@@ -51,7 +51,7 @@ const NewlyAddedStore = () => {
 
   return (
     <SectionLayout>
-      <SectionTitle label='신규 매물' />
+      <SectionTitle label='신규 등록 매물' />
       <ParagraphDivider />
       <Box
         sx={{

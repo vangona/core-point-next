@@ -51,7 +51,7 @@ const RecommendedStore = () => {
 
   return (
     <SectionLayout>
-      <SectionTitle label={'추천 매물'} />
+      <SectionTitle label={'코어창업 추천 매물'} />
       <ParagraphDivider />
       <Box
         sx={{
