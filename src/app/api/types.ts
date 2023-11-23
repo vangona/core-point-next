@@ -26,12 +26,14 @@ export enum StoresColumn {
   SALES_REASON = 'sales_reason',
   MANAGER = 'manager',
   MANAGER_CONTACT = 'manager_contact',
+  DESCRIPTION = 'description',
   STORE_SIZE_M2 = 'store_size_m2',
   STORE_IMG_SRC_ARR = 'store_img_src_arr',
   STORE_STATE = 'store_state',
   CREATED_AT = 'created_at',
   UPDATED_AT = 'updated_at',
   DELETED = 'deleted',
+  MEMO = 'memo',
 }
 export enum OpeningRequestColumn {
   ID = 'id',
@@ -45,6 +47,7 @@ export enum OpeningRequestColumn {
   CREATED_AT = 'created_at',
   UPDATED_AT = 'updated_at',
   DELETED = 'deleted',
+  MEMO = 'memo',
 }
 
 export enum TransferRequestColumn {
@@ -60,6 +63,7 @@ export enum TransferRequestColumn {
   CREATED_AT = 'created_at',
   UPDATED_AT = 'updated_at',
   DELETED = 'deleted',
+  MEMO = 'memo',
 }
 
 export enum PartnershipRequestColumn {
@@ -73,6 +77,7 @@ export enum PartnershipRequestColumn {
   CREATED_AT = 'created_at',
   UPDATED_AT = 'updated_at',
   DELETED = 'deleted',
+  MEMO = 'memo',
 }
 
 export enum StoreState {

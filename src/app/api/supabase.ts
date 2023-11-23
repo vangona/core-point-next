@@ -23,12 +23,14 @@ export interface TableDefinitions {
     [StoresColumn.SALES_REASON]: string;
     [StoresColumn.MANAGER]: string;
     [StoresColumn.MANAGER_CONTACT]: string;
+    [StoresColumn.DESCRIPTION]: string;
     [StoresColumn.CREATED_AT]: string;
     [StoresColumn.UPDATED_AT]: string;
     [StoresColumn.DELETED]: boolean;
     [StoresColumn.STORE_SIZE_M2]?: string;
     [StoresColumn.STORE_IMG_SRC_ARR]?: string[];
     [StoresColumn.STORE_STATE]: StoreState;
+    [StoresColumn.MEMO]: string;
   };
   ['opening_request']: {
     [OpeningRequestColumn.ID]: number;
@@ -42,6 +44,7 @@ export interface TableDefinitions {
     [OpeningRequestColumn.UPDATED_AT]: string;
     [OpeningRequestColumn.DELETED]: boolean;
     [OpeningRequestColumn.REQUEST_STATE]: RequestState;
+    [OpeningRequestColumn.MEMO]: string;
   };
   ['transfer_request']: {
     [TransferRequestColumn.ID]: number;
@@ -56,6 +59,7 @@ export interface TableDefinitions {
     [TransferRequestColumn.UPDATED_AT]: string;
     [TransferRequestColumn.DELETED]: boolean;
     [TransferRequestColumn.REQUEST_STATE]: RequestState;
+    [TransferRequestColumn.MEMO]: string;
   };
   ['partnership_request']: {
     [PartnershipRequestColumn.ID]: number;
@@ -67,6 +71,7 @@ export interface TableDefinitions {
     [PartnershipRequestColumn.CREATED_AT]: string;
     [PartnershipRequestColumn.UPDATED_AT]: string;
     [PartnershipRequestColumn.DELETED]: boolean;
+    [PartnershipRequestColumn.MEMO]: string;
   };
 }
 
