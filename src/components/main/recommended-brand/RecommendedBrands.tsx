@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 
+const MEDIUM_LOGO_SIZE = '100px';
+const SMALL_LOGO_SIZE = '50px';
+
 const RecommendedBrands = () => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBrandName, setCurrentBrandName] = useState('');
   const { data } = useSuspenseQuery({
@@ -25,18 +32,19 @@ const RecommendedBrands = () => {
   return (
     <>
       {data.data?.map((brand, index) => (
-        <Box
-          key={'recommended-brand-' + index}
-          sx={{
-            position: 'relative',
-            width: '100px',
-            height: '100px',
-            '&:hover': { cursor: 'pointer' },
-          }}
-          onClick={(e) => handleBrandClick(e, brand.brand_name)}
-        >
-          <Image src={brand.brand_img_src} alt={brand.brand_name} fill />
-        </Box>
+        <Tooltip title={brand.brand_name} key={'recommended-brand-' + index}>
+          <Box
+            sx={{
+              position: 'relative',
+              width: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
+              height: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
+              '&:hover': { cursor: 'pointer' },
+            }}
+            onClick={(e) => handleBrandClick(e, brand.brand_name)}
+          >
+            <Image src={brand.brand_img_src} alt={brand.brand_name} fill />
+          </Box>
+        </Tooltip>
       ))}
       <ConsultingModal
         open={isModalOpen}

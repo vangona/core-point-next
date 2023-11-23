@@ -17,10 +17,11 @@ const RecommendedBrand = () => {
       <ParagraphDivider />
       <Box
         sx={{
-          mt: 3,
+          mt: 5,
+          mb: 10,
           display: 'flex',
           width: '100%',
-          gap: 10,
+          gap: 5,
           justifyContent: 'center',
           alignItems: 'center',
         }}
