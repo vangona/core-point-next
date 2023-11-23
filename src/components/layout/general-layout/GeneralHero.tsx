@@ -16,13 +16,14 @@ const MEDIUM_TITLE_SIZE = 'h4';
 const SMALL_TITLE_SIZE = 'h5';
 
 interface GeneralHeroProps {
-  title?: string;
-  description?: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   imgSrc?: string;
   heroComponent?: React.ReactNode;
+  disableImg?: boolean;
 }
 const GeneralHero = (props: GeneralHeroProps) => {
-  const { heroComponent, description, imgSrc, title } = props;
+  const { heroComponent, description, imgSrc, title, disableImg } = props;
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -90,17 +91,19 @@ const GeneralHero = (props: GeneralHeroProps) => {
               },
             }}
           >
-            <Image
-              fill
-              objectFit='cover'
-              objectPosition='50% 100%'
-              alt='hero image'
-              src={
-                imgSrc
-                  ? imgSrc
-                  : 'https://source.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
-              }
-            />
+            {!disableImg && (
+              <Image
+                fill
+                objectFit='cover'
+                objectPosition='50% 100%'
+                alt='hero image'
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : 'https://source.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
+                }
+              />
+            )}
           </Box>
         </>
       )}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,7 +9,7 @@ const BottomSection = () => {
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <SectionLayout color='white' innerSx={{ gap: 8 }}>
+    <SectionLayout color='white' sx={{ gap: 8 }}>
       {isDownMedium ? (
         <Box
           sx={{

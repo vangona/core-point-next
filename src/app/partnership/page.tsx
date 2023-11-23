@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import { Metadata } from 'next';
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
 import PartnershipContent from './content';
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 export default function Partnership() {
   return (
     <>
-      <GeneralHero />
+      <GeneralHero title='협업 신청' />
       <PartnershipContent />
     </>
   );

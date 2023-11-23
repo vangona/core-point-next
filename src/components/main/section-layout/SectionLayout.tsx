@@ -16,10 +16,9 @@ interface SectionLayoutProps {
   color?: 'white' | 'beige';
   children?: React.ReactNode;
   sx?: SxProps;
-  innerSx?: SxProps;
 }
 const SectionLayout = (props: SectionLayoutProps) => {
-  const { height, color, children, sx, innerSx } = props;
+  const { height, color, children, sx } = props;
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -51,28 +50,19 @@ const SectionLayout = (props: SectionLayoutProps) => {
       <Box
         component='section'
         sx={{
+          maxWidth: layoutWidth,
+          height: height,
+          flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
-          height: height,
           alignItems: 'center',
+          justifyContent: 'center',
           padding: 5,
           marginBottom: 5,
-          maxWidth: layoutWidth,
           ...sx,
         }}
       >
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            ...innerSx,
-          }}
-        >
-          {children}
-        </Box>
+        {children}
       </Box>
     </Box>
   );

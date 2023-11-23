@@ -30,7 +30,8 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
+  const openDrawer = () => setIsDrawerOpen(true);
+  const closeDrawer = () => setIsDrawerOpen(false);
 
   const onLogoClick = () => {
     router.push(CorePointRoutes.HOME);
@@ -143,7 +144,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
             color='inherit'
             aria-label='open drawer'
             edge='start'
-            onClick={toggleDrawer}
+            onClick={openDrawer}
             sx={(theme) => ({
               mr: 3,
               display: 'none',
@@ -155,7 +156,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
         </Toolbar>
         <NavDrawer
           isOpen={isDrawerOpen}
-          onClose={toggleDrawer}
+          onClose={closeDrawer}
           navDataArr={NAV_DATA_ARR}
         />
       </AppBar>

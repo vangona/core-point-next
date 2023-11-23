@@ -1,29 +1,25 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-  useQuery,
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import { useGetStore } from '@/api/store';
 import { getStoreMinimum } from '@/api/store/getStoreMinimum';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
 import { StoreSearchParams } from '@/app/store/page';
 import StoreCards from './StoreCards';
 import StoreResultLoading from './StoreResultLoading';
-import StoreWindow from './StoreWindow';
+
+const StoreWindow = dynamic(() => import('./StoreWindow'), { ssr: false }); // store window는 localstorage 사용하기 때문에 ssr false
 
 interface StoreResultProps {
   searchParams: StoreSearchParams;
 }
 const StoreResult = ({ searchParams }: StoreResultProps) => {
-  const queryClient = new QueryClient();
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const query = useGetStore(searchParams);
-  const storeData = query.data?.data;
+  const { data } = useGetStore(searchParams);
+  const storeData = data?.data;
 
   const [recentStores, setRecentStores] = useState<string[] | undefined>(
     undefined,
@@ -55,9 +51,7 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
       }}
     >
       <Suspense fallback={<StoreResultLoading />}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <StoreCards storeData={storeData} />
-        </HydrationBoundary>
+        <StoreCards storeData={storeData} />
       </Suspense>
       {!isDownMedium && (
         <StoreWindow

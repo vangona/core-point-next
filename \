@@ -1,0 +1,14 @@
+type: 협업 브랜드 타이핑
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Nov 23 22:42:57 2023 +0900
+#
+# On branch feat/transfer-consulting
+# Changes to be committed:
+#	modified:   src/app/api/partnership/route.ts
+#	modified:   src/app/api/store/new/route.ts
+#	modified:   src/app/api/supabase.ts
+#	modified:   src/app/api/types.ts
+#

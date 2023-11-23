@@ -53,7 +53,7 @@ const SuccessExampleStore = () => {
 
   return (
     <SectionLayout color='white'>
-      <SectionTitle label='성공 사례' />
+      <SectionTitle label='창업 성공 사례' />
       <ParagraphDivider />
       <Box
         sx={{

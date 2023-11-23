@@ -1,3 +1,4 @@
+import React from 'react';
 import Assignment from '@mui/icons-material/Assignment';
 import ChatBubble from '@mui/icons-material/ChatBubble';
 import Handshake from '@mui/icons-material/Handshake';
@@ -11,7 +12,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { CorePointRoutes } from '@/constants/routes';
 import { NavData } from './constants';
 import type { ModalProps } from '@mui/material';
@@ -23,6 +24,15 @@ interface NavDrawerProps {
 }
 const NavDrawer = (props: NavDrawerProps) => {
   const { navDataArr, isOpen, onClose } = props;
+  const router = useRouter();
+
+  const handleLinkClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    href: CorePointRoutes,
+  ) => {
+    onClose && onClose(event, 'backdropClick');
+    router.push(href);
+  };
 
   return (
     <nav>
@@ -60,13 +70,11 @@ const NavDrawer = (props: NavDrawerProps) => {
                     <Handshake />
                   )}
                 </ListItemIcon>
-                <ListItemText>
-                  <Link
-                    href={navData.href}
-                    style={{ textDecoration: 'none', color: 'black' }}
-                  >
-                    {navData.label}
-                  </Link>
+                <ListItemText
+                  onClick={(e) => handleLinkClick(e, navData.href)}
+                  sx={{ textDecoration: 'none', color: 'black' }}
+                >
+                  {navData.label}
                 </ListItemText>
               </ListItemButton>
             </ListItem>

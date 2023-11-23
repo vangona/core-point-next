@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
   if (search) query = query.ilike('store_name', `%${search}%`);
 
   query = query
+    .eq('deleted', 'FALSE')
     .range(page * limit, (page + 1) * limit - 1)
     .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
 

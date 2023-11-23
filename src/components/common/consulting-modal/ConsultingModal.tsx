@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Image from 'next/image';
 import OpeningConsultingContent from '@/app/consulting/opening/content';
+import { OpeningFormInput } from '@/components/consulting/opening/OpeningForm';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { ModalProps } from '@mui/material';
 
-const ConsultingModal = (props: Omit<ModalProps, 'children'>) => {
+type ConsultingModalProps = Omit<ModalProps, 'children'> & {
+  initialValue?: Partial<OpeningFormInput>;
+};
+const ConsultingModal = ({ initialValue, ...props }: ConsultingModalProps) => {
   const theme = useTheme();
   const isUpMedium = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -55,7 +59,7 @@ const ConsultingModal = (props: Omit<ModalProps, 'children'>) => {
           src='/core-icon.png'
           alt='열쇠 모양의 코어창업 로고'
         />
-        <OpeningConsultingContent />
+        <OpeningConsultingContent initialValue={initialValue} />
       </Box>
     </Modal>
   );
