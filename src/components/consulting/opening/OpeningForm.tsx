@@ -26,8 +26,9 @@ export interface OpeningFormInput {
 
 interface OpeningFormProps {
   isDownLarge: boolean;
+  initialValue?: Partial<OpeningFormInput>;
 }
-const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
+const OpeningForm = ({ isDownLarge, initialValue }: OpeningFormProps) => {
   const {
     reset,
     control,
@@ -75,7 +76,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='name'
           control={control}
-          defaultValue=''
+          defaultValue={initialValue?.name ? initialValue.name : ''}
           rules={{ required: true }}
           render={({ field, fieldState }) => (
             <TextField
@@ -93,7 +94,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='contact'
           control={control}
-          defaultValue=''
+          defaultValue={initialValue?.contact ? initialValue.contact : ''}
           rules={{ required: true }}
           render={({ field, fieldState }) => (
             <TextField
@@ -121,7 +122,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='category'
           control={control}
-          defaultValue=''
+          defaultValue={initialValue?.category ? initialValue.category : ''}
           rules={{ required: true }}
           render={({ field: { onChange, value }, fieldState }) => (
             <Autocomplete
@@ -145,7 +146,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='budget'
           control={control}
-          defaultValue=''
+          defaultValue={initialValue?.budget ? initialValue.budget : ''}
           rules={{ required: true }}
           render={({ field: { onChange, value }, fieldState }) => (
             <Autocomplete
@@ -169,7 +170,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='location'
           control={control}
-          defaultValue=''
+          defaultValue={initialValue?.location ? initialValue.location : ''}
           rules={{ required: true }}
           render={({ field: { onChange, value }, fieldState }) => (
             <Autocomplete
@@ -194,7 +195,7 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
       <Controller
         name='additional'
         control={control}
-        defaultValue=''
+        defaultValue={initialValue?.additional ? initialValue.additional : ''}
         render={({ field, fieldState }) => (
           <TextField
             {...field}
@@ -218,7 +219,9 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
         <Controller
           name='privateAgree'
           control={control}
-          defaultValue={false}
+          defaultValue={
+            initialValue?.privateAgree ? initialValue.privateAgree : false
+          }
           rules={{ required: true }}
           render={({ field, fieldState }) => (
             <Box>

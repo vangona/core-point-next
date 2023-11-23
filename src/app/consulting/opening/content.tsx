@@ -5,10 +5,17 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import OpeningForm from '@/components/consulting/opening/OpeningForm';
+import OpeningForm, {
+  OpeningFormInput,
+} from '@/components/consulting/opening/OpeningForm';
 import { MEDIUM_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 
-const OpeningConsultingContent = () => {
+interface OpeningConsultingContentProps {
+  initialValue?: Partial<OpeningFormInput>;
+}
+const OpeningConsultingContent = ({
+  initialValue,
+}: OpeningConsultingContentProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
@@ -40,7 +47,7 @@ const OpeningConsultingContent = () => {
         창업 컨설팅 신청하기
       </Typography>
       <Divider />
-      <OpeningForm isDownLarge={isDownLarge} />
+      <OpeningForm isDownLarge={isDownLarge} initialValue={initialValue} />
     </Box>
   );
 };

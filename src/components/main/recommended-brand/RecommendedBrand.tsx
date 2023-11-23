@@ -1,15 +1,32 @@
-import { SectionTitle } from '@/components/common/section-title';
-import React from 'react';
-import { SectionLayout } from '../section-layout';
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
+import dynamic from 'next/dynamic';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
-import RecommendedBrands from './RecommendedBrands';
+import { SectionTitle } from '@/components/common/section-title';
+import { SectionLayout } from '../section-layout';
+
+const RecommendedBrands = dynamic(() => import('./RecommendedBrands'), {
+  ssr: false,
+  loading: () => <Skeleton width='100%' height='100px' />,
+});
 
 const RecommendedBrand = () => {
   return (
     <SectionLayout color='white'>
       <SectionTitle label='창업 추천 브랜드' />
       <ParagraphDivider />
-      <RecommendedBrands />
+      <Box
+        sx={{
+          mt: 3,
+          display: 'flex',
+          width: '100%',
+          gap: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <RecommendedBrands />
+      </Box>
     </SectionLayout>
   );
 };

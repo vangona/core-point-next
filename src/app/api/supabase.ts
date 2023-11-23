@@ -18,6 +18,61 @@ export enum DbTables {
   PARTNERSHIP_BRANDS = 'partnership_brands',
 }
 
+export interface OpeningRequest {
+  [OpeningRequestColumn.ID]: number;
+  [OpeningRequestColumn.NAME]: string;
+  [OpeningRequestColumn.CONTACT]: string;
+  [OpeningRequestColumn.CATEGORY]: string;
+  [OpeningRequestColumn.LOCATION]: string;
+  [OpeningRequestColumn.BUDGET]: string;
+  [OpeningRequestColumn.ADDITIONAL]: string;
+  [OpeningRequestColumn.CREATED_AT]: string;
+  [OpeningRequestColumn.UPDATED_AT]: string;
+  [OpeningRequestColumn.DELETED]: boolean;
+  [OpeningRequestColumn.REQUEST_STATE]: RequestState;
+  [OpeningRequestColumn.MEMO]: string;
+}
+
+export interface TransferRequest {
+  [TransferRequestColumn.ID]: number;
+  [TransferRequestColumn.NAME]: string;
+  [TransferRequestColumn.CONTACT]: string;
+  [TransferRequestColumn.LOCATION]: string;
+  [TransferRequestColumn.SIZE]: string;
+  [TransferRequestColumn.STORE_NAME]: string;
+  [TransferRequestColumn.CATEGORY]: string;
+  [TransferRequestColumn.ADDITIONAL]: string;
+  [TransferRequestColumn.CREATED_AT]: string;
+  [TransferRequestColumn.UPDATED_AT]: string;
+  [TransferRequestColumn.DELETED]: boolean;
+  [TransferRequestColumn.REQUEST_STATE]: RequestState;
+  [TransferRequestColumn.MEMO]: string;
+}
+
+export interface PartnershipRequest {
+  [PartnershipRequestColumn.ID]: number;
+  [PartnershipRequestColumn.NAME]: string;
+  [PartnershipRequestColumn.CONTACT]: string;
+  [PartnershipRequestColumn.BRAND_NAME]: string;
+  [PartnershipRequestColumn.ADDITIONAL]: string;
+  [PartnershipRequestColumn.REQUEST_STATE]: RequestState;
+  [PartnershipRequestColumn.CREATED_AT]: string;
+  [PartnershipRequestColumn.UPDATED_AT]: string;
+  [PartnershipRequestColumn.DELETED]: boolean;
+  [PartnershipRequestColumn.MEMO]: string;
+}
+
+export interface PartnershipBrand {
+  [PartnershipBrandsColumn.ID]: number;
+  [PartnershipBrandsColumn.BRAND_NAME]: string;
+  [PartnershipBrandsColumn.BRAND_IMG_SRC]: string;
+  [PartnershipBrandsColumn.BRAND_URL]: string;
+  [PartnershipBrandsColumn.BRAND_STATE]: StoreState;
+  [PartnershipBrandsColumn.CREATED_AT]: string;
+  [PartnershipBrandsColumn.UPDATED_AT]: string;
+  [PartnershipBrandsColumn.DELETED]: boolean;
+}
+
 export interface TableDefinitions {
   [DbTables.STORES]: {
     [StoresColumn.STORE_ID]: number;
@@ -41,61 +96,11 @@ export interface TableDefinitions {
     [StoresColumn.STORE_STATE]: StoreState;
     [StoresColumn.MEMO]: string;
   };
-  [DbTables.OPENING_REQUEST]: {
-    [OpeningRequestColumn.ID]: number;
-    [OpeningRequestColumn.NAME]: string;
-    [OpeningRequestColumn.CONTACT]: string;
-    [OpeningRequestColumn.CATEGORY]: string;
-    [OpeningRequestColumn.LOCATION]: string;
-    [OpeningRequestColumn.BUDGET]: string;
-    [OpeningRequestColumn.ADDITIONAL]: string;
-    [OpeningRequestColumn.CREATED_AT]: string;
-    [OpeningRequestColumn.UPDATED_AT]: string;
-    [OpeningRequestColumn.DELETED]: boolean;
-    [OpeningRequestColumn.REQUEST_STATE]: RequestState;
-    [OpeningRequestColumn.MEMO]: string;
-  };
-  [DbTables.TRANSFER_REQUEST]: {
-    [TransferRequestColumn.ID]: number;
-    [TransferRequestColumn.NAME]: string;
-    [TransferRequestColumn.CONTACT]: string;
-    [TransferRequestColumn.LOCATION]: string;
-    [TransferRequestColumn.SIZE]: string;
-    [TransferRequestColumn.STORE_NAME]: string;
-    [TransferRequestColumn.CATEGORY]: string;
-    [TransferRequestColumn.ADDITIONAL]: string;
-    [TransferRequestColumn.CREATED_AT]: string;
-    [TransferRequestColumn.UPDATED_AT]: string;
-    [TransferRequestColumn.DELETED]: boolean;
-    [TransferRequestColumn.REQUEST_STATE]: RequestState;
-    [TransferRequestColumn.MEMO]: string;
-  };
-  [DbTables.PARTNERSHIP_REQUEST]: {
-    [PartnershipRequestColumn.ID]: number;
-    [PartnershipRequestColumn.NAME]: string;
-    [PartnershipRequestColumn.CONTACT]: string;
-    [PartnershipRequestColumn.BRAND_NAME]: string;
-    [PartnershipRequestColumn.ADDITIONAL]: string;
-    [PartnershipRequestColumn.REQUEST_STATE]: RequestState;
-    [PartnershipRequestColumn.CREATED_AT]: string;
-    [PartnershipRequestColumn.UPDATED_AT]: string;
-    [PartnershipRequestColumn.DELETED]: boolean;
-    [PartnershipRequestColumn.MEMO]: string;
-  };
-  [DbTables.PARTNERSHIP_BRANDS]: {
-    [PartnershipBrandsColumn.ID]: number;
-    [PartnershipBrandsColumn.BRAND_NAME]: string;
-    [PartnershipBrandsColumn.BRAND_IMG_SRC]: string;
-    [PartnershipBrandsColumn.BRAND_URL]: string;
-    [PartnershipBrandsColumn.BRAND_STATE]: StoreState;
-    [PartnershipBrandsColumn.CREATED_AT]: string;
-    [PartnershipBrandsColumn.UPDATED_AT]: string;
-    [PartnershipBrandsColumn.DELETED]: boolean;
-  };
+  [DbTables.OPENING_REQUEST]: OpeningRequest;
+  [DbTables.TRANSFER_REQUEST]: TransferRequest;
+  [DbTables.PARTNERSHIP_REQUEST]: PartnershipRequest;
+  [DbTables.PARTNERSHIP_BRANDS]: PartnershipBrand;
 }
-
-export type TableStores = TableDefinitions['stores'];
-
 export interface Database {
   public: {
     Tables: TableDefinitions;
