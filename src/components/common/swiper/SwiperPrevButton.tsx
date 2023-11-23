@@ -26,4 +26,4 @@ const SwiperPrevButton = ({
   );
 };
 
-export default React.forwardRef(SwiperPrevButton);
+export default SwiperPrevButton;

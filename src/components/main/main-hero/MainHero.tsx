@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Skeleton, useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
-import { MainIntroduceSlide } from '../main-introduce-slide';
+
+const MainIntroduceSlide = dynamic(
+  () => import('../main-introduce-slide/MainIntroduceSlide'),
+  {
+    ssr: false,
+    loading: () => (
+      <GeneralHero
+        disableImg
+        title={<Skeleton width='200px' />}
+        description={<Skeleton width='300px' />}
+      />
+    ),
+  },
+);
 
 export const LARGE_HERO_HEIGHT = '400px';
 export const SMALL_HERO_HEIGHT = '250px';
