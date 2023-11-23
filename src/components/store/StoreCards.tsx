@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { Store } from '@/api/store';
-import { StoreCard } from '../common/store-card';
+import { StoreCard } from '@/components/common/store-card';
 
 interface StoreCardsProps {
   storeData: Store[];
@@ -9,6 +9,7 @@ const StoreCards = ({ storeData }: StoreCardsProps) => {
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
