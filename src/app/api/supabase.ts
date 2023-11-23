@@ -1,24 +1,72 @@
 import { createClient } from '@supabase/supabase-js';
+import { StoreCategoy, StoreLocation } from '@/components/store/constants';
+import {
+  OpeningRequestColumn,
+  PartnershipRequestColumn,
+  RequestState,
+  StoreState,
+  StoresColumn,
+  TransferRequestColumn,
+} from './types';
 
 export interface TableDefinitions {
   stores: {
-    store_id: number;
-    store_name: string;
-    store_location: string;
-    store_size: string;
-    store_category: '카페 / 디저트';
-    store_cost: number;
-    monthly_sales: number;
-    monthly_revenue: number;
-    monthly_cost: number;
-    sales_reason: string;
-    manager: string;
-    manager_contact: string;
-    created_at: string;
-    updated_at: string;
-    deleted: boolean;
-    store_size_m2?: string;
-    store_img_src_arr?: string[];
+    [StoresColumn.STORE_ID]: number;
+    [StoresColumn.STORE_NAME]: string;
+    [StoresColumn.STORE_LOCATION]: StoreLocation;
+    [StoresColumn.STORE_SIZE]: string;
+    [StoresColumn.STORE_CATEGORY]: StoreCategoy;
+    [StoresColumn.STORE_COST]: number;
+    [StoresColumn.MONTHLY_SALES]: number;
+    [StoresColumn.MONTHLY_REVENUE]: number;
+    [StoresColumn.MONTHLY_COST]: number;
+    [StoresColumn.SALES_REASON]: string;
+    [StoresColumn.MANAGER]: string;
+    [StoresColumn.MANAGER_CONTACT]: string;
+    [StoresColumn.CREATED_AT]: string;
+    [StoresColumn.UPDATED_AT]: string;
+    [StoresColumn.DELETED]: boolean;
+    [StoresColumn.STORE_SIZE_M2]?: string;
+    [StoresColumn.STORE_IMG_SRC_ARR]?: string[];
+    [StoresColumn.STORE_STATE]: StoreState;
+  };
+  ['opening_request']: {
+    [OpeningRequestColumn.ID]: number;
+    [OpeningRequestColumn.NAME]: string;
+    [OpeningRequestColumn.CONTACT]: string;
+    [OpeningRequestColumn.CATEGORY]: string;
+    [OpeningRequestColumn.LOCATION]: string;
+    [OpeningRequestColumn.BUDGET]: string;
+    [OpeningRequestColumn.ADDITIONAL]: string;
+    [OpeningRequestColumn.CREATED_AT]: string;
+    [OpeningRequestColumn.UPDATED_AT]: string;
+    [OpeningRequestColumn.DELETED]: boolean;
+    [OpeningRequestColumn.REQUEST_STATE]: RequestState;
+  };
+  ['transfer_request']: {
+    [TransferRequestColumn.ID]: number;
+    [TransferRequestColumn.NAME]: string;
+    [TransferRequestColumn.CONTACT]: string;
+    [TransferRequestColumn.LOCATION]: string;
+    [TransferRequestColumn.SIZE]: string;
+    [TransferRequestColumn.STORE_NAME]: string;
+    [TransferRequestColumn.CATEGORY]: string;
+    [TransferRequestColumn.ADDITIONAL]: string;
+    [TransferRequestColumn.CREATED_AT]: string;
+    [TransferRequestColumn.UPDATED_AT]: string;
+    [TransferRequestColumn.DELETED]: boolean;
+    [TransferRequestColumn.REQUEST_STATE]: RequestState;
+  };
+  ['partnership_request']: {
+    [PartnershipRequestColumn.ID]: number;
+    [PartnershipRequestColumn.NAME]: string;
+    [PartnershipRequestColumn.CONTACT]: string;
+    [PartnershipRequestColumn.BRAND_NAME]: string;
+    [PartnershipRequestColumn.ADDITIONAL]: string;
+    [PartnershipRequestColumn.REQUEST_STATE]: RequestState;
+    [PartnershipRequestColumn.CREATED_AT]: string;
+    [PartnershipRequestColumn.UPDATED_AT]: string;
+    [PartnershipRequestColumn.DELETED]: boolean;
   };
 }
 
