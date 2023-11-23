@@ -21,13 +21,13 @@ const NewlyAddedStoreSwiper = dynamic(() => import('./NewlyAddedStoreSwiper'), {
 
 const LARGE_SWIPER_WRAPPER_WIDTH = 1000;
 const MEDIUM_SWIPER_WRAPPER_WIDTH = 600;
-const SMALL_SWIPER_WRAPPER_WIDTH = '100%';
+const SMALL_SWIPER_WRAPPER_WIDTH = 400;
 
 const NewlyAddedStore = () => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
-  const [slideWrapperWidth, setSliderWrapperWidth] = useState(
+  const [slideWrapperWidth, setSliderWrapperWidth] = useState<string | number>(
     LARGE_SWIPER_WRAPPER_WIDTH,
   );
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
