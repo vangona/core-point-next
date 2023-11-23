@@ -1,7 +1,9 @@
 'use client';
 
 import Box from '@mui/material/Box';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useGetStore } from '@/api/store';
+import { getNewStore } from '@/api/store/getNewStore';
 import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { SectionTitle } from '@/components/common/section-title';
 import { BottomSection } from '@/components/main/bottom-section';
@@ -13,6 +15,10 @@ import SuccessExample from '@/components/main/success-example-store/SuccessExamp
 
 export default function Home() {
   const { data, isLoading } = useGetStore({ page: '1', limit: '20' });
+  const { data: newStores, isLoading: isNewStoreLoading } = useSuspenseQuery({
+    queryKey: ['store-new'],
+    queryFn: () => getNewStore(),
+  });
 
   return (
     <Box
@@ -27,7 +33,10 @@ export default function Home() {
       <MainHero />
       <RecommendedStore storeDataArr={data.data} isLoading={isLoading} />
       <SuccessExample />
-      <NewlyAddedStore storeDataArr={data.data} isLoading={isLoading} />
+      <NewlyAddedStore
+        storeDataArr={newStores.data}
+        isLoading={isNewStoreLoading}
+      />
       <SectionLayout color='white'>
         <SectionTitle label='협업 브랜드' />
       </SectionLayout>
