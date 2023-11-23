@@ -1,11 +1,12 @@
-import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
-import { Box, Skeleton, useMediaQuery, useTheme } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Autoplay, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getRecommendedStore } from '@/api/store/getRecommendedStore';
+import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 const LARGE_SLIDE_PER_VIEW = 4;
 const MEDIUM_SLIDE_PER_VIEW = 2;

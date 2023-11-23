@@ -1,14 +1,15 @@
+import { useState, useEffect } from 'react';
+import { useTheme, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import dynamic from 'next/dynamic';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
-import { SectionLayout } from '@/components/main/section-layout';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
-import { useTheme, useMediaQuery, Box } from '@mui/material';
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
+import { SectionLayout } from '@/components/main/section-layout';
 import SectionSkeleton from '@/components/main/section-skeleton/SectionSkeleton';
 const RecommendedStoreSwiper = dynamic(
   () => import('./RecommendedStoreSwiper'),

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Skeleton, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';

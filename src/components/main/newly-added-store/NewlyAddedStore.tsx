@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Skeleton, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import dynamic from 'next/dynamic';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import {
@@ -11,7 +12,6 @@ import {
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
 import SectionLayout from '../section-layout/SectionLayout';
-import dynamic from 'next/dynamic';
 import SectionSkeleton from '../section-skeleton/SectionSkeleton';
 
 const NewlyAddedStoreSwiper = dynamic(() => import('./NewlyAddedStoreSwiper'), {
