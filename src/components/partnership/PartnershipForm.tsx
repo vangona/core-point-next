@@ -36,7 +36,6 @@ const PartnershipForm = ({ isDownLarge }: PartnershipFormProps) => {
   const onSubmit: SubmitHandler<PartnershipFormInput> = (data) => {
     openSnackbar();
     postPartnershipConsulting(data);
-    console.log(data);
   };
 
   useEffect(() => {

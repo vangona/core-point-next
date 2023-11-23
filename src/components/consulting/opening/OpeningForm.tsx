@@ -43,7 +43,6 @@ const OpeningForm = ({ isDownLarge }: OpeningFormProps) => {
   const onSubmit: SubmitHandler<OpeningFormInput> = (data) => {
     openSnackbar();
     postOpeningConsulting(data);
-    console.log(data);
   };
 
   useEffect(() => {

@@ -41,7 +41,6 @@ const TransferForm = ({ isDownLarge }: TransferFormProps) => {
   const onSubmit: SubmitHandler<TransferFormInput> = (data) => {
     openSnackbar();
     postTransferConsulting(data);
-    console.log(data);
   };
 
   useEffect(() => {
