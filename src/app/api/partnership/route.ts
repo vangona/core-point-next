@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { resend } from '@/app/api/resend';
 import { PartnershipFormInput } from '@/components/partnership/PartnershipForm';
+import { supabase } from '../supabase';
+import { SupabaseTable } from '../types';
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as PartnershipFormInput;
@@ -17,4 +19,15 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ status: 'good' });
+}
+
+export async function GET() {
+  const query = await supabase
+    .from(SupabaseTable.PARTNERSHIP_BRANDS)
+    .select()
+    .eq('deleted', 'FALSE')
+    .order('created_at')
+    .range(0, 10);
+
+  return NextResponse.json({ data: query.data });
 }

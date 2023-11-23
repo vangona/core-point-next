@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { StoreCategoy, StoreLocation } from '@/components/store/constants';
 import {
   OpeningRequestColumn,
+  PartnershipBrandsColumn,
   PartnershipRequestColumn,
   RequestState,
   StoreState,
@@ -14,6 +15,7 @@ export enum DbTables {
   OPENING_REQUEST = 'opening_request',
   TRANSFER_REQUEST = 'transfer_request',
   PARTNERSHIP_REQUEST = 'partnership_request',
+  PARTNERSHIP_BRANDS = 'partnership_brands',
 }
 
 export interface TableDefinitions {
@@ -79,6 +81,16 @@ export interface TableDefinitions {
     [PartnershipRequestColumn.UPDATED_AT]: string;
     [PartnershipRequestColumn.DELETED]: boolean;
     [PartnershipRequestColumn.MEMO]: string;
+  };
+  [DbTables.PARTNERSHIP_BRANDS]: {
+    [PartnershipBrandsColumn.ID]: number;
+    [PartnershipBrandsColumn.BRAND_NAME]: string;
+    [PartnershipBrandsColumn.BRAND_IMG_SRC]: string;
+    [PartnershipBrandsColumn.BRAND_URL]: string;
+    [PartnershipBrandsColumn.BRAND_STATE]: StoreState;
+    [PartnershipBrandsColumn.CREATED_AT]: string;
+    [PartnershipBrandsColumn.UPDATED_AT]: string;
+    [PartnershipBrandsColumn.DELETED]: boolean;
   };
 }
 
