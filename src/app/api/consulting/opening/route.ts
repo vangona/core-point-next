@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     text: `성함 : ${body.name}
 연락처 : ${body.contact}
 업종 : ${body.category}
-예산 : ${body.contact}
+예산 : ${body.budget}
 지역 : ${body.location}
 추가 문의사항 : ${body.additional ? body.additional : '없음'}   
 `,
