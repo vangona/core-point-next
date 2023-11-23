@@ -1,9 +1,9 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { useGetStore } from '@/api/store';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getNewStore } from '@/api/store/getNewStore';
+import { getRecommendedStore } from '@/api/store/getRecommendedStore';
 import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { SectionTitle } from '@/components/common/section-title';
 import { BottomSection } from '@/components/main/bottom-section';
@@ -14,11 +14,15 @@ import { SectionLayout } from '@/components/main/section-layout';
 import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
 
 export default function Home() {
-  const { data, isLoading } = useGetStore({ page: '1', limit: '20' });
   const { data: newStores, isLoading: isNewStoreLoading } = useSuspenseQuery({
     queryKey: ['store-new'],
     queryFn: () => getNewStore(),
   });
+  const { data: recommendedStores, isLoading: isRecommendedStoreLoading } =
+    useSuspenseQuery({
+      queryKey: ['store-recommended'],
+      queryFn: () => getRecommendedStore(),
+    });
 
   return (
     <Box
@@ -31,7 +35,10 @@ export default function Home() {
       }}
     >
       <MainHero />
-      <RecommendedStore storeDataArr={data.data} isLoading={isLoading} />
+      <RecommendedStore
+        storeDataArr={recommendedStores.data}
+        isLoading={isRecommendedStoreLoading}
+      />
       <SuccessExample />
       <NewlyAddedStore
         storeDataArr={newStores.data}
