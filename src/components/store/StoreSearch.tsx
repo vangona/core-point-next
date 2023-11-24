@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import ProgressBackdrop from '../common/progress-backdrop/ProgressBackdrop';
 import { DEFAULT_SELECT_WIDTH } from '../common/select/constants';
 import {
   LARGE_LAYOUT_WIDTH,
@@ -32,6 +33,8 @@ const StoreSearch = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [isBackdrop, setIsBackdrop] = useState(false);
+
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -40,14 +43,13 @@ const StoreSearch = () => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const [storeCategory, setStoreCategory] = useState<string | undefined>(
-    undefined,
+  // searchParams.get()이 빈 값일 때 값이 null이므로 state 초기 값을 null로 사용함
+  const [storeCategory, setStoreCategory] = useState<string | null>(null);
+  const [storeBudget, setStoreBudget] = useState<string | null>(null);
+  const [storeLocation, setStoreLocation] = useState<string | null>(null);
+  const [storeSearchKeyword, setStoreSearchKeyword] = useState<string | null>(
+    null,
   );
-  const [storeBudget, setStoreBudget] = useState<string | undefined>(undefined);
-  const [storeLocation, setStoreLocation] = useState<string | undefined>(
-    undefined,
-  );
-  const [storeSearchKeyword, setStoreSearchKeyword] = useState('');
 
   const createQueryString = useCallback(
     ({
@@ -75,24 +77,39 @@ const StoreSearch = () => {
   );
 
   const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreCategory(value ?? undefined);
+    setStoreCategory(value ?? null);
   };
   const handleBudgetChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreBudget(value ?? undefined);
+    setStoreBudget(value ?? null);
   };
   const handleLocationChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreLocation(value ?? undefined);
+    setStoreLocation(value ?? null);
   };
   const handleSearchKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStoreSearchKeyword(event.target.value);
   };
 
   const handleSearchClick = () => {
+    const category = searchParams.get('category');
+    const budget = searchParams.get('budget');
+    const location = searchParams.get('location');
+    const searchKeyword = searchParams.get('search');
+
+    if (
+      storeCategory === category &&
+      storeBudget === budget &&
+      location === storeLocation &&
+      storeSearchKeyword === searchKeyword
+    ) {
+      return;
+    }
+
+    setIsBackdrop(true);
     const queryString = createQueryString({
-      category: storeCategory,
-      budget: storeBudget,
-      location: storeLocation,
-      searchKeyword: storeSearchKeyword,
+      category: storeCategory ?? undefined,
+      budget: storeBudget ?? undefined,
+      location: storeLocation ?? undefined,
+      searchKeyword: storeSearchKeyword ?? undefined,
     });
     router.push(pathname + '?' + queryString);
   };
@@ -112,6 +129,8 @@ const StoreSearch = () => {
   }, [isUpLarge, isMedium]);
 
   useEffect(() => {
+    setIsBackdrop(false);
+
     const category = searchParams.get('category');
     const budget = searchParams.get('budget');
     const location = searchParams.get('location');
@@ -206,6 +225,7 @@ const StoreSearch = () => {
           검색하기
         </Button>
       </Box>
+      <ProgressBackdrop open={isBackdrop} />
     </Box>
   );
 };
