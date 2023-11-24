@@ -3,25 +3,23 @@
 import { useEffect, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Store, getStoreDetail } from '@/api/store';
-import ContainedListItem from '@/components/common/contained-list/ContainedList';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
-import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
+import { CostDetailSection } from '@/components/store-detail/cost-detail';
+import { DescriptionSection } from '@/components/store-detail/description';
 import { ImageSection } from '@/components/store-detail/image-section';
+import { LocalStoreSection } from '@/components/store-detail/local-store';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
 import { SalesDetailSection } from '@/components/store-detail/sales-detail';
-import { DIMMED_GRAY } from '@/constants/color';
-import { convertMoneyString } from '@/utils';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
 
 interface StoreDetailPageProps {
@@ -128,33 +126,10 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
             <Box
               sx={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}
             >
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  padding: 3,
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  borderRadius: 2,
-                }}
-              >
-                <ContainedListItem
-                  label='매출'
-                  value={convertMoneyString(storeDetailData?.monthly_sales)}
-                />
-                {parsedExpenditureData.length > 0 &&
-                  parsedExpenditureData.map(([label, value], index) => (
-                    <ContainedListItem
-                      key={index + label}
-                      label={label}
-                      value={'- ' + convertMoneyString(value)}
-                    />
-                  ))}
-                <ContainedListItem
-                  primary
-                  label='수익'
-                  value={convertMoneyString(storeDetailData?.monthly_revenue)}
-                />
-              </Box>
+              <CostDetailSection
+                storeDetailData={storeDetailData}
+                parsedExpenditureData={parsedExpenditureData}
+              />
               {parsedExpenditureData.length > 0 && (
                 <StoreDetailPieChart
                   parsedExpenditureData={parsedExpenditureData}
@@ -162,56 +137,11 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
               )}
             </Box>
           </Box>
-          {storeDetailData?.description && (
-            <>
-              <Box
-                sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}
-              >
-                <Box>
-                  <Typography variant='h5' fontWeight='bold' sx={{ mt: 6 }}>
-                    상세 설명
-                  </Typography>
-                  <Divider sx={{ my: 2 }} />
-                </Box>
-                <Box
-                  sx={{
-                    width: '700px',
-                    minHeight: '300px',
-                    padding: 3,
-                    backgroundColor: DIMMED_GRAY,
-                  }}
-                >
-                  {storeDetailData?.description}
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'center',
-                }}
-              >
-                <Button sx={{ width: '300px', mt: 4 }} variant='contained'>
-                  상담 신청하기
-                </Button>
-              </Box>
-            </>
-          )}
+          {storeDetailData?.description && <DescriptionSection />}
         </Box>
         <StoreDetailWindow storeDetailData={storeDetailData} />
       </Box>
-      <Box>
-        <Box>
-          <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
-            지역 매물
-          </Typography>
-          <Divider sx={{ my: 2 }} />
-        </Box>
-        <Box sx={{ mt: 5 }}>
-          <VerticalStoreCard size='sm' />
-        </Box>
-      </Box>
+      <LocalStoreSection />
     </Box>
   );
 };
