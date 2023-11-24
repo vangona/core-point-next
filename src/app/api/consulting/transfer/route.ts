@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { TransferFormInput } from '@/components/consulting/transfer/TransferForm';
 import { resend } from '../../resend';
+import { supabase } from '../../supabase';
+import { SupabaseTable, TransferRequestColumn } from '../../types';
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as TransferFormInput;
+
+  const query = await supabase.from(SupabaseTable.TRANSFER_REQUEST).insert([
+    {
+      [TransferRequestColumn.NAME]: body.name,
+      [TransferRequestColumn.CONTACT]: body.contact,
+      [TransferRequestColumn.LOCATION]: body.location,
+      [TransferRequestColumn.SIZE]: body.size,
+      [TransferRequestColumn.STORE_NAME]: body.storeName,
+      [TransferRequestColumn.CATEGORY]: body.category,
+      [TransferRequestColumn.ADDITIONAL]: body.additional,
+    },
+  ]);
 
   resend.emails.send({
     from: '코어창업 <noreply@core-point.kr>',
@@ -19,5 +33,5 @@ export async function POST(req: NextRequest) {
 `,
   });
 
-  return NextResponse.json({ status: 'good' });
+  return NextResponse.json({ data: query.data });
 }
