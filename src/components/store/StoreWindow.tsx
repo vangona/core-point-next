@@ -12,8 +12,9 @@ import { StoreMinimum } from '@/api/store/getStoreMinimum';
 interface StoreWindowProps {
   storeData?: StoreMinimum[];
   isLoading?: boolean;
+  openModal?: () => void;
 }
-const StoreWindow = ({ storeData, isLoading }: StoreWindowProps) => {
+const StoreWindow = ({ storeData, isLoading, openModal }: StoreWindowProps) => {
   const router = useRouter();
   const isEmptyData = !storeData || storeData.length === 0;
 
@@ -55,7 +56,11 @@ const StoreWindow = ({ storeData, isLoading }: StoreWindowProps) => {
           ))}
         {!isLoading && isEmptyData && '최근 조회한 매물이 없습니다.'}
       </Box>
-      <Button size='large' variant='contained'>
+      <Button
+        size='large'
+        variant='contained'
+        onClick={() => openModal && openModal()}
+      >
         상담 신청하기
       </Button>
     </Card>

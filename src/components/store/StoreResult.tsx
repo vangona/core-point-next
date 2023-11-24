@@ -7,6 +7,7 @@ import { useGetStore } from '@/api/store';
 import { getStoreMinimum } from '@/api/store/getStoreMinimum';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
 import { StoreSearchParams } from '@/app/store/page';
+import { ConsultingModal } from '../common/consulting-modal';
 import StoreCards from './StoreCards';
 import StoreResultLoading from './StoreResultLoading';
 
@@ -21,9 +22,22 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
   const { data } = useGetStore(searchParams);
   const storeData = data?.data;
 
+  const [currentStoreName, setCurrentStoreName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [recentStores, setRecentStores] = useState<string[] | undefined>(
     undefined,
   );
+
+  const handleStoreChange = (newStoreName: string) => {
+    setCurrentStoreName(newStoreName);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const { data: minimumData, isLoading: isMinimumLoading } = useQuery({
     queryKey: ['store-minimum', recentStores],
@@ -57,8 +71,18 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
         <StoreWindow
           storeData={minimumData?.data}
           isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture
+          openModal={openModal}
         />
       )}
+      <ConsultingModal
+        open={isModalOpen}
+        onClose={closeModal}
+        initialValue={{
+          additional: currentStoreName
+            ? `${currentStoreName} 관련 문의`
+            : undefined,
+        }}
+      />
     </Box>
   );
 };
