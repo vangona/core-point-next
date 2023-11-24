@@ -141,7 +141,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         </Box>
         <StoreDetailWindow storeDetailData={storeDetailData} />
       </Box>
-      <LocalStoreSection />
+      <LocalStoreSection storeDetailData={storeDetailData} />
     </Box>
   );
 };
