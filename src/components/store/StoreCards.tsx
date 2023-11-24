@@ -8,8 +8,14 @@ import { MobileStoreCard } from '../common/mobile-store-card';
 
 interface StoreCardsProps {
   storeData: Store[];
+  handleStoreChange: (newStoreName?: string) => void;
+  openModal?: () => void;
 }
-const StoreCards = ({ storeData }: StoreCardsProps) => {
+const StoreCards = ({
+  storeData,
+  handleStoreChange,
+  openModal,
+}: StoreCardsProps) => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -32,6 +38,8 @@ const StoreCards = ({ storeData }: StoreCardsProps) => {
           <StoreCard
             key={'store-card' + index + ', id-' + store.store_id}
             storeData={store}
+            handleStoreChange={handleStoreChange}
+            openModal={openModal}
           />
         ))}
       {isDownMedium &&
@@ -41,6 +49,8 @@ const StoreCards = ({ storeData }: StoreCardsProps) => {
           <MobileStoreCard
             key={'store-card' + index + ', id-' + store.store_id}
             storeData={store}
+            handleStoreChange={handleStoreChange}
+            openModal={openModal}
           />
         ))}
     </Box>

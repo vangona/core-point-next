@@ -22,14 +22,16 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
   const { data } = useGetStore(searchParams);
   const storeData = data?.data;
 
-  const [currentStoreName, setCurrentStoreName] = useState('');
+  const [currentStoreName, setCurrentStoreName] = useState<string | undefined>(
+    '',
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [recentStores, setRecentStores] = useState<string[] | undefined>(
     undefined,
   );
 
-  const handleStoreChange = (newStoreName: string) => {
+  const handleStoreChange = (newStoreName?: string) => {
     setCurrentStoreName(newStoreName);
   };
   const openModal = () => {
@@ -65,7 +67,11 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
       }}
     >
       <Suspense fallback={<StoreResultLoading />}>
-        <StoreCards storeData={storeData} />
+        <StoreCards
+          storeData={storeData}
+          handleStoreChange={handleStoreChange}
+          openModal={openModal}
+        />
       </Suspense>
       {!isDownLarge && (
         <StoreWindow
@@ -79,7 +85,7 @@ const StoreResult = ({ searchParams }: StoreResultProps) => {
         onClose={closeModal}
         initialValue={{
           additional: currentStoreName
-            ? `${currentStoreName} 관련 문의`
+            ? `'${currentStoreName}' 관련 문의`
             : undefined,
         }}
       />

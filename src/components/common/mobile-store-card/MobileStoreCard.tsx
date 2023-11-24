@@ -13,12 +13,22 @@ import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
 import { BoldLabelValue } from '../store-card/elements';
 
-const MobileStoreCard = ({ storeData, sx }: StoreCardProps) => {
+const MobileStoreCard = ({
+  storeData,
+  sx,
+  handleStoreChange,
+  openModal,
+}: StoreCardProps) => {
   const router = useRouter();
 
   const handleCardClick = (storeId?: string) => {
     if (!storeId) return;
     router.push(CorePointRoutes.STORE + '/' + storeId);
+  };
+
+  const handleConsultingClick = (newStoreName?: string) => {
+    handleStoreChange && handleStoreChange(newStoreName);
+    openModal && openModal();
   };
 
   return (
@@ -98,7 +108,11 @@ const MobileStoreCard = ({ storeData, sx }: StoreCardProps) => {
           mb: 1,
         }}
       >
-        <Button variant='contained' size='small'>
+        <Button
+          variant='contained'
+          size='small'
+          onClick={() => handleConsultingClick(storeData?.store_name)}
+        >
           창업컨설팅 신청
         </Button>
       </CardActions>
