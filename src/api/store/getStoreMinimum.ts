@@ -6,7 +6,7 @@ export interface StoreMinimum {
   store_id: string;
   store_name: string;
   store_cost: number;
-  monthly_sales: number;
+  monthly_revenue: number;
 }
 
 export interface GetStoreMinimumResponse {

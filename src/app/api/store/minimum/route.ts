@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const storeId = req.nextUrl.searchParams.getAll('id');
   const query = await supabase
     .from(SupabaseTable.STORES)
-    .select('store_id, store_name, store_cost, monthly_sales')
+    .select('store_id, store_name, store_cost, monthly_revenue')
     .eq('deleted', 'FALSE')
     .in('store_id', storeId);
 

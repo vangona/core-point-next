@@ -99,7 +99,7 @@ const StoreWindow = ({
                       label='월 수익'
                       value={
                         storeData
-                          ? convertMoneyString(storeData.monthly_sales)
+                          ? convertMoneyString(storeData.monthly_revenue)
                           : undefined
                       }
                     />
