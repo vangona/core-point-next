@@ -10,7 +10,11 @@ export const metadata: Metadata = {
 export default function Partnership() {
   return (
     <>
-      <GeneralHero title='협업 신청' />
+      <GeneralHero
+        title='협업 신청'
+        description='브랜드 신규 협업 신청'
+        imgSrc='/partnership-hero.webp'
+      />
       <PartnershipContent />
     </>
   );
