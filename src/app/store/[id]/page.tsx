@@ -23,6 +23,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
@@ -92,13 +93,15 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         flexDirection: 'column',
         gap: 2,
         mb: 10,
+        px: isDownMedium ? 2 : 0,
       }}
     >
       <Typography
-        variant='h4'
+        variant={isDownMedium ? 'h6' : 'h4'}
+        component='h4'
         fontWeight='bold'
         align='center'
-        sx={{ mt: 8, mb: 3 }}
+        sx={{ mt: isDownMedium ? 5 : 8, mb: isDownMedium ? 2 : 3 }}
       >
         {storeDetailData?.store_name}
       </Typography>
