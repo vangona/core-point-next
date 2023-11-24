@@ -22,7 +22,7 @@ const CostDetailSection = ({
       }}
     >
       <ContainedListItem
-        label='매출'
+        label='월 매출'
         value={convertMoneyString(storeDetailData?.monthly_sales)}
       />
       {parsedExpenditureData.length > 0 &&
@@ -35,7 +35,7 @@ const CostDetailSection = ({
         ))}
       <ContainedListItem
         primary
-        label='수익'
+        label='월 수익'
         value={convertMoneyString(storeDetailData?.monthly_revenue)}
       />
     </Box>

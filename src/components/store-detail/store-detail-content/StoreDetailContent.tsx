@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { Store } from '@/api/store';
+import { ConsultingModal } from '@/components/common/consulting-modal';
 import { CostDetailSection } from '@/components/store-detail/cost-detail';
 import { DescriptionSection } from '@/components/store-detail/description';
 import { ImageSection } from '@/components/store-detail/image-section';
@@ -23,6 +26,8 @@ const StoreDetailContent = ({
 }: StoreDetailContentProps) => {
   const theme = useTheme();
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const containerSx: SxProps = isDownLarge
     ? {
@@ -49,7 +54,7 @@ const StoreDetailContent = ({
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <Box sx={{ width: '100%' }}>
               <Typography variant='h5' fontWeight='bold'>
-                지출 세부내역
+                월 지출 세부내역
               </Typography>
               <Divider sx={{ my: 2 }} />
             </Box>
@@ -68,6 +73,33 @@ const StoreDetailContent = ({
             </Box>
           </Box>
           {storeDetailData?.description && <DescriptionSection />}
+          {isDownLarge && (
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center',
+                mt: 3,
+              }}
+            >
+              <Button
+                sx={{ width: '300px', mt: 4 }}
+                variant='contained'
+                onClick={() => setIsModalOpen(true)}
+              >
+                상담 신청하기
+              </Button>
+              <ConsultingModal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                initialValue={{
+                  location: storeDetailData?.store_location,
+                  category: storeDetailData?.store_category,
+                  additional: `'${storeDetailData?.store_name}' 관련 문의`,
+                }}
+              />
+            </Box>
+          )}
         </Box>
         {!isDownLarge && (
           <StoreDetailWindow storeDetailData={storeDetailData} />

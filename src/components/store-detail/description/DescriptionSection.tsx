@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { Store } from '@/api/store';
@@ -28,17 +27,6 @@ const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
         >
           {storeDetailData?.description}
         </Box>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'center',
-        }}
-      >
-        <Button sx={{ width: '300px', mt: 4 }} variant='contained'>
-          상담 신청하기
-        </Button>
       </Box>
     </>
   );
