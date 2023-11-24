@@ -93,3 +93,6 @@ export const STORE_BUDGET_MAPPER: Record<string, StoreBudgetLabel> = {
     StoreBudgetLabel.TWO_BILLION_TO_THREE_BILLION,
   [StoreBudgetValue.THREE_BILLION_MORE]: StoreBudgetLabel.THREE_BILLION_MORE,
 };
+
+export const DEFAULT_WINDOW_WIDTH = 268;
+export const DEFAULT_WINDOW_HEIGHT = 468;
