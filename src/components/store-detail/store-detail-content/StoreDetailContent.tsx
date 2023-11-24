@@ -10,6 +10,7 @@ import { LocalStoreSection } from '@/components/store-detail/local-store';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
 import { SalesDetailSection } from '@/components/store-detail/sales-detail';
+import { OverviewSection } from '../overview';
 import type { SxProps } from '@mui/material';
 
 interface StoreDetailContentProps {
@@ -33,10 +34,18 @@ const StoreDetailContent = ({
     <Box sx={containerSx}>
       <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
         <ImageSection imgSrcArr={storeDetailData?.store_img_src_arr} />
-        <SalesDetailSection storeDetailData={storeDetailData} />
+        {!isDownLarge && (
+          <SalesDetailSection storeDetailData={storeDetailData} />
+        )}
+        {isDownLarge && <OverviewSection storeDetailData={storeDetailData} />}
       </Box>
+      {isDownLarge && (
+        <Box sx={{ mt: 5 }}>
+          <SalesDetailSection fullWidth storeDetailData={storeDetailData} />
+        </Box>
+      )}
       <Box sx={{ mt: 5, display: 'flex', gap: 5 }}>
-        <Box sx={{ width: '750px' }}>
+        <Box sx={{ width: isDownLarge ? '100%' : '750px' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <Box sx={{ width: '100%' }}>
               <Typography variant='h5' fontWeight='bold'>

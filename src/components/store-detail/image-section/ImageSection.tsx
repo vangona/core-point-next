@@ -12,7 +12,7 @@ const LARGE_WIDTH = '500px';
 const LARGE_HEIGHT = '400px';
 
 const MEDIUM_WIDTH = '300px';
-const MEDIUM_HEIGHT = '200px';
+const MEDIUM_HEIGHT = '300px';
 
 interface ImageSectionProps {
   imgSrcArr?: string[];

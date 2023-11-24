@@ -9,16 +9,19 @@ interface ContainedListItemProps {
   value?: React.ReactNode;
   valueSx?: SxProps;
   sx?: SxProps;
+  size?: 'sm' | 'md';
 }
 const ContainedListItem = ({
   primary,
+  size = 'md',
   label = 'label placeholder',
   labelSx,
   value = 'value placeholder',
   valueSx,
   sx,
 }: ContainedListItemProps) => {
-  const defaultHeight = '56px';
+  const isSmall = size === 'sm';
+  const defaultHeight = isSmall ? '35px' : '56px';
 
   const containerSx: SxProps = {
     display: 'flex',
