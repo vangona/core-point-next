@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { OpeningFormInput } from '@/components/consulting/opening/OpeningForm';
 import { resend } from '../../resend';
+import { supabase } from '../../supabase';
+import { OpeningRequestColumn, SupabaseTable } from '../../types';
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as OpeningFormInput;
+
+  const query = await supabase.from(SupabaseTable.OPENING_REQUEST).insert([
+    {
+      [OpeningRequestColumn.NAME]: body.name,
+      [OpeningRequestColumn.CONTACT]: body.contact,
+      [OpeningRequestColumn.LOCATION]: body.location,
+      [OpeningRequestColumn.CATEGORY]: body.category,
+      [OpeningRequestColumn.BUDGET]: body.budget,
+      [OpeningRequestColumn.ADDITIONAL]: body.additional,
+    },
+  ]);
 
   resend.emails.send({
     from: '코어창업 <noreply@core-point.kr>',
@@ -18,5 +31,5 @@ export async function POST(req: NextRequest) {
 `,
   });
 
-  return NextResponse.json({ status: 'good' });
+  return NextResponse.json({ data: query.data });
 }
