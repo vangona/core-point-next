@@ -19,7 +19,7 @@ const StoreCards = ({ storeData }: StoreCardsProps) => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        gap: 3,
+        gap: isDownMedium ? 1 : 3,
       }}
     >
       {Array.isArray(storeData) &&
