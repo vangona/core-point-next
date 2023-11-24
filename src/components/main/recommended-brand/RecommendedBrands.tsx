@@ -46,6 +46,7 @@ const RecommendedBrands = () => {
           </Box>
         </Tooltip>
       ))}
+      {/* 후에 추천 브랜드 섹션의 재사용이 있을 수 있으므로 Modal을 별도로 두었음. */}
       <ConsultingModal
         open={isModalOpen}
         onClose={onModalClose}

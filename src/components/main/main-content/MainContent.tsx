@@ -1,3 +1,5 @@
+'use client';
+
 import { BottomSection } from '@/components/main/bottom-section';
 import { MainHero } from '@/components/main/main-hero';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
