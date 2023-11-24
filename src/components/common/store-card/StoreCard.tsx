@@ -31,9 +31,10 @@ export interface StoreCardProps {
   sx?: SxProps;
   handleStoreChange?: (newStoreName?: string) => void;
   openModal?: () => void;
+  onCardClick?: () => void;
 }
 const StoreCard = (props: StoreCardProps) => {
-  const { storeData, sx, handleStoreChange, openModal } = props;
+  const { storeData, sx, handleStoreChange, openModal, onCardClick } = props;
   const theme = useTheme();
   const router = useRouter();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
@@ -100,6 +101,7 @@ const StoreCard = (props: StoreCardProps) => {
 
   const handleCardClick = (storeId?: string) => {
     if (!storeId) return;
+    onCardClick && onCardClick();
     router.push(CorePointRoutes.STORE + '/' + storeId);
   };
 

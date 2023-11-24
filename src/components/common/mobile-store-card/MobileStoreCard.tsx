@@ -18,11 +18,13 @@ const MobileStoreCard = ({
   sx,
   handleStoreChange,
   openModal,
+  onCardClick,
 }: StoreCardProps) => {
   const router = useRouter();
 
   const handleCardClick = (storeId?: string) => {
     if (!storeId) return;
+    onCardClick && onCardClick();
     router.push(CorePointRoutes.STORE + '/' + storeId);
   };
 

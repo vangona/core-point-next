@@ -11,6 +11,7 @@ import {
 } from '@/components/store/constants';
 import StoreCards from '@/components/store/StoreCards';
 import StoreResultLoading from '@/components/store/StoreResultLoading';
+import ProgressBackdrop from '../common/progress-backdrop/ProgressBackdrop';
 
 const StoreWindow = dynamic(() => import('./StoreWindow'), {
   ssr: false,
@@ -39,6 +40,7 @@ const StoreData = ({
   const { data } = useGetStore(searchParams);
   const storeData = data?.data;
 
+  const [isBackdrop, setIsBackdrop] = useState(false);
   const [recentStores, setRecentStores] = useState<string[] | undefined>(
     undefined,
   );
@@ -48,6 +50,10 @@ const StoreData = ({
     queryFn: () => getStoreMinimum({ idArr: recentStores }),
     enabled: recentStores !== undefined,
   });
+
+  const onCardClick = () => {
+    setIsBackdrop(true);
+  };
 
   useEffect(() => {
     const localStorageRecentStores = localStorage.getItem(
@@ -66,6 +72,7 @@ const StoreData = ({
           storeData={storeData}
           handleStoreChange={handleStoreChange}
           openModal={openModal}
+          onCardClick={onCardClick}
         />
       </Suspense>
       {!isDownLarge && (
@@ -74,8 +81,10 @@ const StoreData = ({
           isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture
           openModal={openModal}
           handleStoreChange={handleStoreChange}
+          onCardClick={onCardClick}
         />
       )}
+      <ProgressBackdrop open={isBackdrop} />
     </>
   );
 };

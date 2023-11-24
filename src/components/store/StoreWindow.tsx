@@ -20,15 +20,22 @@ interface StoreWindowProps {
   isLoading?: boolean;
   openModal?: () => void;
   handleStoreChange?: (newStoreName: string) => void;
+  onCardClick?: () => void;
 }
 const StoreWindow = ({
   storeData,
   isLoading,
   openModal,
   handleStoreChange,
+  onCardClick,
 }: StoreWindowProps) => {
   const router = useRouter();
   const isEmptyData = !storeData || storeData.length === 0;
+
+  const handleCardClick = (storeId: string) => {
+    onCardClick && onCardClick();
+    router.push(`/store/${storeId}`);
+  };
 
   const handleStoreClick = () => {
     handleStoreChange && handleStoreChange(''); // window에서 열릴 때는 storename 초기화
@@ -74,7 +81,7 @@ const StoreWindow = ({
               <Card>
                 <CardActionArea
                   sx={{ padding: 2, pb: 0 }}
-                  onClick={() => router.push(`/store/${storeData.store_id}`)}
+                  onClick={() => handleCardClick(storeData.store_id)}
                 >
                   <Typography
                     sx={{

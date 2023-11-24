@@ -1,9 +1,10 @@
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import type { BackdropProps } from '@mui/material';
 
-const ProgressBackdrop = () => {
+const ProgressBackdrop = (props: BackdropProps) => {
   return (
-    <Backdrop open={true} sx={{ zIndex: 9999 }}>
+    <Backdrop sx={{ zIndex: 9999 }} {...props}>
       <CircularProgress />
     </Backdrop>
   );

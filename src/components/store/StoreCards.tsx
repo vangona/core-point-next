@@ -10,11 +10,13 @@ interface StoreCardsProps {
   storeData: Store[];
   handleStoreChange: (newStoreName?: string) => void;
   openModal?: () => void;
+  onCardClick?: () => void;
 }
 const StoreCards = ({
   storeData,
   handleStoreChange,
   openModal,
+  onCardClick,
 }: StoreCardsProps) => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -40,6 +42,7 @@ const StoreCards = ({
             storeData={store}
             handleStoreChange={handleStoreChange}
             openModal={openModal}
+            onCardClick={onCardClick}
           />
         ))}
       {isDownMedium &&
@@ -51,6 +54,7 @@ const StoreCards = ({
             storeData={store}
             handleStoreChange={handleStoreChange}
             openModal={openModal}
+            onCardClick={onCardClick}
           />
         ))}
     </Box>
