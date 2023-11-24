@@ -56,14 +56,17 @@ const GeneralHero = (props: GeneralHeroProps) => {
         <>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
+              position: 'absolute',
+              width: '75%',
               left: '50%',
               top: '50%',
-              transform: 'translate(-50%, -50%)',
-              position: 'absolute',
-              zIndex: 9,
+              display: 'flex',
+              flexDirection: 'column',
               gap: 3,
+              justifyContent: 'center',
+              alignItems: 'center',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 9,
             }}
           >
             <Typography
@@ -74,7 +77,11 @@ const GeneralHero = (props: GeneralHeroProps) => {
             >
               {title}
             </Typography>
-            <Typography variant='body1' color={OFF_WHITE_COLOR}>
+            <Typography
+              variant='body1'
+              color={OFF_WHITE_COLOR}
+              sx={{ wordBreak: 'keep-all' }}
+            >
               {description}
             </Typography>
           </Box>
@@ -95,7 +102,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
               <Image
                 fill
                 objectFit='cover'
-                objectPosition='50% 100%'
+                objectPosition='50% 50%'
                 alt='hero image'
                 src={
                   imgSrc

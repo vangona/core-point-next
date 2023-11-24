@@ -4,10 +4,11 @@ import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import { postPartnershipConsulting } from '@/api/partnership/postPartnershipConsulting';
 import useSlideSnackBar from '@/components/common/slide-snackbar/useSlideSnackBar';
+import { PrivateAgreeLink } from '../common/private-agree-link';
 
 export interface PartnershipFormInput {
   brandName: string;
@@ -151,19 +152,34 @@ const PartnershipForm = ({ isDownLarge }: PartnershipFormProps) => {
           rules={{ required: true }}
           render={({ field, fieldState }) => (
             <Box>
-              <Checkbox
-                {...field}
-                checked={field.value}
-                component='button'
+              <Box
                 sx={{
-                  '& svg path': {
-                    fill: fieldState.error
-                      ? theme.palette.error.main
-                      : undefined,
-                  },
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-              />
-              <Link component='button'>개인정보 이용 및 수집 동의</Link>
+              >
+                <Checkbox
+                  {...field}
+                  checked={field.value}
+                  component='button'
+                  sx={{
+                    '& svg path': {
+                      fill: fieldState.error
+                        ? theme.palette.error.main
+                        : undefined,
+                    },
+                  }}
+                />
+                <PrivateAgreeLink
+                  handleAgreeClick={() => field.onChange(true)}
+                />
+              </Box>
+              {fieldState.error && (
+                <FormHelperText error={!!fieldState.error}>
+                  모든 값이 제대로 입력되었는지 한 번 더 확인해주세요.
+                </FormHelperText>
+              )}
             </Box>
           )}
         />

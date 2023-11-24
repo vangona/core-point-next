@@ -8,7 +8,13 @@ const StoreDetailPieChart = ({
   parsedExpenditureData,
 }: StoreDetailPieChartProps) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <PieChart
         width={300}
         height={300}

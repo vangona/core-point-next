@@ -1,18 +1,24 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { DEFAULT_BOLD_LABEL_WIDTH } from './constants';
-import type { TypographyVariant } from '@mui/material';
+import type {
+  SxProps,
+  TypographyOwnProps,
+  TypographyVariant,
+} from '@mui/material';
 
 interface BoldLabelProps {
   label?: string;
   value?: string;
   variant?: TypographyVariant;
   primary?: boolean;
+  color?: TypographyOwnProps['color'];
+  sx?: SxProps;
 }
 export const BoldLabelValue = (props: BoldLabelProps) => {
-  const { label, value, variant = 'subtitle2', primary } = props;
+  const { label, value, variant = 'subtitle2', primary, color, sx } = props;
   return (
-    <Typography variant={variant}>
+    <Typography variant={variant} color={color} sx={sx}>
       <Box
         sx={{
           width: DEFAULT_BOLD_LABEL_WIDTH,

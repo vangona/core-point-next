@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useMediaQuery, useTheme } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import { StoreSearchParams } from '@/app/store/page';
 import {
@@ -21,6 +25,7 @@ export default function StoreContent({ searchParams }: StoreContentProps) {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
@@ -28,7 +33,7 @@ export default function StoreContent({ searchParams }: StoreContentProps) {
   const smallContainerSx: SxProps = isDownLarge
     ? {
         py: 2,
-        px: 5,
+        px: 3,
       }
     : {};
 
@@ -46,7 +51,17 @@ export default function StoreContent({ searchParams }: StoreContentProps) {
 
   return (
     <Box sx={{ width: layoutWidth, ...smallContainerSx }}>
-      <StoreSearch />
+      {!isDownMedium && <StoreSearch />}
+      {isDownMedium && (
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            매물 검색하기
+          </AccordionSummary>
+          <AccordionDetails>
+            <StoreSearch />
+          </AccordionDetails>
+        </Accordion>
+      )}
       <StoreResultLayout>
         <StoreResult searchParams={searchParams} />
         <StorePagination />

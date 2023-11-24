@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -10,9 +10,9 @@ import StyledLink from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import HideOnScroll from '@/components/common/hide-on-scroll/HideOnScroll';
+import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import { hoverSx } from '@/components/styles/interactionSx';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import { CorePointRoutes } from '@/constants/routes';
@@ -28,12 +28,26 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isBackdrop, setIsBackdrop] = useState(false);
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
 
+  const openBackdrop = () => {
+    setIsBackdrop(true);
+  };
+
+  const handleNavClick = (newHref: string) => {
+    openBackdrop();
+    router.push(newHref);
+  };
+
   const onLogoClick = () => {
+    if (pathname === CorePointRoutes.HOME) return;
+
+    openBackdrop();
     router.push(CorePointRoutes.HOME);
   };
 
@@ -79,6 +93,10 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
     [theme.breakpoints.down('md')]: {
       left: '0%',
       transform: 'translate(24px)',
+      '&:hover': {
+        transform: 'scale(1.03) translateX(24px)',
+        cursor: 'pointer',
+      },
     },
   };
 
@@ -93,6 +111,11 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const LinkSx: SxProps = {
     ...hoverSx,
   };
+
+  // 경로나 param이 변경되면 backdrop 닫음
+  useEffect(() => {
+    setIsBackdrop(false);
+  }, [pathname, searchParams]);
 
   return (
     <HideOnScroll>
@@ -123,21 +146,16 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           {/* right area */}
           <Box sx={rightAreaSx}>
             {NAV_DATA_ARR.map((navData) => (
-              <Link
+              <StyledLink
+                onClick={() => handleNavClick(navData.href)}
                 key={'nav' + navData.href}
-                passHref
-                legacyBehavior
-                href={navData.href}
+                underline='none'
+                sx={LinkSx}
+                color={pathname === navData.href ? 'primary' : 'black'}
+                fontWeight={pathname === navData.href ? 'bold' : 'normal'}
               >
-                <StyledLink
-                  underline='none'
-                  sx={LinkSx}
-                  color={pathname === navData.href ? 'primary' : 'black'}
-                  fontWeight={pathname === navData.href ? 'bold' : 'normal'}
-                >
-                  {navData.label}
-                </StyledLink>
-              </Link>
+                {navData.label}
+              </StyledLink>
             ))}
           </Box>
           <IconButton
@@ -158,7 +176,9 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           isOpen={isDrawerOpen}
           onClose={closeDrawer}
           navDataArr={NAV_DATA_ARR}
+          onNavClick={handleNavClick}
         />
+        <ProgressBackdrop open={isBackdrop} />
       </AppBar>
     </HideOnScroll>
   );

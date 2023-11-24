@@ -17,7 +17,11 @@ interface StorePageProps {
 export default function StorePage({ searchParams }: StorePageProps) {
   return (
     <>
-      <GeneralHero title='매물 정보' />
+      <GeneralHero
+        title='매물 정보'
+        description='코어창업이 선별한 창업 매물들'
+        imgSrc='/store-hero.webp'
+      />
       <StoreContent searchParams={searchParams} />
     </>
   );

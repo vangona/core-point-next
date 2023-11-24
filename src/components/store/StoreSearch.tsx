@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import ProgressBackdrop from '../common/progress-backdrop/ProgressBackdrop';
 import { DEFAULT_SELECT_WIDTH } from '../common/select/constants';
 import {
   LARGE_LAYOUT_WIDTH,
@@ -32,21 +33,23 @@ const StoreSearch = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [isBackdrop, setIsBackdrop] = useState(false);
+
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
 
-  const [storeCategory, setStoreCategory] = useState<string | undefined>(
-    undefined,
+  // searchParams.get()이 빈 값일 때 값이 null이므로 state 초기 값을 null로 사용함
+  const [storeCategory, setStoreCategory] = useState<string | null>(null);
+  const [storeBudget, setStoreBudget] = useState<string | null>(null);
+  const [storeLocation, setStoreLocation] = useState<string | null>(null);
+  const [storeSearchKeyword, setStoreSearchKeyword] = useState<string | null>(
+    null,
   );
-  const [storeBudget, setStoreBudget] = useState<string | undefined>(undefined);
-  const [storeLocation, setStoreLocation] = useState<string | undefined>(
-    undefined,
-  );
-  const [storeSearchKeyword, setStoreSearchKeyword] = useState('');
 
   const createQueryString = useCallback(
     ({
@@ -74,24 +77,39 @@ const StoreSearch = () => {
   );
 
   const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreCategory(value ?? undefined);
+    setStoreCategory(value ?? null);
   };
   const handleBudgetChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreBudget(value ?? undefined);
+    setStoreBudget(value ?? null);
   };
   const handleLocationChange = (_: SyntheticEvent, value: string | null) => {
-    setStoreLocation(value ?? undefined);
+    setStoreLocation(value ?? null);
   };
   const handleSearchKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStoreSearchKeyword(event.target.value);
   };
 
   const handleSearchClick = () => {
+    const category = searchParams.get('category');
+    const budget = searchParams.get('budget');
+    const location = searchParams.get('location');
+    const searchKeyword = searchParams.get('search');
+
+    if (
+      storeCategory === category &&
+      storeBudget === budget &&
+      location === storeLocation &&
+      storeSearchKeyword === searchKeyword
+    ) {
+      return;
+    }
+
+    setIsBackdrop(true);
     const queryString = createQueryString({
-      category: storeCategory,
-      budget: storeBudget,
-      location: storeLocation,
-      searchKeyword: storeSearchKeyword,
+      category: storeCategory ?? undefined,
+      budget: storeBudget ?? undefined,
+      location: storeLocation ?? undefined,
+      searchKeyword: storeSearchKeyword ?? undefined,
     });
     router.push(pathname + '?' + queryString);
   };
@@ -111,6 +129,8 @@ const StoreSearch = () => {
   }, [isUpLarge, isMedium]);
 
   useEffect(() => {
+    setIsBackdrop(false);
+
     const category = searchParams.get('category');
     const budget = searchParams.get('budget');
     const location = searchParams.get('location');
@@ -129,8 +149,8 @@ const StoreSearch = () => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
-        marginTop: 5,
+        gap: isDownMedium ? 1 : 2,
+        marginTop: isDownMedium ? 2 : 5,
       }}
     >
       <Box
@@ -138,24 +158,27 @@ const StoreSearch = () => {
           maxWidth: layoutWidth,
           width: '100%',
           display: 'flex',
-          gap: 3,
+          flexDirection: isDownMedium ? 'column' : 'row',
+          gap: isDownMedium ? 1 : 3,
           justifyContent: 'space-between',
         }}
       >
         <Autocomplete
           key={'store-category--' + storeCategory}
           fullWidth
-          value={storeCategory}
+          value={storeCategory ?? undefined}
           options={STORE_CATEGORY_DATA_ARR}
           onChange={handleCategoryChange}
+          size={isDownMedium ? 'small' : 'medium'}
           renderInput={(params) => (
             <TextField {...params} label='업종' placeholder='전체 업종' />
           )}
         />
         <Autocomplete
           key={'store-budget--' + storeBudget}
-          value={storeBudget}
+          value={storeBudget ?? undefined}
           onChange={handleBudgetChange}
+          size={isDownMedium ? 'small' : 'medium'}
           fullWidth
           getOptionLabel={(option) => STORE_BUDGET_MAPPER[option]}
           options={STORE_BUDGET_DATA_ARR}
@@ -165,8 +188,9 @@ const StoreSearch = () => {
         />
         <Autocomplete
           key={'store-location--' + storeLocation}
-          value={storeLocation}
+          value={storeLocation ?? undefined}
           onChange={handleLocationChange}
+          size={isDownMedium ? 'small' : 'medium'}
           fullWidth
           options={STORE_LOCATION_DATA_ARR}
           renderInput={(params) => (
@@ -174,11 +198,19 @@ const StoreSearch = () => {
           )}
         />
       </Box>
-      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: isDownMedium ? 'column' : 'row',
+          gap: isDownMedium ? 1 : 3,
+          justifyContent: 'space-between',
+        }}
+      >
         <TextField
-          value={storeSearchKeyword}
+          value={storeSearchKeyword ?? undefined}
           onChange={handleSearchKeywordChange}
           fullWidth
+          size={isDownMedium ? 'small' : 'medium'}
           variant='filled'
           label='매물 이름'
           placeholder='매물 전체'
@@ -186,13 +218,14 @@ const StoreSearch = () => {
         <Button
           onClick={handleSearchClick}
           fullWidth
-          sx={{ width: DEFAULT_SELECT_WIDTH }}
+          sx={{ width: isDownMedium ? undefined : DEFAULT_SELECT_WIDTH }}
           variant='contained'
           startIcon={<Search />}
         >
           검색하기
         </Button>
       </Box>
+      <ProgressBackdrop open={isBackdrop} />
     </Box>
   );
 };

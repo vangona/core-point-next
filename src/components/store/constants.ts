@@ -7,8 +7,7 @@ export enum StoreCategoy {
   ICECREAM = '아이스크림',
   SPORTS = '시설스포츠',
 }
-export const STORE_CATEGORY_DATA_ARR: (StoreCategoy | '')[] = [
-  '',
+export const STORE_CATEGORY_DATA_ARR: StoreCategoy[] = [
   StoreCategoy.CAFE,
   StoreCategoy.BAKERY,
   StoreCategoy.CHICKEN,
@@ -94,3 +93,6 @@ export const STORE_BUDGET_MAPPER: Record<string, StoreBudgetLabel> = {
     StoreBudgetLabel.TWO_BILLION_TO_THREE_BILLION,
   [StoreBudgetValue.THREE_BILLION_MORE]: StoreBudgetLabel.THREE_BILLION_MORE,
 };
+
+export const DEFAULT_WINDOW_WIDTH = 268;
+export const DEFAULT_WINDOW_HEIGHT = 468;

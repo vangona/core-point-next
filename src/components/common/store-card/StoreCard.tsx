@@ -29,9 +29,12 @@ const MANAGER_WIDTH = '180px';
 export interface StoreCardProps {
   storeData?: Store;
   sx?: SxProps;
+  handleStoreChange?: (newStoreName?: string) => void;
+  openModal?: () => void;
+  onCardClick?: () => void;
 }
 const StoreCard = (props: StoreCardProps) => {
-  const { storeData, sx } = props;
+  const { storeData, sx, handleStoreChange, openModal, onCardClick } = props;
   const theme = useTheme();
   const router = useRouter();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
@@ -98,7 +101,13 @@ const StoreCard = (props: StoreCardProps) => {
 
   const handleCardClick = (storeId?: string) => {
     if (!storeId) return;
+    onCardClick && onCardClick();
     router.push(CorePointRoutes.STORE + '/' + storeId);
+  };
+
+  const handleConsultingClick = (newStoreName?: string) => {
+    handleStoreChange && handleStoreChange(newStoreName);
+    openModal && openModal();
   };
 
   useEffect(() => {
@@ -207,7 +216,11 @@ const StoreCard = (props: StoreCardProps) => {
                   {storeData?.manager_contact}
                 </Typography>
               </Box>
-              <Button variant='contained' sx={{ whiteSpace: 'nowrap' }}>
+              <Button
+                variant='contained'
+                sx={{ whiteSpace: 'nowrap' }}
+                onClick={() => handleConsultingClick(storeData.store_name)}
+              >
                 창업컨설팅 신청
               </Button>
             </CardActions>

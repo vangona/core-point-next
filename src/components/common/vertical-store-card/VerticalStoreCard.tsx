@@ -17,9 +17,10 @@ import type { SxProps, TypographyVariant } from '@mui/material';
 interface VerticalStoreCardProps {
   size?: 'md' | 'sm';
   storeData?: Store;
+  onCardClick?: (isPathChanged?: boolean) => void;
 }
 const VerticalStoreCard = (props: VerticalStoreCardProps) => {
-  const { size = 'md', storeData } = props;
+  const { size = 'md', storeData, onCardClick } = props;
   const router = useRouter();
 
   const isSmall = size === 'sm';
@@ -40,6 +41,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
 
   const handleCardClick = (storeId?: string) => {
     if (!storeId) return;
+    onCardClick && onCardClick();
     router.push(CorePointRoutes.STORE + '/' + storeId);
   };
 

@@ -72,7 +72,6 @@ export enum PartnershipRequestColumn {
   NAME = 'name',
   CONTACT = 'contact',
   BRAND_NAME = 'brand_name',
-  LOCATION = 'location',
   REQUEST_STATE = 'request_state',
   ADDITIONAL = 'additional',
   CREATED_AT = 'created_at',
