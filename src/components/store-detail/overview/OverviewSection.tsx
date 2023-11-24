@@ -16,10 +16,10 @@ const OverviewSection = ({ storeDetailData }: OverviewSectionProps) => {
         <Typography variant='h5' fontWeight='bold'>
           개요
         </Typography>
-        <Divider sx={{ my: 2 }} />
+        <Divider sx={{ my: 1 }} />
       </Box>
       <Box>
-        <Card sx={{ px: 3, py: 2, my: 1 }}>
+        <Card sx={{ px: 3, py: 2 }}>
           <Typography variant='subtitle1'>
             {storeDetailData?.store_location}﹒{storeDetailData?.store_category}
             ﹒{storeDetailData?.store_size}평({storeDetailData?.store_size_m2} m
@@ -37,6 +37,10 @@ const OverviewSection = ({ storeDetailData }: OverviewSectionProps) => {
         <ContainedListItem
           label='창업 비용'
           value={convertMoneyString(storeDetailData?.store_cost)}
+        />
+        <ContainedListItem
+          label='담당자'
+          value={`${storeDetailData?.manager}(${storeDetailData?.manager_contact})`}
         />
       </Box>
     </Box>
