@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
@@ -9,6 +10,7 @@ import { LocalStoreSection } from '@/components/store-detail/local-store';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
 import { SalesDetailSection } from '@/components/store-detail/sales-detail';
+import type { SxProps } from '@mui/material';
 
 interface StoreDetailContentProps {
   storeDetailData?: Store;
@@ -18,8 +20,17 @@ const StoreDetailContent = ({
   storeDetailData,
   parsedExpenditureData,
 }: StoreDetailContentProps) => {
+  const theme = useTheme();
+  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+
+  const containerSx: SxProps = isDownLarge
+    ? {
+        px: 3,
+      }
+    : {};
+
   return (
-    <>
+    <Box sx={containerSx}>
       <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
         <ImageSection imgSrcArr={storeDetailData?.store_img_src_arr} />
         <SalesDetailSection storeDetailData={storeDetailData} />
@@ -49,10 +60,12 @@ const StoreDetailContent = ({
           </Box>
           {storeDetailData?.description && <DescriptionSection />}
         </Box>
-        <StoreDetailWindow storeDetailData={storeDetailData} />
+        {!isDownLarge && (
+          <StoreDetailWindow storeDetailData={storeDetailData} />
+        )}
       </Box>
       <LocalStoreSection storeDetailData={storeDetailData} />
-    </>
+    </Box>
   );
 };
 

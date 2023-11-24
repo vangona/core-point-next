@@ -13,6 +13,10 @@ const LARGE_SWIPER_WRAPPER_WIDTH = 1100;
 const MEDIUM_SWIPER_WRAPPER_WIDTH = 700;
 const SMALL_SWIPER_WRAPPER_WIDTH = 400;
 
+const LARGE_SLIDE_PER_VIEW = 4;
+const MEDIUM_SLIDE_PER_VIEW = 3;
+const SMALL_SLIDE_PER_VIEW = 1;
+
 interface LocalStoreSectionProps {
   storeDetailData?: Store;
 }
@@ -20,6 +24,7 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const [slidePerView, setSlidePerView] = useState(4);
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(
@@ -34,15 +39,18 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   useEffect(() => {
     if (isUpLarge) {
       setSliderWrapperWidth(LARGE_SWIPER_WRAPPER_WIDTH);
+      setSlidePerView(LARGE_SLIDE_PER_VIEW);
       return;
     }
 
     if (isMedium) {
       setSliderWrapperWidth(MEDIUM_SWIPER_WRAPPER_WIDTH);
+      setSlidePerView(MEDIUM_SLIDE_PER_VIEW);
       return;
     }
 
     setSliderWrapperWidth(SMALL_SWIPER_WRAPPER_WIDTH);
+    setSlidePerView(SMALL_SLIDE_PER_VIEW);
   }, [isUpLarge, isMedium]);
 
   return (
@@ -74,9 +82,6 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
           }}
           slidesPerView={slidePerView}
           modules={[Pagination]}
-          autoplay
-          mousewheel
-          loop
           pagination={{ clickable: true }}
         >
           {data.data.map((storeData, index) => (
