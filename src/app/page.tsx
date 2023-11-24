@@ -11,6 +11,7 @@ export default function Home() {
         flexDirection: 'column',
         marginBottom: 3,
         paddingBottom: 10,
+        overflowX: 'hidden',
       }}
     >
       <MainContent />

@@ -93,6 +93,10 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
     [theme.breakpoints.down('md')]: {
       left: '0%',
       transform: 'translate(24px)',
+      '&:hover': {
+        transform: 'scale(1.03) translateX(24px)',
+        cursor: 'pointer',
+      },
     },
   };
 
