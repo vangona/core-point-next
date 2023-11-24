@@ -1,11 +1,15 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import ArrowUpward from '@mui/icons-material/ArrowUpward';
 import { useScrollTrigger } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 
 const HideScrollTop = () => {
+  const [target, setTarget] = useState<Window | undefined>();
   const trigger = useScrollTrigger({
-    target: typeof window !== 'undefined' ? window : undefined,
+    target: target,
     disableHysteresis: true,
     threshold: 100,
   });
@@ -13,6 +17,12 @@ const HideScrollTop = () => {
   const handleClick = () => {
     scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    if (window) {
+      setTarget(window);
+    }
+  }, []);
 
   return (
     <Fade in={trigger}>
