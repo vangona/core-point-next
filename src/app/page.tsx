@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { MainContent } from '@/components/main/main-content';
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       }}
     >
       <MainContent />
+      <HideScrollTop />
     </Box>
   );
 }

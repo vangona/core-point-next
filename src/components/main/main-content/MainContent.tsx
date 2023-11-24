@@ -1,6 +1,3 @@
-'use client';
-
-import HideScrollTop from '@/components/common/hide-scroll-top/HideScrollTop';
 import { BottomSection } from '@/components/main/bottom-section';
 import { MainHero } from '@/components/main/main-hero';
 import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore';
@@ -17,7 +14,6 @@ const MainContent = () => {
       <NewlyAddedStore />
       <RecommendedBrand />
       <BottomSection />
-      <HideScrollTop />
     </>
   );
 };
