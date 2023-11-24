@@ -34,10 +34,9 @@ const MobileStoreCard = ({
   };
 
   return (
-    <Card sx={{ ...sx }}>
+    <Card sx={{ width: '100%', ...sx }}>
       <CardActionArea
         sx={{
-          width: '100%',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-start',

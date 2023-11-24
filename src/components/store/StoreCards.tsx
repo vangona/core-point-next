@@ -23,7 +23,9 @@ const StoreCards = ({
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box
+      sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}
+    >
       <Typography>{storeData.length}개의 검색결과</Typography>
       <Box
         sx={{
