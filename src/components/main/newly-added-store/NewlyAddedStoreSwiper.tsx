@@ -6,6 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Mousewheel, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getNewStore } from '@/api/store';
+import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 
@@ -20,6 +21,12 @@ const NewlyAddedStoreSwiper = () => {
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const swiperRef = useRef<SwiperClass>();
   const [slidePerView, setSlidePerView] = useState(LARGE_SLIDE_PER_VIEW);
+
+  const [isBackdrop, setIsBackdrop] = useState(false);
+
+  const onCardClick = () => {
+    setIsBackdrop(true);
+  };
 
   const { data: newStores } = useSuspenseQuery({
     queryKey: ['store-new'],
@@ -60,11 +67,13 @@ const NewlyAddedStoreSwiper = () => {
             <VerticalStoreCard
               storeData={store}
               size={isDownMedium ? 'md' : 'sm'}
+              onCardClick={onCardClick}
             />
           </SwiperSlide>
         ))}
       </Swiper>
       {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
+      <ProgressBackdrop open={isBackdrop} />
     </>
   );
 };
