@@ -26,18 +26,28 @@ const StoreDetailContent = ({
 }: StoreDetailContentProps) => {
   const theme = useTheme();
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const containerSx: SxProps = isDownLarge
     ? {
-        px: 3,
+        width: '100%',
+        px: isDownMedium ? 1 : 3,
       }
     : {};
 
   return (
     <Box sx={containerSx}>
-      <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
+      <Box
+        sx={{
+          mt: 3,
+          display: 'flex',
+          flexDirection: isDownMedium ? 'column' : 'row',
+          gap: isDownMedium ? 5 : 8,
+          alignItems: 'center',
+        }}
+      >
         <ImageSection imgSrcArr={storeDetailData?.store_img_src_arr} />
         {!isDownLarge && (
           <SalesDetailSection storeDetailData={storeDetailData} />
@@ -59,7 +69,12 @@ const StoreDetailContent = ({
               <Divider sx={{ my: 2 }} />
             </Box>
             <Box
-              sx={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}
+              sx={{
+                display: 'flex',
+                flexDirection: isDownMedium ? 'column-reverse' : 'row',
+                justifyContent: 'space-between',
+                gap: 5,
+              }}
             >
               <CostDetailSection
                 storeDetailData={storeDetailData}

@@ -5,7 +5,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Image from 'next/image';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { FreeMode, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 
 const LARGE_WIDTH = '500px';
@@ -14,12 +14,16 @@ const LARGE_HEIGHT = '400px';
 const MEDIUM_WIDTH = '300px';
 const MEDIUM_HEIGHT = '300px';
 
+const SMALL_WIDTH = '250px';
+const SMALL_HEIGHT = '250px';
+
 interface ImageSectionProps {
   imgSrcArr?: string[];
 }
 const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
   const theme = useTheme();
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [width, setWidth] = useState(LARGE_WIDTH);
   const [height, setHeight] = useState(LARGE_HEIGHT);
 
@@ -29,6 +33,12 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
   const thumbContainerStyle = { height: '20%', padding: '10px 0' };
 
   useEffect(() => {
+    if (isDownMedium) {
+      setWidth(SMALL_WIDTH);
+      setHeight(SMALL_HEIGHT);
+      return;
+    }
+
     if (isDownLarge) {
       setWidth(MEDIUM_WIDTH);
       setHeight(MEDIUM_HEIGHT);
@@ -37,19 +47,22 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
 
     setWidth(LARGE_WIDTH);
     setHeight(LARGE_HEIGHT);
-  }, [isDownLarge]);
+  }, [isDownLarge, isDownMedium]);
 
   return (
-    <Box sx={{ width, height }}>
+    <Box
+      sx={{
+        width,
+        height,
+      }}
+    >
       <Swiper
         style={galleryContainerStyle}
-        modules={[FreeMode, Navigation, Thumbs]}
-        spaceBetween={10}
+        modules={[FreeMode, Thumbs]}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         loop
-        navigation
         className='swiper-gallery__image--container'
       >
         {imgSrcArr?.map((imgSrc, index) => (
@@ -71,7 +84,7 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
       <Swiper
         style={thumbContainerStyle}
         onSwiper={setThumbsSwiper}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[FreeMode, Thumbs]}
         spaceBetween={10}
         slidesPerView={4}
         loop

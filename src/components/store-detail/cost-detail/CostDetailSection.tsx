@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import { Store } from '@/api/store';
 import ContainedListItem from '@/components/common/contained-list/ContainedList';
@@ -11,6 +12,11 @@ const CostDetailSection = ({
   storeDetailData,
   parsedExpenditureData,
 }: CostDetailSectionProps) => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+  const continaedListSize = isDownMedium ? 'sm' : 'md';
+
   return (
     <Box
       sx={{
@@ -22,6 +28,7 @@ const CostDetailSection = ({
       }}
     >
       <ContainedListItem
+        size={continaedListSize}
         label='월 매출'
         value={convertMoneyString(storeDetailData?.monthly_sales)}
       />
@@ -29,11 +36,13 @@ const CostDetailSection = ({
         parsedExpenditureData.map(([label, value], index) => (
           <ContainedListItem
             key={index + label}
+            size={continaedListSize}
             label={label}
-            value={'- ' + convertMoneyString(value)}
+            value={convertMoneyString(value)}
           />
         ))}
       <ContainedListItem
+        size={continaedListSize}
         primary
         label='월 수익'
         value={convertMoneyString(storeDetailData?.monthly_revenue)}

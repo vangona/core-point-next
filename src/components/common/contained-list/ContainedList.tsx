@@ -21,7 +21,7 @@ const ContainedListItem = ({
   sx,
 }: ContainedListItemProps) => {
   const isSmall = size === 'sm';
-  const defaultHeight = isSmall ? '35px' : '56px';
+  const defaultHeight = isSmall ? '40px' : '56px';
 
   const containerSx: SxProps = {
     display: 'flex',
