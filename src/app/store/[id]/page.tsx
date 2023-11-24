@@ -19,6 +19,7 @@ import {
 import { ImageSection } from '@/components/store-detail/image-section';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
+import { SalesDetailSection } from '@/components/store-detail/sales-detail';
 import { DIMMED_GRAY } from '@/constants/color';
 import { convertMoneyString } from '@/utils';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
@@ -113,27 +114,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
       <ParagraphDivider />
       <Box sx={{ mt: 3, display: 'flex', gap: 8 }}>
         <ImageSection imgSrcArr={storeDetailData?.store_img_src_arr} />
-        <Box sx={{ width: '500px' }}>
-          <Typography variant='h5' fontWeight='bold' sx={{ mb: 2 }}>
-            매출내역
-          </Typography>
-          <ContainedListItem
-            label='월 매출'
-            value={convertMoneyString(storeDetailData?.monthly_sales)}
-          />
-          <ContainedListItem
-            label='월 지출'
-            value={convertMoneyString(storeDetailData?.monthly_cost)}
-          />
-          <ContainedListItem
-            label='월 수익'
-            value={convertMoneyString(storeDetailData?.monthly_revenue)}
-          />
-          <ContainedListItem
-            label='매출 근거'
-            value={storeDetailData?.sales_reason}
-          />
-        </Box>
+        <SalesDetailSection storeDetailData={storeDetailData} />
       </Box>
       <Box sx={{ mt: 5, display: 'flex', gap: 5 }}>
         <Box sx={{ width: '750px' }}>
