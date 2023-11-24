@@ -35,6 +35,7 @@ const StoreSearch = () => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
@@ -129,8 +130,8 @@ const StoreSearch = () => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
-        marginTop: 5,
+        gap: isDownMedium ? 1 : 2,
+        marginTop: isDownMedium ? 2 : 5,
       }}
     >
       <Box
@@ -138,7 +139,8 @@ const StoreSearch = () => {
           maxWidth: layoutWidth,
           width: '100%',
           display: 'flex',
-          gap: 3,
+          flexDirection: isDownMedium ? 'column' : 'row',
+          gap: isDownMedium ? 1 : 3,
           justifyContent: 'space-between',
         }}
       >
@@ -148,6 +150,7 @@ const StoreSearch = () => {
           value={storeCategory}
           options={STORE_CATEGORY_DATA_ARR}
           onChange={handleCategoryChange}
+          size={isDownMedium ? 'small' : 'medium'}
           renderInput={(params) => (
             <TextField {...params} label='업종' placeholder='전체 업종' />
           )}
@@ -156,6 +159,7 @@ const StoreSearch = () => {
           key={'store-budget--' + storeBudget}
           value={storeBudget}
           onChange={handleBudgetChange}
+          size={isDownMedium ? 'small' : 'medium'}
           fullWidth
           getOptionLabel={(option) => STORE_BUDGET_MAPPER[option]}
           options={STORE_BUDGET_DATA_ARR}
@@ -167,6 +171,7 @@ const StoreSearch = () => {
           key={'store-location--' + storeLocation}
           value={storeLocation}
           onChange={handleLocationChange}
+          size={isDownMedium ? 'small' : 'medium'}
           fullWidth
           options={STORE_LOCATION_DATA_ARR}
           renderInput={(params) => (
@@ -174,11 +179,19 @@ const StoreSearch = () => {
           )}
         />
       </Box>
-      <Box sx={{ display: 'flex', gap: 3, justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: isDownMedium ? 'column' : 'row',
+          gap: isDownMedium ? 1 : 3,
+          justifyContent: 'space-between',
+        }}
+      >
         <TextField
           value={storeSearchKeyword}
           onChange={handleSearchKeywordChange}
           fullWidth
+          size={isDownMedium ? 'small' : 'medium'}
           variant='filled'
           label='매물 이름'
           placeholder='매물 전체'
@@ -186,7 +199,7 @@ const StoreSearch = () => {
         <Button
           onClick={handleSearchClick}
           fullWidth
-          sx={{ width: DEFAULT_SELECT_WIDTH }}
+          sx={{ width: isDownMedium ? undefined : DEFAULT_SELECT_WIDTH }}
           variant='contained'
           startIcon={<Search />}
         >
