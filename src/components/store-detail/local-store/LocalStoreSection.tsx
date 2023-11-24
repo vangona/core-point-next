@@ -3,9 +3,11 @@ import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import { usePathname } from 'next/navigation';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Store, useGetStore } from '@/api/store';
+import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 
@@ -22,8 +24,17 @@ interface LocalStoreSectionProps {
 }
 const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   const theme = useTheme();
+  const pathname = usePathname();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+
+  const { data, isLoading } = useGetStore({
+    location: storeDetailData?.store_location,
+  });
+
+  const filteredData = data.data.filter(
+    (storeData) => storeData.store_id !== storeDetailData?.store_id,
+  );
 
   const [slidePerView, setSlidePerView] = useState(4);
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(
@@ -31,9 +42,11 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   );
   const swiperRef = useRef<SwiperClass>();
 
-  const { data, isLoading } = useGetStore({
-    location: storeDetailData?.store_location,
-  });
+  const [isBackdrop, setIsBackdrop] = useState(false);
+
+  const onCardClick = () => {
+    setIsBackdrop(true);
+  };
 
   useEffect(() => {
     if (isUpLarge) {
@@ -52,14 +65,16 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
     setSlidePerView(SMALL_SLIDE_PER_VIEW);
   }, [isUpLarge, isMedium]);
 
+  useEffect(() => {
+    setIsBackdrop(false);
+  }, [pathname]);
+
   return (
     <Box>
       <Box>
         <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
-          <Box component='span' color='primary.main'>
-            {storeDetailData?.store_location}
-          </Box>{' '}
-          지역 매물 | {data.data.length + '개'}
+          {storeDetailData?.store_location} 지역 매물 |{' '}
+          {filteredData.length + '개'}
         </Typography>
         <Divider sx={{ my: 2 }} />
       </Box>
@@ -83,14 +98,19 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
           modules={[Pagination]}
           pagination={{ clickable: true }}
         >
-          {data.data.map((storeData, index) => (
+          {filteredData.map((storeData, index) => (
             <SwiperSlide key={'store-detail-local-store--' + index}>
-              <VerticalStoreCard storeData={storeData} size='sm' />
+              <VerticalStoreCard
+                storeData={storeData}
+                size='sm'
+                onCardClick={onCardClick}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
         <SwiperNextButton swiperRef={swiperRef} />
       </Box>
+      <ProgressBackdrop open={isBackdrop} />
     </Box>
   );
 };

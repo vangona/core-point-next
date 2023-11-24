@@ -17,7 +17,7 @@ import type { SxProps, TypographyVariant } from '@mui/material';
 interface VerticalStoreCardProps {
   size?: 'md' | 'sm';
   storeData?: Store;
-  onCardClick?: () => void;
+  onCardClick?: (isPathChanged?: boolean) => void;
 }
 const VerticalStoreCard = (props: VerticalStoreCardProps) => {
   const { size = 'md', storeData, onCardClick } = props;
