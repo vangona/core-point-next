@@ -70,48 +70,50 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   }, [pathname]);
 
   return (
-    <Box>
+    filteredData.length > 0 && (
       <Box>
-        <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
-          {storeDetailData?.store_location} 지역 매물 |{' '}
-          {filteredData.length + '개'}
-        </Typography>
-        <Divider sx={{ my: 2 }} />
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          alignItems: 'center',
-          '& .swiper-wrapper': {
-            width: slideWrapperWidth,
-          },
-        }}
-      >
-        <SwiperPrevButton swiperRef={swiperRef} />
-        <Swiper
-          className='main-swiper'
-          onBeforeInit={(swiper) => {
-            swiperRef.current = swiper;
+        <Box>
+          <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
+            {storeDetailData?.store_location} 지역 매물 |{' '}
+            {filteredData.length + '개'}
+          </Typography>
+          <Divider sx={{ my: 2 }} />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            alignItems: 'center',
+            '& .swiper-wrapper': {
+              width: slideWrapperWidth,
+            },
           }}
-          slidesPerView={slidePerView}
-          modules={[Pagination]}
-          pagination={{ clickable: true }}
         >
-          {filteredData.map((storeData, index) => (
-            <SwiperSlide key={'store-detail-local-store--' + index}>
-              <VerticalStoreCard
-                storeData={storeData}
-                size='sm'
-                onCardClick={onCardClick}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <SwiperNextButton swiperRef={swiperRef} />
+          <SwiperPrevButton swiperRef={swiperRef} />
+          <Swiper
+            className='main-swiper'
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            slidesPerView={slidePerView}
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+          >
+            {filteredData.map((storeData, index) => (
+              <SwiperSlide key={'store-detail-local-store--' + index}>
+                <VerticalStoreCard
+                  storeData={storeData}
+                  size='sm'
+                  onCardClick={onCardClick}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <SwiperNextButton swiperRef={swiperRef} />
+        </Box>
+        <ProgressBackdrop open={isBackdrop} />
       </Box>
-      <ProgressBackdrop open={isBackdrop} />
-    </Box>
+    )
   );
 };
 
