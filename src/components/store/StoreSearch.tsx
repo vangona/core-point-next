@@ -166,7 +166,7 @@ const StoreSearch = () => {
         <Autocomplete
           key={'store-category--' + storeCategory}
           fullWidth
-          value={storeCategory}
+          value={storeCategory ?? undefined}
           options={STORE_CATEGORY_DATA_ARR}
           onChange={handleCategoryChange}
           size={isDownMedium ? 'small' : 'medium'}
@@ -176,7 +176,7 @@ const StoreSearch = () => {
         />
         <Autocomplete
           key={'store-budget--' + storeBudget}
-          value={storeBudget}
+          value={storeBudget ?? undefined}
           onChange={handleBudgetChange}
           size={isDownMedium ? 'small' : 'medium'}
           fullWidth
@@ -188,7 +188,7 @@ const StoreSearch = () => {
         />
         <Autocomplete
           key={'store-location--' + storeLocation}
-          value={storeLocation}
+          value={storeLocation ?? undefined}
           onChange={handleLocationChange}
           size={isDownMedium ? 'small' : 'medium'}
           fullWidth
@@ -207,7 +207,7 @@ const StoreSearch = () => {
         }}
       >
         <TextField
-          value={storeSearchKeyword}
+          value={storeSearchKeyword ?? undefined}
           onChange={handleSearchKeywordChange}
           fullWidth
           size={isDownMedium ? 'small' : 'medium'}

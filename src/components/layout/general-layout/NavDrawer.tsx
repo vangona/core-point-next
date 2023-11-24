@@ -21,15 +21,17 @@ interface NavDrawerProps {
   navDataArr: NavData[];
   isOpen: boolean;
   onClose: ModalProps['onClose'];
+  onNavClick: (newHref: string) => void;
 }
 const NavDrawer = (props: NavDrawerProps) => {
-  const { navDataArr, isOpen, onClose } = props;
+  const { navDataArr, isOpen, onClose, onNavClick } = props;
   const router = useRouter();
 
   const handleLinkClick = (
     event: React.MouseEvent<HTMLDivElement>,
     href: CorePointRoutes,
   ) => {
+    onNavClick(href);
     onClose && onClose(event, 'backdropClick');
     router.push(href);
   };
