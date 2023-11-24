@@ -1,28 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
 import Image from 'next/image';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+
+const LARGE_WIDTH = '500px';
+const LARGE_HEIGHT = '400px';
+
+const MEDIUM_WIDTH = '300px';
+const MEDIUM_HEIGHT = '200px';
 
 interface ImageSectionProps {
   imgSrcArr?: string[];
 }
 const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
+  const theme = useTheme();
+  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
+  const [width, setWidth] = useState(LARGE_WIDTH);
+  const [height, setHeight] = useState(LARGE_HEIGHT);
+
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   const galleryContainerStyle = { width: '100%', height: '80%' };
   const thumbContainerStyle = { height: '20%', padding: '10px 0' };
 
+  useEffect(() => {
+    if (isDownLarge) {
+      setWidth(MEDIUM_WIDTH);
+      setHeight(MEDIUM_HEIGHT);
+      return;
+    }
+
+    setWidth(LARGE_WIDTH);
+    setHeight(LARGE_HEIGHT);
+  }, [isDownLarge]);
+
   return (
-    <Box sx={{ width: '500px', height: '400px' }}>
+    <Box sx={{ width, height }}>
       <Swiper
         style={galleryContainerStyle}
         modules={[FreeMode, Navigation, Thumbs]}

@@ -24,7 +24,6 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
-  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const [slidePerView, setSlidePerView] = useState(4);
   const [slideWrapperWidth, setSliderWrapperWidth] = useState(
