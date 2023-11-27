@@ -3,7 +3,9 @@ import '@/app/globals.css';
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { Noto_Sans_KR } from 'next/font/google';
+import Head from 'next/head';
 import { commonMetaData } from '@/app/commonMetaData';
+import * as GoogleTagManger from '@/app/GoogleTagManager';
 import ConditionalLayout from './conditionalLayout';
 import ReactQueryRegistry from './ReactQueryRegistry';
 import ThemeRegistry from './ThemeRegistry';
@@ -43,15 +45,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang='ko'>
+      <Head>
+        <Suspense>
+          <GoogleAnalytics />
+          <GoogleTagManger.HeadTag />
+        </Suspense>
+      </Head>
       <body className={notoSansKr.className}>
         <ReactQueryRegistry>
           <ThemeRegistry>
             <ConditionalLayout>{children}</ConditionalLayout>
           </ThemeRegistry>
         </ReactQueryRegistry>
-        <Suspense>
-          <GoogleAnalytics />
-        </Suspense>
+        <GoogleTagManger.BodyTag />
       </body>
     </html>
   );
