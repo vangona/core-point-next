@@ -2,8 +2,8 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://www.core-point.kr
+Disallow: /admin
+Disallow: /admin/*
 
 # Sitemaps
 Sitemap: https://www.core-point.kr/sitemap.xml
