@@ -2,6 +2,7 @@ import React from 'react';
 import '@/app/globals.css';
 import { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
+import { commonMetaData } from '@/app/commonMetaData';
 import ConditionalLayout from './conditionalLayout';
 import ReactQueryRegistry from './ReactQueryRegistry';
 import ThemeRegistry from './ThemeRegistry';
@@ -27,6 +28,7 @@ declare global {
 export const metadata: Metadata = {
   title: '코어창업',
   description: '코어창업이 창업을 위한 열쇠가 되어드리겠습니다.',
+  ...commonMetaData,
 };
 
 export default function RootLayout({
