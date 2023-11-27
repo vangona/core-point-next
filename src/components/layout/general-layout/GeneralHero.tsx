@@ -104,11 +104,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
                 objectFit='cover'
                 objectPosition='50% 50%'
                 alt='hero image'
-                src={
-                  imgSrc
-                    ? imgSrc
-                    : 'https://source.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
-                }
+                src={imgSrc ? imgSrc : '/core-icon.png'}
               />
             )}
           </Box>
