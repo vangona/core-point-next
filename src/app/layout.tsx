@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import '@/app/globals.css';
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Noto_Sans_KR } from 'next/font/google';
 import { commonMetaData } from '@/app/commonMetaData';
 import ConditionalLayout from './conditionalLayout';
 import ReactQueryRegistry from './ReactQueryRegistry';
 import ThemeRegistry from './ThemeRegistry';
 import type { SwiperProps, SwiperSlideProps } from 'swiper/react';
+
+const GoogleAnalytics = dynamic(() => import('./GoogleAnalytics'), {
+  ssr: false,
+});
 
 const notoSansKr = Noto_Sans_KR({ subsets: ['latin'] });
 
@@ -44,6 +49,9 @@ export default function RootLayout({
             <ConditionalLayout>{children}</ConditionalLayout>
           </ThemeRegistry>
         </ReactQueryRegistry>
+        <Suspense>
+          <GoogleAnalytics />
+        </Suspense>
       </body>
     </html>
   );
