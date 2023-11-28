@@ -10,7 +10,7 @@ import StyledLink from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import HideOnScroll from '@/components/common/hide-on-scroll/HideOnScroll';
 import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import { hoverSx } from '@/components/styles/interactionSx';
@@ -28,7 +28,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const params = useParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isBackdrop, setIsBackdrop] = useState(false);
 
@@ -115,7 +115,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   // 경로나 param이 변경되면 backdrop 닫음
   useEffect(() => {
     setIsBackdrop(false);
-  }, [pathname, searchParams]);
+  }, [pathname, params]);
 
   return (
     <HideOnScroll>
