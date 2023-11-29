@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
 import { getStore } from '@/api/store';
 import { StoreColumnDef } from './constants';
@@ -92,6 +92,7 @@ const StoreDataGrid = () => {
       rows={rows}
       columns={columns}
       initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
+      slots={{ toolbar: GridToolbar }}
     />
   );
 };
