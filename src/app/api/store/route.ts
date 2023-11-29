@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PutStoreDescriptionBody } from '@/api/store/putStoreDescription';
+import { PatchStoreDescriptionBody } from '@/api/store/patchStoreDescription';
 import { supabase } from '@/app/api/supabase';
 import { StoresColumn, SupabaseTable } from '@/app/api/types';
 import { StoreCategoy } from '@/components/store/constants';
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const body = (await req.json()) as PutStoreDescriptionBody;
+  const body = (await req.json()) as PatchStoreDescriptionBody;
 
   const query = await supabase
     .from(SupabaseTable.STORES)

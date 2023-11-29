@@ -29,9 +29,10 @@ import {
 } from '@/api/storage/postStoreImg';
 import { getStoreDetail } from '@/api/store';
 import {
-  PutStoreDescriptionBody,
-  putStoreDescription,
-} from '@/api/store/putStoreDescription';
+  PatchStoreDescriptionBody,
+  patchStoreDescription,
+} from '@/api/store/patchStoreDescription';
+import { PatchStoreImgBody, patchStoreImg } from '@/api/store/patchStoreImg';
 import { convertMoneyString } from '@/utils';
 import type { AlertProps, ModalProps } from '@mui/material';
 
@@ -62,9 +63,9 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     enabled: !!editedId,
   });
 
-  const { mutate } = useMutation<unknown, Error, PutStoreDescriptionBody>({
+  const { mutate } = useMutation<unknown, Error, PatchStoreDescriptionBody>({
     mutationKey: ['stores'],
-    mutationFn: (variables) => putStoreDescription(variables),
+    mutationFn: (variables) => patchStoreDescription(variables),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['stores'] });
       setIsSnackbar(true);
@@ -95,6 +96,25 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       setIsSnackbar(true);
       setSnackbarStatus('error');
       setSnackbarTitle('이미지 업로드에 문제가 발생했습니다.');
+    },
+  });
+
+  const { mutate: patchImg } = useMutation<unknown, Error, PatchStoreImgBody>({
+    mutationKey: ['store-img'],
+    mutationFn: (variables) => patchStoreImg(variables),
+    onSuccess: () => {
+      setAdditionalImg([]);
+      queryClient.invalidateQueries({ queryKey: ['stores'] });
+      queryClient.invalidateQueries({ queryKey: ['stores', editedId] });
+      setIsSnackbar(true);
+      setSnackbarStatus('success');
+      setSnackbarTitle('이미지 수정에 성공했습니다.');
+    },
+    onError: () => {
+      setAdditionalImg([]);
+      setIsSnackbar(true);
+      setSnackbarStatus('error');
+      setSnackbarTitle('이미지 수정에 문제가 발생했습니다.');
     },
   });
 
@@ -135,13 +155,15 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   };
 
   const handleDescriptionSubmit = (
-    descriptionBody: PutStoreDescriptionBody,
+    descriptionBody: PatchStoreDescriptionBody,
   ) => {
     if (descriptionBody.description === data?.description) return;
     mutate(descriptionBody);
   };
 
   const handleImageSubmit = () => {
+    if (!editedId) return;
+
     const newImgSrcArr = [...imgSrcArr];
     additionalImg.forEach((imgData) => {
       const filepath = editedId + '/' + uuidv4() + '.png';
@@ -153,6 +175,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
         process.env.NEXT_PUBLIC_SUPABASE_STORE_IMG_STORAGE + '/' + filepath,
       );
     });
+    patchImg({ id: editedId, imgSrcArr: newImgSrcArr });
   };
 
   useEffect(() => {
