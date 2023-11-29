@@ -5,6 +5,7 @@ import { DataGrid, GridToolbar, koKR } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
 import { getStore } from '@/api/store';
 import { StoreColumnDef } from './constants';
+import StoreEditDialog from './EditDialog';
 import type { GridColDef } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
@@ -61,6 +62,8 @@ const columns: GridColDef[] = [
 type StoreRow = Record<StoreColumnDef, unknown>[];
 
 const StoreDataGrid = () => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [editedId, setEditedId] = useState<string | undefined>(undefined);
   const [rows, setRows] = useState<StoreRow>([]);
   const { data } = useQuery({
     queryKey: ['stores'],
@@ -87,14 +90,25 @@ const StoreDataGrid = () => {
   }, [data]);
 
   return (
-    <DataGrid
-      autoHeight
-      rows={rows}
-      columns={columns}
-      initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
-      slots={{ toolbar: GridToolbar }}
-      localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
-    />
+    <>
+      <DataGrid
+        autoHeight
+        rows={rows}
+        columns={columns}
+        onRowDoubleClick={(params) => {
+          setEditedId(String(params.id));
+          setIsEdit(true);
+        }}
+        initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
+        slots={{ toolbar: GridToolbar }}
+        localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
+      />
+      <StoreEditDialog
+        open={isEdit}
+        onClose={() => setIsEdit(false)}
+        editedId={editedId}
+      />
+    </>
   );
 };
 
