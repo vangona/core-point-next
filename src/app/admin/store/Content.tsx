@@ -1,5 +1,4 @@
 import Paper from '@mui/material/Paper';
-import StoreAppbar from '@/components/admin/store/StoreAppbar';
 import StoreDataGrid from '@/components/admin/store/StoreDataGrid';
 
 export default function Content() {
@@ -12,7 +11,7 @@ export default function Content() {
         overflow: 'hidden',
       }}
     >
-      <StoreAppbar />
+      {/* <StoreAppbar /> */}
       <StoreDataGrid />
     </Paper>
   );
