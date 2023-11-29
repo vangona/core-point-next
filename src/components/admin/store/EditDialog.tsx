@@ -21,6 +21,12 @@ import Typography from '@mui/material/Typography';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import imageCompression from 'browser-image-compression';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  PostStoreImgResponse,
+  StoreImgData,
+  postStoreImg,
+} from '@/api/storage/postStoreImg';
 import { getStoreDetail } from '@/api/store';
 import {
   PutStoreDescriptionBody,
@@ -32,10 +38,11 @@ import type { AlertProps, ModalProps } from '@mui/material';
 type StoreEditDialogProps = Omit<ModalProps, 'children'> & {
   editedId?: string;
 };
-interface ImgData {
+export interface ImgData {
   file: File;
   previewUrl: string;
 }
+
 const StoreEditDialog = (props: StoreEditDialogProps) => {
   const { editedId, ...rest } = props;
   const queryClient = useQueryClient();
@@ -68,6 +75,26 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       setIsSnackbar(true);
       setSnackbarStatus('error');
       setSnackbarTitle('설명 수정에 문제가 발생했습니다.');
+    },
+  });
+
+  const { mutate: uploadImage } = useMutation<
+    PostStoreImgResponse,
+    Error,
+    StoreImgData
+  >({
+    mutationKey: ['store-img'],
+    mutationFn: (variables) => postStoreImg(variables),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['stores'] });
+      setIsSnackbar(true);
+      setSnackbarStatus('success');
+      setSnackbarTitle('이미지 업로드에 성공했습니다.');
+    },
+    onError: () => {
+      setIsSnackbar(true);
+      setSnackbarStatus('error');
+      setSnackbarTitle('이미지 업로드에 문제가 발생했습니다.');
     },
   });
 
@@ -112,6 +139,20 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   ) => {
     if (descriptionBody.description === data?.description) return;
     mutate(descriptionBody);
+  };
+
+  const handleImageSubmit = () => {
+    const newImgSrcArr = [...imgSrcArr];
+    additionalImg.forEach((imgData) => {
+      const filepath = editedId + '/' + uuidv4() + '.png';
+      uploadImage({
+        filename: filepath,
+        file: imgData.file,
+      });
+      newImgSrcArr.push(
+        process.env.NEXT_PUBLIC_SUPABASE_STORE_IMG_STORAGE + '/' + filepath,
+      );
+    });
   };
 
   useEffect(() => {
@@ -257,7 +298,12 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                       </Button>
                     </label>
                   </ImageList>
-                  <Button sx={{ alignSelf: 'flex-end' }}>이미지 저장</Button>
+                  <Button
+                    sx={{ alignSelf: 'flex-end' }}
+                    onClick={handleImageSubmit}
+                  >
+                    이미지 저장
+                  </Button>
                 </Box>
               </DialogContent>
             </>
