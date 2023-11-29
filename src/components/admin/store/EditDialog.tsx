@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import Close from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -16,7 +17,9 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ListItem from '@mui/material/ListItem';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import imageCompression from 'browser-image-compression';
 import Image from 'next/image';
 import { getStoreDetail } from '@/api/store';
 import {
@@ -39,6 +42,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   const [editedDescription, setEditedDescription] = useState<string>('');
   const [imgSrcArr, setImgSrcArr] = useState<string[]>([]);
   const [additionalImg, setAdditionalImg] = useState<ImgData[]>([]);
+  const [isImgLoading, setIsImgLoading] = useState(false);
   const [snackbarTitle, setSnackbarTitle] = useState('');
   const [snackbarStatus, setSnackbarStatus] =
     useState<AlertProps['severity']>('success');
@@ -79,17 +83,27 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     setAdditionalImg(filteredImgData);
   };
 
+  const compressImage = async (image: File): Promise<ImgData> => {
+    const compressedImage = await imageCompression(image, {
+      maxSizeMB: 0.5,
+      useWebWorker: true,
+    });
+    const previewUrl =
+      await imageCompression.getDataUrlFromFile(compressedImage);
+    return { file: compressedImage, previewUrl };
+  };
+
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
+    const promiseArr: Promise<ImgData>[] = [];
     Array.from(event.target.files).forEach((file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setAdditionalImg((prev) => [
-          ...prev,
-          { file, previewUrl: reader.result as string },
-        ]);
-      };
+      const result = compressImage(file);
+      promiseArr.push(result);
+    });
+    setIsImgLoading(true);
+    Promise.all(promiseArr).then((processedData) => {
+      setIsImgLoading(false);
+      setAdditionalImg((prev) => [...prev, ...processedData]);
     });
   };
 
@@ -112,6 +126,22 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
 
   return (
     <>
+      <Backdrop
+        open={isImgLoading}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 5,
+          zIndex: (theme) => theme.zIndex.modal + 1,
+        }}
+      >
+        <CircularProgress />
+        <Typography color='primary.contrastText'>
+          이미지 압축 및 가공중입니다.
+        </Typography>
+      </Backdrop>
       <Snackbar
         open={isSnackbar}
         onClose={() => setIsSnackbar(false)}
