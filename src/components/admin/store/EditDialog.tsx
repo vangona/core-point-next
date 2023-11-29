@@ -37,6 +37,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   const { editedId, ...rest } = props;
   const queryClient = useQueryClient();
   const [editedDescription, setEditedDescription] = useState<string>('');
+  const [imgSrcArr, setImgSrcArr] = useState<string[]>([]);
   const [additionalImg, setAdditionalImg] = useState<ImgData[]>([]);
   const [snackbarTitle, setSnackbarTitle] = useState('');
   const [snackbarStatus, setSnackbarStatus] =
@@ -66,7 +67,14 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     },
   });
 
-  const deleteImage = (imgData: ImgData) => {
+  const deleteOriginImage = (imgSrc: string) => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+    const filteredImgSrc = imgSrcArr.filter((src) => src !== imgSrc);
+    setImgSrcArr(filteredImgSrc);
+  };
+
+  const deleteAdditioanlImage = (imgData: ImgData) => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
     const filteredImgData = additionalImg.filter((data) => data !== imgData);
     setAdditionalImg(filteredImgData);
   };
@@ -94,8 +102,13 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
 
   useEffect(() => {
     if (!data) return;
+    setImgSrcArr(data.store_img_src_arr ?? []);
     setEditedDescription(data.description ?? '');
   }, [data]);
+
+  useEffect(() => {
+    setAdditionalImg([]);
+  }, [props.open]);
 
   return (
     <>
@@ -110,7 +123,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       <Dialog {...rest}>
         <Box
           sx={{
-            minWidth: '500px',
+            width: '600px',
             minHeight: '100px',
             display: 'flex',
             flexDirection: 'column',
@@ -153,19 +166,32 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     sx={{ height: '300px', overflow: 'auto' }}
                     rowHeight={150}
                   >
-                    {data.store_img_src_arr &&
-                      data.store_img_src_arr?.map((imgSrc, index) => (
-                        <ImageListItem key={'store-edit__store-img--' + index}>
-                          <Image fill src={imgSrc} alt='매장 이미지' />
-                        </ImageListItem>
-                      ))}
+                    {imgSrcArr.map((imgSrc, index) => (
+                      <ImageListItem
+                        key={'store-edit__store-img--' + index}
+                        sx={{ position: 'relative' }}
+                      >
+                        <IconButton
+                          onClick={() => deleteOriginImage(imgSrc)}
+                          sx={{
+                            position: 'absolute',
+                            top: 1,
+                            right: 1,
+                            zIndex: 9,
+                          }}
+                        >
+                          <Close color='warning' />
+                        </IconButton>
+                        <Image fill src={imgSrc} alt='매장 이미지' />
+                      </ImageListItem>
+                    ))}
                     {additionalImg.map((imgData, index) => (
                       <ImageListItem
                         key={'additional-store-edit__store-img--' + index}
                         sx={{ position: 'relative' }}
                       >
                         <IconButton
-                          onClick={() => deleteImage(imgData)}
+                          onClick={() => deleteAdditioanlImage(imgData)}
                           sx={{
                             position: 'absolute',
                             top: 1,
