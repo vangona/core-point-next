@@ -14,48 +14,41 @@ const columns: GridColDef[] = [
     field: StoreColumnDef.STORE_NAME,
     headerName: '매물 이름',
     width: 150,
-    editable: true,
   },
   {
     field: StoreColumnDef.STORE_LOCATION,
     headerName: '매물 위치',
     width: 150,
-    editable: true,
   },
   {
     field: StoreColumnDef.STORE_CATEGORY,
     headerName: '업종',
     type: 'string',
     width: 150,
-    editable: true,
-  },
-  {
-    field: StoreColumnDef.DESCRIPTION,
-    headerName: '설명',
-    type: 'string',
-    width: 150,
-    editable: true,
   },
   {
     field: StoreColumnDef.MANAGER,
     headerName: '담당자',
     type: 'string',
     width: 150,
-    editable: true,
   },
   {
     field: StoreColumnDef.MANAGER_CONTACT,
     headerName: '담당자 연락처',
     type: 'string',
     width: 150,
-    editable: true,
+  },
+  {
+    field: StoreColumnDef.DESCRIPTION,
+    headerName: '설명 유무',
+    type: 'boolean',
+    width: 150,
   },
   {
     field: StoreColumnDef.HAS_IMG,
     headerName: '이미지 유무',
     type: 'boolean',
     width: 150,
-    editable: false,
   },
 ];
 
@@ -78,9 +71,9 @@ const StoreDataGrid = () => {
       [StoreColumnDef.STORE_NAME]: storeData.store_name,
       [StoreColumnDef.STORE_LOCATION]: storeData.store_location,
       [StoreColumnDef.STORE_CATEGORY]: storeData.store_category,
-      [StoreColumnDef.DESCRIPTION]: storeData.description ?? '',
       [StoreColumnDef.MANAGER]: storeData.manager,
       [StoreColumnDef.MANAGER_CONTACT]: storeData.manager_contact,
+      [StoreColumnDef.DESCRIPTION]: !!storeData.description,
       [StoreColumnDef.HAS_IMG]: !!(
         storeData.store_img_src_arr && storeData.store_img_src_arr.length > 0
       ),
