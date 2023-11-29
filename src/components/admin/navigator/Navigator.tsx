@@ -11,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Link from 'next/link';
+import { ADMIN_PATH } from '../constants';
 import type { DrawerProps } from '@mui/material/Drawer';
 
 const categories = [
@@ -20,7 +21,7 @@ const categories = [
       {
         id: '매물정보 관리',
         icon: <StoreMallDirectoryRounded />,
-        href: '/admin/store',
+        href: ADMIN_PATH.STORE,
       },
     ],
   },
@@ -30,12 +31,12 @@ const categories = [
       {
         id: '메인 페이지 관리',
         icon: <PermMediaOutlinedIcon />,
-        href: '/admin/main',
+        href: ADMIN_PATH.MAIN,
       },
       {
         id: '사이트 하단 정보 관리',
         icon: <PublicIcon />,
-        href: '/admin/footer',
+        href: ADMIN_PATH.FOOTER,
       },
     ],
   },
@@ -67,11 +68,18 @@ export default function Navigator(props: DrawerProps) {
         >
           코어창업 관리자 페이지
         </ListItem>
-        <ListItem sx={{ ...item, ...itemCategory }}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>웹사이트 개요</ListItemText>
+        <ListItem disablePadding sx={{ pt: 2, pb: 1 }}>
+          <Link
+            href={ADMIN_PATH.OVERVIEW}
+            style={{ width: '100%', textDecoration: 'none' }}
+          >
+            <ListItemButton sx={item}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText>웹사이트 개요</ListItemText>
+            </ListItemButton>
+          </Link>
         </ListItem>
         {categories.map(({ id, children }) => (
           <Box key={id} sx={{ bgcolor: '#101F33' }}>
@@ -80,7 +88,10 @@ export default function Navigator(props: DrawerProps) {
             </ListItem>
             {children.map(({ id: childId, icon, href }) => (
               <ListItem disablePadding key={childId}>
-                <Link href={href} style={{ textDecoration: 'none' }}>
+                <Link
+                  href={href}
+                  style={{ width: '100%', textDecoration: 'none' }}
+                >
                   <ListItemButton sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText>{childId}</ListItemText>

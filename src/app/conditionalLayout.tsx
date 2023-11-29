@@ -9,7 +9,7 @@ interface ConditionalLayoutProps {
 }
 const ConditionalLayout = ({ children }: ConditionalLayoutProps) => {
   const pathname = usePathname();
-  if (pathname !== '/admin') {
+  if (!pathname.includes('/admin')) {
     return <GeneralLayout>{children}</GeneralLayout>;
   } else {
     return children;
