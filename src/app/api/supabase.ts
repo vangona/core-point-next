@@ -101,6 +101,12 @@ export interface TableDefinitions {
   [DbTables.PARTNERSHIP_REQUEST]: PartnershipRequest;
   [DbTables.PARTNERSHIP_BRANDS]: PartnershipBrand;
 }
+
+export enum Storages {
+  STORE_IMG = 'store_img',
+  BRAND_IMG = 'brand_img',
+}
+
 export interface Database {
   public: {
     Tables: TableDefinitions;

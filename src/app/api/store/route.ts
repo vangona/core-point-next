@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PatchStoreDescriptionBody } from '@/api/store/patchStoreDescription';
 import { supabase } from '@/app/api/supabase';
-import { SupabaseTable } from '@/app/api/types';
+import { StoresColumn, SupabaseTable } from '@/app/api/types';
 import { StoreCategoy } from '@/components/store/constants';
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from './constants';
 
@@ -37,4 +38,17 @@ export async function GET(req: NextRequest) {
   const { data } = await query;
 
   return NextResponse.json({ data });
+}
+
+export async function PATCH(req: NextRequest) {
+  const body = (await req.json()) as PatchStoreDescriptionBody;
+
+  const query = await supabase
+    .from(SupabaseTable.STORES)
+    .update({
+      [StoresColumn.DESCRIPTION]: body.description,
+    })
+    .eq(StoresColumn.STORE_ID, body.id);
+
+  return NextResponse.json({ data: query.data });
 }

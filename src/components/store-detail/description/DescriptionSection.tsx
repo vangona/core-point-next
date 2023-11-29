@@ -23,6 +23,7 @@ const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
             minHeight: '300px',
             padding: 3,
             backgroundColor: DIMMED_GRAY,
+            whiteSpace: 'pre',
           }}
         >
           {storeDetailData?.description}

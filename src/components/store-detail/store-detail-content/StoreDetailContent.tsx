@@ -87,7 +87,9 @@ const StoreDetailContent = ({
               )}
             </Box>
           </Box>
-          {storeDetailData?.description && <DescriptionSection />}
+          {storeDetailData?.description && (
+            <DescriptionSection storeDetailData={storeDetailData} />
+          )}
           {isDownLarge && (
             <Box
               sx={{

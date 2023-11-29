@@ -1,20 +1,12 @@
-import * as React from 'react';
-import HelpIcon from '@mui/icons-material/Help';
+import React, { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-
-const lightColor = 'rgba(255, 255, 255, 0.7)';
+import { usePathname } from 'next/navigation';
+import { ADMIN_PAGE_NAME, ADMIN_PATH } from '../constants';
 
 interface HeaderProps {
   onDrawerToggle: () => void;
@@ -22,53 +14,40 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { onDrawerToggle } = props;
+  const pathname = usePathname() as ADMIN_PATH;
+  const [title, setTitle] = useState(ADMIN_PAGE_NAME.OVERVIEW);
+
+  useEffect(() => {
+    switch (pathname) {
+      case ADMIN_PATH.OVERVIEW:
+        setTitle(ADMIN_PAGE_NAME.OVERVIEW);
+        break;
+      case ADMIN_PATH.STORE:
+        setTitle(ADMIN_PAGE_NAME.STORE);
+        break;
+      case ADMIN_PATH.MAIN:
+        setTitle(ADMIN_PAGE_NAME.MAIN);
+        break;
+      case ADMIN_PATH.FOOTER:
+        setTitle(ADMIN_PAGE_NAME.FOOTER);
+        break;
+    }
+    return () => {}; // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <React.Fragment>
       <AppBar color='primary' position='sticky' elevation={0}>
         <Toolbar>
-          <Grid container spacing={1} alignItems='center'>
-            <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
-              <IconButton
-                color='inherit'
-                aria-label='open drawer'
-                onClick={onDrawerToggle}
-                edge='start'
-              >
-                <MenuIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs />
-            <Grid item>
-              <Link
-                href='/'
-                variant='body2'
-                sx={{
-                  textDecoration: 'none',
-                  color: lightColor,
-                  '&:hover': {
-                    color: 'common.white',
-                  },
-                }}
-                rel='noopener noreferrer'
-                target='_blank'
-              >
-                Go to docs
-              </Link>
-            </Grid>
-            <Grid item>
-              <Tooltip title='Alerts • No alerts'>
-                <IconButton color='inherit'>
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <IconButton color='inherit' sx={{ p: 0.5 }}>
-                <Avatar src='/static/images/avatar/1.jpg' alt='My Avatar' />
-              </IconButton>
-            </Grid>
-          </Grid>
+          <IconButton
+            color='inherit'
+            aria-label='open drawer'
+            onClick={onDrawerToggle}
+            edge='start'
+            sx={{ display: { sm: 'none', xs: 'block' } }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <AppBar
@@ -76,36 +55,19 @@ export default function Header(props: HeaderProps) {
         color='primary'
         position='static'
         elevation={0}
-        sx={{ zIndex: 0 }}
+        sx={{ pb: 3, zIndex: 0 }}
       >
         <Toolbar>
           <Grid container alignItems='center' spacing={1}>
             <Grid item xs>
               <Typography color='inherit' variant='h5' component='h1'>
-                Authentication
+                {title}
               </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                sx={{ borderColor: lightColor }}
-                variant='outlined'
-                color='inherit'
-                size='small'
-              >
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title='Help'>
-                <IconButton color='inherit'>
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar
+      {/* <AppBar
         component='div'
         position='static'
         elevation={0}
@@ -117,7 +79,7 @@ export default function Header(props: HeaderProps) {
           <Tab label='Templates' />
           <Tab label='Usage' />
         </Tabs>
-      </AppBar>
+      </AppBar> */}
     </React.Fragment>
   );
 }
