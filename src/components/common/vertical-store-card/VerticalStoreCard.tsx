@@ -82,7 +82,10 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
               alignItems: 'center',
             }}
           >
-            <Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', mb: 1 }}>
+              <Typography align='center' variant='caption'>
+                [ 매물번호 {storeData?.store_number} ]
+              </Typography>
               <Typography
                 align='center'
                 variant={cardTitleTypo}
@@ -106,18 +109,17 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
                 width: '100%',
                 height: '100%',
                 justifyContent: 'center',
-                alignItems: 'center',
               }}
             >
-              <BoldLabelValue
-                label={isSmall ? '비용' : '창업 비용'}
-                value={convertMoneyString(storeData?.store_cost)}
-                variant={cardTypo}
-              />
               <BoldLabelValue
                 primary
                 label='월 수익'
                 value={convertMoneyString(storeData?.monthly_revenue)}
+                variant={cardTypo}
+              />
+              <BoldLabelValue
+                label={isSmall ? '비용' : '창업 비용'}
+                value={convertMoneyString(storeData?.store_cost)}
                 variant={cardTypo}
               />
             </Box>
