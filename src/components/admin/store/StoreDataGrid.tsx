@@ -10,6 +10,7 @@ import type { GridColDef } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
   { field: StoreColumnDef.ID, headerName: 'ID', width: 90 },
+  { field: StoreColumnDef.STORE_NUMBER, headerName: '매물 번호', width: 90 },
   {
     field: StoreColumnDef.STORE_NAME,
     headerName: '매물 이름',
@@ -68,6 +69,7 @@ const StoreDataGrid = () => {
 
     const parsedStore = data?.data.map((storeData) => ({
       [StoreColumnDef.ID]: storeData.store_id,
+      [StoreColumnDef.STORE_NUMBER]: storeData.store_number,
       [StoreColumnDef.STORE_NAME]: storeData.store_name,
       [StoreColumnDef.STORE_LOCATION]: storeData.store_location,
       [StoreColumnDef.STORE_CATEGORY]: storeData.store_category,

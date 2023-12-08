@@ -2,19 +2,20 @@
 
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { Store } from '@/api/store';
 import { StoreCard } from '@/components/common/store-card';
 import { MobileStoreCard } from '../common/mobile-store-card';
 
 interface StoreCardsProps {
   storeData: Store[];
+  isLoading?: boolean;
   handleStoreChange: (newStoreName?: string) => void;
   openModal?: () => void;
   onCardClick?: () => void;
 }
 const StoreCards = ({
   storeData,
+  isLoading,
   handleStoreChange,
   openModal,
   onCardClick,
@@ -26,7 +27,7 @@ const StoreCards = ({
     <Box
       sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}
     >
-      <Typography>{storeData.length}개의 검색결과</Typography>
+      {/* <Typography>{storeData.length}개의 검색결과</Typography> */}
       <Box
         sx={{
           width: '100%',
@@ -45,6 +46,7 @@ const StoreCards = ({
             <StoreCard
               key={'store-card' + index + ', id-' + store.store_id}
               storeData={store}
+              isLoading={isLoading}
               handleStoreChange={handleStoreChange}
               openModal={openModal}
               onCardClick={onCardClick}

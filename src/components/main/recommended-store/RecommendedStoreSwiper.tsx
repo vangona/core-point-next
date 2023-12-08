@@ -57,7 +57,7 @@ const RecommendedStoreSwiper = () => {
         }}
         slidesPerView={slidePerView}
         modules={[Autoplay, Mousewheel, Navigation, Pagination]}
-        autoplay
+        // autoplay
         mousewheel
         loop
         pagination={{ clickable: true }}

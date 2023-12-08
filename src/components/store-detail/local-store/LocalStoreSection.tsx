@@ -74,8 +74,8 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
       <Box>
         <Box>
           <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
-            {storeDetailData?.store_location} 지역 매물 |{' '}
-            {filteredData.length + '개'}
+            {storeDetailData?.store_location} 지역 매물
+            {/* {filteredData.length + '개'} */}
           </Typography>
           <Divider sx={{ my: 2 }} />
         </Box>

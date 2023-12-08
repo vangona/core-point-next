@@ -64,6 +64,7 @@ export interface StoreBudgetData {
   value: string;
 }
 export enum StoreBudgetValue {
+  EMPTY = '',
   LESS_THAN_FIVE_THOUSAND = '0,5000',
   FIVE_THOUSAND_TO_ONE_BILLION = '5000,10000',
   ONE_BILLION_TO_TWO_BILLION = '10000,20000',
@@ -71,6 +72,7 @@ export enum StoreBudgetValue {
   THREE_BILLION_MORE = '30000,0',
 }
 export enum StoreBudgetLabel {
+  EMPTY = '',
   LESS_THAN_FIVE_THOUSAND = '5,000만 원 이하',
   FIVE_THOUSAND_TO_ONE_BILLION = '5,000만 원 ~ 1억 원',
   ONE_BILLION_TO_TWO_BILLION = '1억 원 ~ 2억 원',
@@ -85,6 +87,7 @@ export const STORE_BUDGET_DATA_ARR: StoreBudgetValue[] = [
   StoreBudgetValue.THREE_BILLION_MORE,
 ];
 export const STORE_BUDGET_MAPPER: Record<string, StoreBudgetLabel> = {
+  [StoreBudgetValue.EMPTY]: StoreBudgetLabel.EMPTY,
   [StoreBudgetValue.LESS_THAN_FIVE_THOUSAND]:
     StoreBudgetLabel.LESS_THAN_FIVE_THOUSAND,
   [StoreBudgetValue.FIVE_THOUSAND_TO_ONE_BILLION]:

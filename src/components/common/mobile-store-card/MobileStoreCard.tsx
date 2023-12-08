@@ -6,11 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { StoreCardProps } from '@/components/common/store-card/StoreCard';
 import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
+import { AltImage } from '../alt-image';
 import { BoldLabelValue } from '../store-card/elements';
 
 const MobileStoreCard = ({
@@ -48,7 +48,7 @@ const MobileStoreCard = ({
         onClick={() => handleCardClick(storeData?.store_id)}
       >
         <Typography variant='subtitle1' component='h4' sx={{ mt: 2 }}>
-          {storeData?.store_name}
+          [ 매물번호 {storeData?.store_number} ] {storeData?.store_name}
         </Typography>
         <Divider sx={{ width: '100%' }} />
         <Box sx={{ display: 'flex', mt: 1 }}>
@@ -66,12 +66,12 @@ const MobileStoreCard = ({
               mb: 1,
             }}
           >
-            <Image
+            <AltImage
               fill
               src={
                 storeData?.store_img_src_arr
                   ? storeData?.store_img_src_arr[0]
-                  : ''
+                  : undefined
               }
               alt={storeData?.store_name + ' image'}
             />
@@ -112,7 +112,11 @@ const MobileStoreCard = ({
         <Button
           variant='contained'
           size='small'
-          onClick={() => handleConsultingClick(storeData?.store_name)}
+          onClick={() =>
+            handleConsultingClick(
+              `[ 매물번호 ${storeData?.store_number} ] ${storeData?.store_name}`,
+            )
+          }
         >
           창업컨설팅 신청
         </Button>

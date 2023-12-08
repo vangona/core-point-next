@@ -11,6 +11,8 @@ import { postOpeningConsulting } from '@/api/consulting/opening/postOpeningrCons
 import { PrivateAgreeLink } from '@/components/common/private-agree-link';
 import useSlideSnackBar from '@/components/common/slide-snackbar/useSlideSnackBar';
 import {
+  STORE_BUDGET_DATA_ARR,
+  STORE_BUDGET_MAPPER,
   STORE_CATEGORY_DATA_ARR,
   STORE_LOCATION_DATA_ARR,
 } from '@/components/store/constants';
@@ -154,7 +156,8 @@ const OpeningForm = ({ isDownLarge, initialValue }: OpeningFormProps) => {
               value={value}
               fullWidth
               onChange={(_, value) => onChange(value)}
-              options={STORE_CATEGORY_DATA_ARR}
+              getOptionLabel={(option) => STORE_BUDGET_MAPPER[option]}
+              options={STORE_BUDGET_DATA_ARR}
               renderInput={(params) => (
                 <TextField
                   {...params}
