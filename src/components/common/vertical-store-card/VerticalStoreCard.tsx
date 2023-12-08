@@ -68,7 +68,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
               src={
                 Array.isArray(storeData?.store_img_src_arr)
                   ? storeData?.store_img_src_arr[0]
-                  : '/core-icon.png'
+                  : undefined
               }
               alt='store image'
             />

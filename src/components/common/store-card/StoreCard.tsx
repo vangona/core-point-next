@@ -128,8 +128,6 @@ const StoreCard = (props: StoreCardProps) => {
       setImgSrc(storeData?.store_img_src_arr[0]);
       return;
     }
-
-    setImgSrc('/core-icon.png');
   }, [storeData]);
 
   useEffect(() => {

@@ -52,7 +52,7 @@ const StoreDetailContent = ({
           imgSrcArr={
             storeDetailData?.store_img_src_arr
               ? storeDetailData?.store_img_src_arr
-              : ['/core-icon.png']
+              : [undefined]
           }
         />
         {!isDownLarge && (

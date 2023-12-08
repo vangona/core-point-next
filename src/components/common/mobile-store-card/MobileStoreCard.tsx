@@ -71,7 +71,7 @@ const MobileStoreCard = ({
               src={
                 storeData?.store_img_src_arr
                   ? storeData?.store_img_src_arr[0]
-                  : '/core-icon.png'
+                  : undefined
               }
               alt={storeData?.store_name + ' image'}
             />

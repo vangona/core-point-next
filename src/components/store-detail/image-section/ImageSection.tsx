@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Image from 'next/image';
 import { FreeMode, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import { AltImage } from '@/components/common/alt-image';
 
 const LARGE_WIDTH = '500px';
 const LARGE_HEIGHT = '400px';
@@ -18,7 +18,7 @@ const SMALL_WIDTH = '250px';
 const SMALL_HEIGHT = '250px';
 
 interface ImageSectionProps {
-  imgSrcArr?: string[];
+  imgSrcArr?: string[] | undefined[];
 }
 const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
   const theme = useTheme();
@@ -76,7 +76,7 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
                 height: '100%',
               }}
             >
-              <Image objectFit='cover' src={imgSrc} alt='가게 이미지' fill />
+              <AltImage objectFit='cover' src={imgSrc} alt='가게 이미지' fill />
             </Card>
           </SwiperSlide>
         ))}
@@ -102,7 +102,13 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
                 height: '100%',
               }}
             >
-              <Image objectFit='cover' src={imgSrc} alt='가게 이미지' fill />
+              <AltImage
+                disableLabel
+                objectFit='cover'
+                src={imgSrc}
+                alt='가게 이미지'
+                fill
+              />
             </Card>
           </SwiperSlide>
         ))}
