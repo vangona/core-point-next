@@ -193,8 +193,8 @@ const StoreCard = (props: StoreCardProps) => {
                       <BoldLabelValue
                         label='매장 면적'
                         value={
-                          `${storeData?.store_size}평` +
-                          `(${storeData?.store_size_m2})`
+                          `${storeData?.store_size}평 / ` +
+                          `${storeData?.store_size_m2}m2`
                         }
                       />
                     </>

@@ -69,7 +69,7 @@ const StoreDetailWindow = (props: StoreDetailWindowProps) => {
             <Box>업종 : {storeDetailData?.store_category}</Box>
             <Box>
               면적 : {storeDetailData?.store_size}평 (
-              {storeDetailData?.store_size_m2} m2)
+              {storeDetailData?.store_size_m2}m<sup>2</sup>)
             </Box>
           </Box>
           <Box sx={{ my: 2 }}>
