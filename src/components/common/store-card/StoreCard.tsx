@@ -217,6 +217,9 @@ const StoreCard = (props: StoreCardProps) => {
             <CardActions sx={managerWrapperSx}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography variant='subtitle2' fontWeight='bold'>
+                  [ 매물번호 {storeData?.store_number} ]
+                </Typography>
+                <Typography variant='subtitle2' fontWeight='bold'>
                   담당자 정보
                 </Typography>
                 <Typography variant='body2'>{storeData?.manager}</Typography>
@@ -227,7 +230,11 @@ const StoreCard = (props: StoreCardProps) => {
               <Button
                 variant='contained'
                 sx={{ whiteSpace: 'nowrap' }}
-                onClick={() => handleConsultingClick(storeData.store_name)}
+                onClick={() =>
+                  handleConsultingClick(
+                    `[ 매물번호 ${storeData.store_number} ] ${storeData.store_name}`,
+                  )
+                }
               >
                 창업컨설팅 신청
               </Button>

@@ -48,7 +48,7 @@ const MobileStoreCard = ({
         onClick={() => handleCardClick(storeData?.store_id)}
       >
         <Typography variant='subtitle1' component='h4' sx={{ mt: 2 }}>
-          {storeData?.store_name}
+          [ 매물번호 {storeData?.store_number} ] {storeData?.store_name}
         </Typography>
         <Divider sx={{ width: '100%' }} />
         <Box sx={{ display: 'flex', mt: 1 }}>
@@ -112,7 +112,11 @@ const MobileStoreCard = ({
         <Button
           variant='contained'
           size='small'
-          onClick={() => handleConsultingClick(storeData?.store_name)}
+          onClick={() =>
+            handleConsultingClick(
+              `[ 매물번호 ${storeData.store_number} ] ${storeData.store_name}`,
+            )
+          }
         >
           창업컨설팅 신청
         </Button>
