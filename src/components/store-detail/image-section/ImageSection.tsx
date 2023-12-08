@@ -80,6 +80,26 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
             </Card>
           </SwiperSlide>
         ))}
+        {imgSrcArr?.length === 0 && (
+          <SwiperSlide key={'swiper-gallery__img'}>
+            <Card
+              variant='elevation'
+              raised
+              sx={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              <AltImage
+                objectFit='cover'
+                src={undefined}
+                alt='이미지 없음'
+                fill
+              />
+            </Card>
+          </SwiperSlide>
+        )}
       </Swiper>
       <Swiper
         style={thumbContainerStyle}
@@ -112,6 +132,27 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
             </Card>
           </SwiperSlide>
         ))}
+        {imgSrcArr?.length === 0 && (
+          <SwiperSlide key={'swiper-gallery__img'}>
+            <Card
+              variant='elevation'
+              raised
+              sx={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              <AltImage
+                disableLabel
+                objectFit='cover'
+                src={undefined}
+                alt='이미지 없음'
+                fill
+              />
+            </Card>
+          </SwiperSlide>
+        )}
       </Swiper>
     </Box>
   );
