@@ -96,15 +96,31 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      <Typography
-        variant={isDownMedium ? 'h6' : 'h4'}
-        component='h4'
-        fontWeight='bold'
-        align='center'
-        sx={{ mt: isDownMedium ? 5 : 8, mb: isDownMedium ? 2 : 3 }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          mt: isDownMedium ? 5 : 8,
+          mb: isDownMedium ? 2 : 3,
+        }}
       >
-        {storeDetailData?.store_name}
-      </Typography>
+        <Typography
+          variant={isDownMedium ? 'h6' : 'h4'}
+          component='h4'
+          fontWeight='bold'
+          align='center'
+        >
+          [ 매물번호 {storeDetailData?.store_number} ]
+        </Typography>
+        <Typography
+          variant={isDownMedium ? 'h6' : 'h4'}
+          component='h4'
+          fontWeight='bold'
+          align='center'
+        >
+          {storeDetailData?.store_name}
+        </Typography>
+      </Box>
       <ParagraphDivider />
       <StoreDetailContent
         storeDetailData={storeDetailData}

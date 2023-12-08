@@ -41,6 +41,7 @@ const StoreDetailWindow = (props: StoreDetailWindowProps) => {
           fontWeight='bold'
           sx={{ borderBottom: '1px solid', borderColor: 'divider' }}
         >
+          [ 매물번호 {storeDetailData?.store_number} ]{' '}
           {storeDetailData?.store_name}
         </Typography>
         <Box>
@@ -94,7 +95,7 @@ const StoreDetailWindow = (props: StoreDetailWindowProps) => {
         initialValue={{
           location: storeDetailData?.store_location,
           category: storeDetailData?.store_category,
-          additional: `'${storeDetailData?.store_name}' 관련 문의`,
+          additional: `[ 매물번호 ${storeDetailData?.store_number} ] '${storeDetailData?.store_name}' 관련 문의`,
         }}
       />
     </>
