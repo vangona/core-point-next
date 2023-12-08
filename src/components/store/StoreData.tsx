@@ -37,7 +37,7 @@ const StoreData = ({
   handleStoreChange,
   openModal,
 }: StoreDataProps) => {
-  const { data } = useGetStore(searchParams);
+  const { data, isLoading } = useGetStore(searchParams);
   const storeData = data?.data;
 
   const [isBackdrop, setIsBackdrop] = useState(false);
@@ -70,6 +70,7 @@ const StoreData = ({
       <Suspense fallback={<StoreResultLoading />}>
         <StoreCards
           storeData={storeData}
+          isLoading={isLoading}
           handleStoreChange={handleStoreChange}
           openModal={openModal}
           onCardClick={onCardClick}

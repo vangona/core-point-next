@@ -12,12 +12,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Skeleton from '@mui/material/Skeleton';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Store } from '@/api/store';
 import { SMALL_LAYOUT_WIDTH } from '@/components/layout/general-layout/constants';
 import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
+import { AltImage } from '../alt-image';
 import { BoldLabelValue } from './elements';
 import type { SxProps } from '@mui/system';
 
@@ -28,13 +28,21 @@ const LARGE_CARD_HEIGHT = 200;
 const MANAGER_WIDTH = '180px';
 export interface StoreCardProps {
   storeData?: Store;
+  isLoading?: boolean;
   sx?: SxProps;
   handleStoreChange?: (newStoreName?: string) => void;
   openModal?: () => void;
   onCardClick?: () => void;
 }
 const StoreCard = (props: StoreCardProps) => {
-  const { storeData, sx, handleStoreChange, openModal, onCardClick } = props;
+  const {
+    storeData,
+    isLoading,
+    sx,
+    handleStoreChange,
+    openModal,
+    onCardClick,
+  } = props;
   const theme = useTheme();
   const router = useRouter();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
@@ -118,7 +126,10 @@ const StoreCard = (props: StoreCardProps) => {
       storeData.store_img_src_arr.length > 0
     ) {
       setImgSrc(storeData?.store_img_src_arr[0]);
+      return;
     }
+
+    setImgSrc('/core-icon.png');
   }, [storeData]);
 
   useEffect(() => {
@@ -148,16 +159,15 @@ const StoreCard = (props: StoreCardProps) => {
               onClick={() => handleCardClick(storeData?.store_id)}
             >
               <CardMedia sx={imgWrapperSx}>
-                {!imgSrc && (
+                {isLoading && (
                   <Skeleton variant='rounded' animation='wave' height='100%' />
                 )}
-                {imgSrc && (
-                  <Image
+                {!isLoading && (
+                  <AltImage
                     loading='lazy'
                     src={imgSrc}
                     fill
                     alt='store image'
-                    placeholder='blur'
                     blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=='
                   />
                 )}

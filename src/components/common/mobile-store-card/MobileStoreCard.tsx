@@ -6,11 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { StoreCardProps } from '@/components/common/store-card/StoreCard';
 import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
+import { AltImage } from '../alt-image';
 import { BoldLabelValue } from '../store-card/elements';
 
 const MobileStoreCard = ({
@@ -66,12 +66,12 @@ const MobileStoreCard = ({
               mb: 1,
             }}
           >
-            <Image
+            <AltImage
               fill
               src={
                 storeData?.store_img_src_arr
                   ? storeData?.store_img_src_arr[0]
-                  : ''
+                  : '/core-icon.png'
               }
               alt={storeData?.store_name + ' image'}
             />

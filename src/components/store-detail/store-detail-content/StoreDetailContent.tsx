@@ -48,7 +48,13 @@ const StoreDetailContent = ({
           alignItems: 'center',
         }}
       >
-        <ImageSection imgSrcArr={storeDetailData?.store_img_src_arr} />
+        <ImageSection
+          imgSrcArr={
+            storeDetailData?.store_img_src_arr
+              ? storeDetailData?.store_img_src_arr
+              : ['/core-icon.png']
+          }
+        />
         {!isDownLarge && (
           <SalesDetailSection storeDetailData={storeDetailData} />
         )}

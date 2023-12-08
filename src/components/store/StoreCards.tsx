@@ -9,6 +9,7 @@ import { MobileStoreCard } from '../common/mobile-store-card';
 
 interface StoreCardsProps {
   storeData: Store[];
+  isLoading?: boolean;
   handleStoreChange: (newStoreName?: string) => void;
   openModal?: () => void;
   onCardClick?: () => void;

@@ -76,7 +76,7 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
                 height: '100%',
               }}
             >
-              <Image src={imgSrc} alt='가게 이미지' fill />
+              <Image objectFit='cover' src={imgSrc} alt='가게 이미지' fill />
             </Card>
           </SwiperSlide>
         ))}
@@ -102,7 +102,7 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
                 height: '100%',
               }}
             >
-              <Image src={imgSrc} alt='가게 이미지' fill />
+              <Image objectFit='cover' src={imgSrc} alt='가게 이미지' fill />
             </Card>
           </SwiperSlide>
         ))}

@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { Store } from '@/api/store';
 import { CorePointRoutes } from '@/constants/routes';
 import { convertMoneyString } from '@/utils';
+import { AltImage } from '../alt-image';
 import { BoldLabelValue } from '../store-card/elements';
 import type { SxProps, TypographyVariant } from '@mui/material';
 
@@ -53,18 +54,25 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
           onClick={() => handleCardClick(storeData?.store_id)}
         >
           <CardMedia
-            component='img'
             sx={{
+              flexGrow: 1,
+              flexShrink: 0,
+              position: 'relative',
               height: isSmall ? '120px' : '180px',
-              objectFit: 'cover',
+              width: '100%',
             }}
-            image={
-              Array.isArray(storeData?.store_img_src_arr)
-                ? storeData?.store_img_src_arr[0]
-                : undefined
-            }
-            alt='store image'
-          />
+          >
+            <AltImage
+              fill
+              objectFit='cover'
+              src={
+                Array.isArray(storeData?.store_img_src_arr)
+                  ? storeData?.store_img_src_arr[0]
+                  : '/core-icon.png'
+              }
+              alt='store image'
+            />
+          </CardMedia>
           <CardContent
             sx={{
               display: 'flex',
