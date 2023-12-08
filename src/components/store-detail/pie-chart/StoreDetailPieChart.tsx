@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
+import { convertMoneyString } from '@/utils';
 
 interface StoreDetailPieChartProps {
   parsedExpenditureData: [string, number][];
@@ -26,7 +27,9 @@ const StoreDetailPieChart = ({
               label,
             })),
             arcLabel: (item) =>
-              `${item.label} / ${item.value.toLocaleString('ko-KR')}`,
+              item.label === '월 수익'
+                ? `${item.label} / ${convertMoneyString(item.value)}`
+                : '',
             cornerRadius: 4,
             arcLabelMinAngle: 45,
             innerRadius: 30,
