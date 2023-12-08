@@ -43,6 +43,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         ['임대료', storeDetailData.rent_cost],
         ['공과금', storeDetailData.dues_cost],
         ['기타잡비', storeDetailData.etc_cost],
+        ['월 수익', storeDetailData.monthly_revenue],
       ]
     : [];
 

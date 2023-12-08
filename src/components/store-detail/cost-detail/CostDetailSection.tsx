@@ -36,17 +36,12 @@ const CostDetailSection = ({
         parsedExpenditureData.map(([label, value], index) => (
           <ContainedListItem
             key={index + label}
+            primary={label === '월 수익'}
             size={continaedListSize}
             label={label}
             value={convertMoneyString(value)}
           />
         ))}
-      <ContainedListItem
-        size={continaedListSize}
-        primary
-        label='월 수익'
-        value={convertMoneyString(storeDetailData?.monthly_revenue)}
-      />
     </Box>
   );
 };
