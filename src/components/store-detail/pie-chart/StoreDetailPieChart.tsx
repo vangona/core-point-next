@@ -16,8 +16,8 @@ const StoreDetailPieChart = ({
       }}
     >
       <PieChart
-        width={300}
-        height={300}
+        width={400}
+        height={400}
         series={[
           {
             data: parsedExpenditureData.map(([label, value], index) => ({
