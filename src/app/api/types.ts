@@ -17,6 +17,7 @@ export enum SupabaseTable {
 export enum StoresColumn {
   STORE_ID = 'store_id',
   STORE_NAME = 'store_name',
+  STORE_NUMBER = 'store_number',
   STORE_LOCATION = 'store_location',
   STORE_SIZE = 'store_size',
   STORE_CATEGORY = 'store_category',

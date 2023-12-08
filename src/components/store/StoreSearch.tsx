@@ -212,7 +212,7 @@ const StoreSearch = () => {
           fullWidth
           size={isDownMedium ? 'small' : 'medium'}
           variant='filled'
-          label='매물 이름'
+          label='매물 이름 / 설명 / 매물 번호'
           placeholder='매물 전체'
         />
         <Button

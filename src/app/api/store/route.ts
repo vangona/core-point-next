@@ -28,7 +28,12 @@ export async function GET(req: NextRequest) {
     query = query.gte('store_cost', parseInt(parsedBudget[0]));
   }
   if (location) query = query.eq('store_location', location);
-  if (search) query = query.ilike('store_name', `%${search}%`);
+  if (search) {
+    const searchQueryStr = isNaN(parseInt(search))
+      ? `${StoresColumn.STORE_NAME}.ilike.%${search}%,${StoresColumn.DESCRIPTION}.ilike.%${search}%`
+      : `${StoresColumn.STORE_NAME}.ilike.%${search}%,${StoresColumn.DESCRIPTION}.ilike.%${search}%,${StoresColumn.STORE_NUMBER}.eq.${search}`;
+    query = query.or(searchQueryStr);
+  }
 
   query = query
     .eq('deleted', 'FALSE')
