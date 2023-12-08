@@ -114,7 +114,7 @@ const MobileStoreCard = ({
           size='small'
           onClick={() =>
             handleConsultingClick(
-              `[ 매물번호 ${storeData.store_number} ] ${storeData.store_name}`,
+              `[ 매물번호 ${storeData?.store_number} ] ${storeData?.store_name}`,
             )
           }
         >
