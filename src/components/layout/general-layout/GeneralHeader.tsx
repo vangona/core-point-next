@@ -78,6 +78,10 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   };
 
   const logoSx: SxProps = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 1,
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
@@ -137,11 +141,14 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           {/* center area */}
           <Box sx={logoSx} onClick={onLogoClick}>
             <Image
-              width={120}
+              width={60}
               height={60}
-              src='/logo.png'
+              src='/core-icon.png'
               alt='열쇠 모양에 Core Company라는 글자가 적혀있는 코어 창업 로고'
             />
+            <Typography variant='h5' component='h1'>
+              코어창업
+            </Typography>
           </Box>
           {/* right area */}
           <Box sx={rightAreaSx}>
