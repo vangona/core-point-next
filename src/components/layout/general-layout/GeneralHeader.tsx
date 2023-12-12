@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -32,6 +32,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const params = useParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isBackdrop, setIsBackdrop] = useState(false);
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
@@ -60,6 +61,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
     justifyContent: 'space-between',
     backgroundColor: OFF_WHITE_COLOR,
     zIndex: 99,
+    paddingX: !isSmall ? 2 : 0,
   };
 
   const toolbarSx: SxProps = {
@@ -145,19 +147,21 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           {/* center area */}
           <Box sx={logoSx} onClick={onLogoClick}>
             <Image
-              width={60}
-              height={60}
-              src='/core-icon.png'
+              width={isSmall ? 100 : 60}
+              height={isSmall ? 50 : 60}
+              src={isSmall ? '/logo.png' : '/core-icon.png'}
               alt='열쇠 모양에 Core Company라는 글자가 적혀있는 코어 창업 로고'
             />
-            <Typography
-              variant='h5'
-              component='h1'
-              fontFamily='NanumSquare'
-              fontWeight='bold'
-            >
-              코어창업
-            </Typography>
+            {!isSmall && (
+              <Typography
+                variant='h5'
+                component='h1'
+                fontFamily='NanumSquare'
+                fontWeight='bold'
+              >
+                코어창업
+              </Typography>
+            )}
           </Box>
           {/* right area */}
           <Box sx={rightAreaSx}>
