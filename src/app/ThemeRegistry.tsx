@@ -40,6 +40,10 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
         xl: 1536,
       },
     },
+    typography: {
+      // eslint-disable-next-line quotes
+      fontFamily: "'Noto Sans KR', sans-serif",
+    },
   });
 
   const [{ cache, flush }] = React.useState(() => {
