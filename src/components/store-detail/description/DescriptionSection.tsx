@@ -19,11 +19,12 @@ const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
         </Box>
         <Box
           sx={{
+            maxWidth: '100%',
             width: '700px',
             minHeight: '300px',
             padding: 3,
             backgroundColor: DIMMED_GRAY,
-            whiteSpace: 'pre',
+            whiteSpace: 'pre-wrap',
           }}
         >
           {storeDetailData?.description}
