@@ -42,7 +42,7 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
     },
     typography: {
       // eslint-disable-next-line quotes
-      fontFamily: "'Noto Sans KR', sans-serif",
+      fontFamily: "'Noto Sans KR', Roboto, sans-serif",
     },
   });
 
