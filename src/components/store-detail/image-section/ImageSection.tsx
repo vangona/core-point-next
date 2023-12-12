@@ -8,7 +8,7 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { AltImage } from '@/components/common/alt-image';
 
-const LARGE_WIDTH = '800px';
+const LARGE_WIDTH = '700px';
 const LARGE_HEIGHT = '600px';
 
 const MEDIUM_WIDTH = '350px';
@@ -52,6 +52,7 @@ const ImageSection = ({ imgSrcArr }: ImageSectionProps) => {
   return (
     <Box
       sx={{
+        flexShrink: 0,
         width,
         height,
       }}

@@ -11,7 +11,7 @@ interface OverviewSectionProps {
 }
 const OverviewSection = ({ storeDetailData }: OverviewSectionProps) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <Box>
         <Typography variant='h5' fontWeight='bold'>
           개요
