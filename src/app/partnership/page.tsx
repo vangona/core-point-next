@@ -6,7 +6,7 @@ export default function Partnership() {
     <>
       <GeneralHero
         title='협업 신청'
-        description='브랜드 신규 협업 신청'
+        description='신규 브랜드 협업 신청'
         imgSrc='/partnership-hero.webp'
       />
       <PartnershipContent />
