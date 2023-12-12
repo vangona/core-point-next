@@ -82,7 +82,6 @@ const StoreCard = (props: StoreCardProps) => {
   const titleSx: SxProps = {
     borderBottom: '1px solid',
     borderColor: theme.palette.divider,
-    color: theme.palette.primary.main,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

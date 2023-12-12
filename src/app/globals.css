@@ -1,5 +1,6 @@
 @import 'swiper/css';
 @import 'swiper/css/bundle';
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css);
 
 html,
 body {

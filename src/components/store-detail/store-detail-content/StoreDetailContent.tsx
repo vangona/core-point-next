@@ -3,18 +3,27 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
+import dynamic from 'next/dynamic';
 import { Store } from '@/api/store';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 import { CostDetailSection } from '@/components/store-detail/cost-detail';
 import { DescriptionSection } from '@/components/store-detail/description';
-import { ImageSection } from '@/components/store-detail/image-section';
-import { LocalStoreSection } from '@/components/store-detail/local-store';
 import StoreDetailPieChart from '@/components/store-detail/pie-chart/StoreDetailPieChart';
 import StoreDetailWindow from '@/components/store-detail/pie-chart/StoreDetailWindow';
 import { SalesDetailSection } from '@/components/store-detail/sales-detail';
 import { OverviewSection } from '../overview';
 import type { SxProps } from '@mui/material';
+
+const ImageSection = dynamic(
+  () => import('@/components/store-detail/image-section/ImageSection'),
+  { loading: () => <Skeleton width='300px' height='500px' /> },
+);
+const LocalStoreSection = dynamic(
+  () => import('@/components/store-detail/local-store/LocalStoreSection'),
+  { loading: () => <Skeleton width='100%' height='300px' /> },
+);
 
 interface StoreDetailContentProps {
   storeDetailData?: Store;

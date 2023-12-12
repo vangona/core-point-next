@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import StyledLink from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
@@ -31,6 +32,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   const params = useParams();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isBackdrop, setIsBackdrop] = useState(false);
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
@@ -59,6 +61,7 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
     justifyContent: 'space-between',
     backgroundColor: OFF_WHITE_COLOR,
     zIndex: 99,
+    paddingX: !isSmall ? 2 : 0,
   };
 
   const toolbarSx: SxProps = {
@@ -78,6 +81,10 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   };
 
   const logoSx: SxProps = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 1,
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
@@ -101,7 +108,10 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
   };
 
   const rightAreaSx: SxProps = {
+    height: '1rem',
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: 3,
     [theme.breakpoints.down('lg')]: {
       display: 'none',
@@ -127,9 +137,9 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
       >
         <Toolbar sx={toolbarSx}>
           {/* left area */}
-          <Box sx={leftAreaSx}>
+          <Box sx={leftAreaSx} fontFamily='NanumSquare' fontWeight='700'>
             {'창업을 위한 '}
-            <Typography fontWeight='bold' display='inline' color='primary'>
+            <Typography fontWeight='900' display='inline' color='primary'>
               열쇠
             </Typography>
             가 되어드리겠습니다
@@ -137,25 +147,50 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           {/* center area */}
           <Box sx={logoSx} onClick={onLogoClick}>
             <Image
-              width={120}
-              height={60}
-              src='/logo.png'
+              width={isSmall ? 100 : 60}
+              height={isSmall ? 50 : 60}
+              src={isSmall ? '/logo.png' : '/core-icon.png'}
               alt='열쇠 모양에 Core Company라는 글자가 적혀있는 코어 창업 로고'
             />
+            {!isSmall && (
+              <Typography
+                variant='h5'
+                component='h1'
+                fontFamily='NanumSquare'
+                fontWeight='bold'
+              >
+                코어창업
+              </Typography>
+            )}
           </Box>
           {/* right area */}
           <Box sx={rightAreaSx}>
-            {NAV_DATA_ARR.map((navData) => (
-              <StyledLink
-                onClick={() => handleNavClick(navData.href)}
-                key={'nav' + navData.href}
-                underline='none'
-                sx={LinkSx}
-                color={pathname === navData.href ? 'primary' : 'black'}
-                fontWeight={pathname === navData.href ? 'bold' : 'normal'}
-              >
-                {navData.label}
-              </StyledLink>
+            {NAV_DATA_ARR.map((navData, index) => (
+              <>
+                <StyledLink
+                  onClick={() => handleNavClick(navData.href)}
+                  key={'nav' + navData.href}
+                  underline='none'
+                  sx={LinkSx}
+                  color={pathname === navData.href ? 'primary' : 'black'}
+                  fontSize='1.1rem'
+                  fontFamily='NanumSquare'
+                  fontWeight={pathname === navData.href ? '900' : 'bold'}
+                >
+                  {navData.label}
+                </StyledLink>
+                {index !== NAV_DATA_ARR.length - 1 && (
+                  <Divider
+                    orientation='vertical'
+                    sx={{
+                      display: 'flex',
+                      flexShrink: 0,
+                      flexGrow: 1,
+                      height: '100%',
+                    }}
+                  />
+                )}
+              </>
             ))}
           </Box>
           <IconButton

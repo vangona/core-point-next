@@ -3,17 +3,42 @@
 import { useEffect, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import { Store, getStoreDetail } from '@/api/store';
-import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
-import { StoreDetailContent } from '@/components/store-detail/store-detail-content';
 import { LOCALSTORAGE_RECENT_STORE_KEY } from './constants';
+
+const TitleSection = dynamic(
+  () => import('@/components/store-detail/title-section/TitleSection'),
+  { ssr: false },
+);
+
+const StoreDetailContent = dynamic(
+  () =>
+    import('@/components/store-detail/store-detail-content/StoreDetailContent'),
+  {
+    ssr: false,
+    loading: () => (
+      <Box
+        sx={{
+          width: '100%',
+          height: '50vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    ),
+  },
+);
 
 interface StoreDetailPageProps {
   params: { id: string };
@@ -97,32 +122,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          mt: isDownMedium ? 5 : 8,
-          mb: isDownMedium ? 2 : 3,
-        }}
-      >
-        <Typography
-          variant={isDownMedium ? 'h6' : 'h4'}
-          component='h4'
-          fontWeight='bold'
-          align='center'
-        >
-          [ 매물번호 {storeDetailData?.store_number} ]
-        </Typography>
-        <Typography
-          variant={isDownMedium ? 'h6' : 'h4'}
-          component='h4'
-          fontWeight='bold'
-          align='center'
-        >
-          {storeDetailData?.store_name}
-        </Typography>
-      </Box>
-      <ParagraphDivider />
+      <TitleSection storeDetailData={storeDetailData} />
       <StoreDetailContent
         storeDetailData={storeDetailData}
         parsedExpenditureData={parsedExpenditureData}

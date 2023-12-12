@@ -17,7 +17,9 @@ export async function GET(req: NextRequest) {
 
   const parsedBudget = budget ? budget.split(',') : undefined;
 
-  let query = supabase.from(SupabaseTable.STORES).select('*');
+  let query = supabase
+    .from(SupabaseTable.STORES)
+    .select('*', { count: 'exact' });
 
   if (category) query = query.eq('store_category', category);
   if (parsedBudget && parsedBudget[0] !== '30000') {
@@ -40,9 +42,9 @@ export async function GET(req: NextRequest) {
     .range(page * limit, (page + 1) * limit - 1)
     .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
 
-  const { data } = await query;
+  const { data, count } = await query;
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ data, count });
 }
 
 export async function PATCH(req: NextRequest) {

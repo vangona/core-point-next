@@ -2,26 +2,27 @@
 
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { Store } from '@/api/store';
+import { useGetStore } from '@/api/store';
+import { StoreSearchParams } from '@/app/store/page';
 import { StoreCard } from '@/components/common/store-card';
 import { MobileStoreCard } from '../common/mobile-store-card';
 
 interface StoreCardsProps {
-  storeData: Store[];
-  isLoading?: boolean;
+  searchParams: StoreSearchParams;
   handleStoreChange: (newStoreName?: string) => void;
   openModal?: () => void;
   onCardClick?: () => void;
 }
 const StoreCards = ({
-  storeData,
-  isLoading,
+  searchParams,
   handleStoreChange,
   openModal,
   onCardClick,
 }: StoreCardsProps) => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const { data, isLoading } = useGetStore(searchParams);
+  const storeData = data?.data;
 
   return (
     <Box

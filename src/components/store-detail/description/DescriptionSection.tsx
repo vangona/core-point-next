@@ -1,3 +1,4 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
@@ -8,6 +9,9 @@ interface DescriptionSectionProps {
   storeDetailData?: Store;
 }
 const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -19,14 +23,17 @@ const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
         </Box>
         <Box
           sx={{
+            maxWidth: '100%',
             width: '700px',
             minHeight: '300px',
             padding: 3,
             backgroundColor: DIMMED_GRAY,
-            whiteSpace: 'pre',
+            whiteSpace: 'pre-wrap',
           }}
         >
-          {storeDetailData?.description}
+          {isDownMedium && storeDetailData?.mobile_description
+            ? storeDetailData.mobile_description
+            : storeDetailData?.description}
         </Box>
       </Box>
     </>

@@ -29,6 +29,7 @@ export enum StoresColumn {
   MANAGER = 'manager',
   MANAGER_CONTACT = 'manager_contact',
   DESCRIPTION = 'description',
+  MOBILE_DESCRIPTION = 'mobile_description',
   STORE_SIZE_M2 = 'store_size_m2',
   STORE_IMG_SRC_ARR = 'store_img_src_arr',
   STORE_STATE = 'store_state',

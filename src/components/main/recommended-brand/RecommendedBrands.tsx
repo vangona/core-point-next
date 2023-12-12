@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 
-const MEDIUM_LOGO_SIZE = '100px';
-const SMALL_LOGO_SIZE = '50px';
+const MEDIUM_LOGO_SIZE = '150px';
+const SMALL_LOGO_SIZE = '100px';
 
 const RecommendedBrands = () => {
   const theme = useTheme();

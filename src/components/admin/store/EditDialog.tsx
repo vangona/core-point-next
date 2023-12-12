@@ -33,6 +33,10 @@ import {
   patchStoreDescription,
 } from '@/api/store/patchStoreDescription';
 import { PatchStoreImgBody, patchStoreImg } from '@/api/store/patchStoreImg';
+import {
+  PatchStoreMobileDescriptionBody,
+  patchStoreMobileDescription,
+} from '@/api/store/patchStoreMobileDescription';
 import { convertMoneyString } from '@/utils';
 import type { AlertProps, ModalProps } from '@mui/material';
 
@@ -48,6 +52,8 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   const { editedId, ...rest } = props;
   const queryClient = useQueryClient();
   const [editedDescription, setEditedDescription] = useState<string>('');
+  const [editedMobileDescription, setEditedMobileDescription] =
+    useState<string>('');
   const [imgSrcArr, setImgSrcArr] = useState<string[]>([]);
   const [additionalImg, setAdditionalImg] = useState<ImgData[]>([]);
   const [isImgLoading, setIsImgLoading] = useState(false);
@@ -76,6 +82,26 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       setIsSnackbar(true);
       setSnackbarStatus('error');
       setSnackbarTitle('설명 수정에 문제가 발생했습니다.');
+    },
+  });
+
+  const { mutate: updateMobileDescription } = useMutation<
+    unknown,
+    Error,
+    PatchStoreMobileDescriptionBody
+  >({
+    mutationKey: ['stores'],
+    mutationFn: (variables) => patchStoreMobileDescription(variables),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['stores'] });
+      setIsSnackbar(true);
+      setSnackbarStatus('success');
+      setSnackbarTitle('모바일 설명 수정에 성공했습니다.');
+    },
+    onError: () => {
+      setIsSnackbar(true);
+      setSnackbarStatus('error');
+      setSnackbarTitle('모바일 설명 수정에 문제가 발생했습니다.');
     },
   });
 
@@ -161,6 +187,13 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     mutate(descriptionBody);
   };
 
+  const handleMobileDescriptionSubmit = (
+    descriptionBody: PatchStoreMobileDescriptionBody,
+  ) => {
+    if (descriptionBody.mobile_description === data?.mobile_description) return;
+    updateMobileDescription(descriptionBody);
+  };
+
   const handleImageSubmit = () => {
     if (!editedId) return;
 
@@ -182,6 +215,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     if (!data) return;
     setImgSrcArr(data.store_img_src_arr ?? []);
     setEditedDescription(data.description ?? '');
+    setEditedMobileDescription(data.mobile_description ?? '');
   }, [data]);
 
   useEffect(() => {
@@ -253,6 +287,27 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     }
                   >
                     설명 저장
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <TextField
+                    label='모바일 설명'
+                    multiline
+                    sx={{ mt: 2, width: '100%' }}
+                    minRows={10}
+                    onChange={(e) => setEditedMobileDescription(e.target.value)}
+                    value={editedMobileDescription}
+                  />
+                  <Button
+                    sx={{ alignSelf: 'flex-end' }}
+                    onClick={() =>
+                      handleMobileDescriptionSubmit({
+                        id: data.store_id,
+                        mobile_description: editedMobileDescription,
+                      })
+                    }
+                  >
+                    모바일 설명 저장
                   </Button>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

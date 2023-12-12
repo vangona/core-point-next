@@ -17,6 +17,7 @@ export interface Store {
   sales_reason: string;
   store_size_m2?: string;
   store_img_src_arr?: string[];
+  mobile_description?: string;
   description?: string;
   personal_cost: number;
   material_cost: number;
