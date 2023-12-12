@@ -3,24 +3,36 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useGetStoreMetadata } from '@/api/store/useGetStoreMetadata';
+import { useRouter } from 'next/navigation';
+import { useGetStore } from '@/api/store';
+import { StoreSearchParams } from '@/app/store/page';
 
-const StorePagination = () => {
+interface StorePaginationProps {
+  searchParams: StoreSearchParams;
+}
+const StorePagination = ({ searchParams }: StorePaginationProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const { data } = useGetStoreMetadata();
+  const { data } = useGetStore(searchParams);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
 
   const handlePageChange = (page: number) => {
-    router.push(`/store?page=${page}`);
+    const url = new URL(
+      process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.core-point.kr',
+    );
+    url.pathname = 'store';
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set('page', page.toString());
+    url.search = newSearchParams.toString();
+
+    router.push(url.toString());
   };
 
   useEffect(() => {
-    setPageCount(Math.ceil(data.data / 20));
-    setPage(parseInt(searchParams.get('page') ?? '1'));
-  }, [data.data, searchParams]);
+    setPageCount(Math.ceil(data.count / 20));
+    setPage(parseInt(searchParams.page ?? '1'));
+  }, [data.count, searchParams]);
 
   return (
     <Box

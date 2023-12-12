@@ -1,14 +1,14 @@
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
 import StoreContent from '@/components/store/StoreContent';
 
-export interface StoreSearchParams {
+export type StoreSearchParams = {
   page?: string;
   limit?: string;
   category?: string;
   budget?: string;
   location?: string;
   search?: string;
-}
+};
 
 interface StorePageProps {
   searchParams: StoreSearchParams;

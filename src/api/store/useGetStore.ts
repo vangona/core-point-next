@@ -4,6 +4,7 @@ import { StoreSearchParams } from '@/app/store/page';
 
 export interface GetStoreResponse {
   data: Store[];
+  count: number;
 }
 
 export const getStore = async (

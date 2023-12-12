@@ -64,7 +64,7 @@ export default function StoreContent({ searchParams }: StoreContentProps) {
       )}
       <StoreResultLayout>
         <StoreResult searchParams={searchParams} />
-        <StorePagination />
+        <StorePagination searchParams={searchParams} />
       </StoreResultLayout>
     </Box>
   );
