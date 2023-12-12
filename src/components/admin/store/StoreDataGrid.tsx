@@ -46,6 +46,12 @@ const columns: GridColDef[] = [
     width: 150,
   },
   {
+    field: StoreColumnDef.MOBILE_DESCRIPTION,
+    headerName: '모바일 설명 유무',
+    type: 'boolean',
+    width: 150,
+  },
+  {
     field: StoreColumnDef.HAS_IMG,
     headerName: '이미지 유무',
     type: 'boolean',
@@ -76,6 +82,7 @@ const StoreDataGrid = () => {
       [StoreColumnDef.MANAGER]: storeData.manager,
       [StoreColumnDef.MANAGER_CONTACT]: storeData.manager_contact,
       [StoreColumnDef.DESCRIPTION]: !!storeData.description,
+      [StoreColumnDef.MOBILE_DESCRIPTION]: !!storeData.mobile_description,
       [StoreColumnDef.HAS_IMG]: !!(
         storeData.store_img_src_arr && storeData.store_img_src_arr.length > 0
       ),
