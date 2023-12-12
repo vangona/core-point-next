@@ -8,11 +8,11 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { AltImage } from '@/components/common/alt-image';
 
-const LARGE_WIDTH = '500px';
-const LARGE_HEIGHT = '400px';
+const LARGE_WIDTH = '800px';
+const LARGE_HEIGHT = '600px';
 
-const MEDIUM_WIDTH = '300px';
-const MEDIUM_HEIGHT = '300px';
+const MEDIUM_WIDTH = '350px';
+const MEDIUM_HEIGHT = '350px';
 
 const SMALL_WIDTH = '250px';
 const SMALL_HEIGHT = '250px';
