@@ -17,6 +17,8 @@ import { CorePointRoutes } from '@/constants/routes';
 import { NavData } from './constants';
 import type { ModalProps } from '@mui/material';
 
+const DRAWER_WIDTH = '250px';
+
 interface NavDrawerProps {
   navDataArr: NavData[];
   isOpen: boolean;
@@ -49,7 +51,10 @@ const NavDrawer = (props: NavDrawerProps) => {
         sx={{
           display: { lg: 'none' },
           flexDirection: 'column',
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '200px' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: DRAWER_WIDTH,
+          },
         }}
       >
         <Box sx={{ padding: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
@@ -74,7 +79,14 @@ const NavDrawer = (props: NavDrawerProps) => {
                 </ListItemIcon>
                 <ListItemText
                   onClick={(e) => handleLinkClick(e, navData.href)}
-                  sx={{ textDecoration: 'none', color: 'black' }}
+                  sx={{
+                    textDecoration: 'none',
+                    color: 'black',
+                  }}
+                  primaryTypographyProps={{
+                    fontFamily: 'NanumSquare',
+                    fontWeight: 'bold',
+                  }}
                 >
                   {navData.label}
                 </ListItemText>
