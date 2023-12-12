@@ -1,9 +1,6 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
-import { getStoreMinimum, useGetStore } from '@/api/store';
-import { LOCALSTORAGE_RECENT_STORE_KEY } from '@/app/store/[id]/constants';
 import { StoreSearchParams } from '@/app/store/page';
 import {
   DEFAULT_WINDOW_WIDTH,
@@ -37,40 +34,17 @@ const StoreData = ({
   handleStoreChange,
   openModal,
 }: StoreDataProps) => {
-  const { data, isLoading } = useGetStore(searchParams);
-  const storeData = data?.data;
-
   const [isBackdrop, setIsBackdrop] = useState(false);
-  const [recentStores, setRecentStores] = useState<string[] | undefined>(
-    undefined,
-  );
-
-  const { data: minimumData, isLoading: isMinimumLoading } = useQuery({
-    queryKey: ['store-minimum', recentStores],
-    queryFn: () => getStoreMinimum({ idArr: recentStores }),
-    enabled: recentStores !== undefined,
-  });
 
   const onCardClick = () => {
     setIsBackdrop(true);
   };
 
-  useEffect(() => {
-    const localStorageRecentStores = localStorage.getItem(
-      LOCALSTORAGE_RECENT_STORE_KEY,
-    );
-    const parsedRecentStores: string[] = localStorageRecentStores
-      ? JSON.parse(localStorageRecentStores)
-      : [];
-    setRecentStores(parsedRecentStores);
-  }, []);
-
   return (
     <>
       <Suspense fallback={<StoreResultLoading />}>
         <StoreCards
-          storeData={storeData}
-          isLoading={isLoading}
+          searchParams={searchParams}
           handleStoreChange={handleStoreChange}
           openModal={openModal}
           onCardClick={onCardClick}
@@ -78,8 +52,6 @@ const StoreData = ({
       </Suspense>
       {!isDownLarge && (
         <StoreWindow
-          storeData={minimumData?.data}
-          isLoading={isMinimumLoading || !recentStores} // data 로딩 중이거나 recentStores를 아직 localStorage에서 가져오지 않았다면 isLoading ture
           openModal={openModal}
           handleStoreChange={handleStoreChange}
           onCardClick={onCardClick}

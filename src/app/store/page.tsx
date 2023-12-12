@@ -1,5 +1,24 @@
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import dynamic from 'next/dynamic';
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
-import StoreContent from '@/components/store/StoreContent';
+
+const StoreContent = dynamic(() => import('@/components/store/StoreContent'), {
+  ssr: false,
+  loading: () => (
+    <Box
+      sx={{
+        width: '100%',
+        height: '50vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  ),
+});
 
 export type StoreSearchParams = {
   page?: string;
