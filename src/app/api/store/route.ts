@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PatchStoreDescriptionBody } from '@/api/store/patchStoreDescription';
+import { DeleteStoreBody } from '@/api/store/deleteStore';
+import { PatchStoreBody } from '@/api/store/patchStore';
 import { supabase } from '@/app/api/supabase';
 import { StoresColumn, SupabaseTable } from '@/app/api/types';
 import { StoreCategoy } from '@/components/store/constants';
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
   query = query
     .eq('deleted', 'FALSE')
     .range(page * limit, (page + 1) * limit - 1)
-    .order('store_name', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+    .order('store_id', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
 
   const { data, count } = await query;
 
@@ -48,14 +49,29 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const body = (await req.json()) as PatchStoreDescriptionBody;
+  const body = (await req.json()) as PatchStoreBody;
 
   const query = await supabase
     .from(SupabaseTable.STORES)
     .update({
-      [StoresColumn.DESCRIPTION]: body.description,
+      [StoresColumn.STORE_NAME]: body.storeName,
     })
-    .eq(StoresColumn.STORE_ID, body.id);
+    .eq(StoresColumn.STORE_ID, body.id)
+    .select();
+
+  return NextResponse.json({ data: query.data });
+}
+
+export async function DELETE(req: NextRequest) {
+  const body = (await req.json()) as DeleteStoreBody;
+
+  const query = await supabase
+    .from(SupabaseTable.STORES)
+    .update({
+      [StoresColumn.DELETED]: true,
+    })
+    .eq(StoresColumn.STORE_ID, body.store_id)
+    .select();
 
   return NextResponse.json({ data: query.data });
 }

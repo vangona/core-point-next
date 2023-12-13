@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import '@/app/globals.css';
 import { commonMetaData } from '@/app/commonMetaData';
 import type { Metadata } from 'next';
@@ -14,5 +14,5 @@ export default function StoreDetailLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <Suspense>{children}</Suspense>;
 }

@@ -92,6 +92,10 @@ const StoreHashTag = ({
           border: '1px solid',
           borderColor: 'divider',
           borderRadius: 2,
+          transition: '0.1s border-color linear',
+          '&:focus-within, &:hover': {
+            borderColor: 'black',
+          },
         }}
       >
         {hashtags.map((hashtag, index) => (
