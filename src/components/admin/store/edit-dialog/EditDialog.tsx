@@ -57,7 +57,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       </Snackbar>
       <Dialog
         {...rest}
-        PaperProps={{ sx: { width: '100%', maxWidth: '80vw' } }}
+        PaperProps={{ sx: { width: '800px', maxWidth: '80vw' } }}
       >
         <Box
           sx={{
