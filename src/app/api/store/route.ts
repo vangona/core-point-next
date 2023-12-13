@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { DeleteStoreBody } from '@/api/store/deleteStore';
 import { PatchStoreBody } from '@/api/store/patchStore';
 import { supabase } from '@/app/api/supabase';
 import { StoresColumn, SupabaseTable } from '@/app/api/types';
@@ -56,6 +57,20 @@ export async function PATCH(req: NextRequest) {
       [StoresColumn.STORE_NAME]: body.storeName,
     })
     .eq(StoresColumn.STORE_ID, body.id)
+    .select();
+
+  return NextResponse.json({ data: query.data });
+}
+
+export async function DELETE(req: NextRequest) {
+  const body = (await req.json()) as DeleteStoreBody;
+
+  const query = await supabase
+    .from(SupabaseTable.STORES)
+    .update({
+      [StoresColumn.DELETED]: true,
+    })
+    .eq(StoresColumn.STORE_ID, body.store_id)
     .select();
 
   return NextResponse.json({ data: query.data });

@@ -17,6 +17,7 @@ import {
 } from '@mui/x-data-grid';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Store, getStore } from '@/api/store';
+import { DeleteStoreBody, deleteStore } from '@/api/store/deleteStore';
 import { PatchStoreBody, patchStore } from '@/api/store/patchStore';
 import { StoreState } from '@/app/api/types';
 import { StoreCategoy, StoreLocation } from '@/components/store/constants';
@@ -62,6 +63,14 @@ const StoreDataGrid = () => {
     mutationFn: (variables: PatchStoreBody) => patchStore(variables),
   });
 
+  const { mutate: deleteRow } = useMutation<
+    { data: Store[] },
+    Error,
+    DeleteStoreBody
+  >({
+    mutationFn: (variables: DeleteStoreBody) => deleteStore(variables),
+  });
+
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
     params,
     event,
@@ -79,8 +88,29 @@ const StoreDataGrid = () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (params: GridRowParams) => () => {
+    if (!confirm(`정말로 '${params.row.storeName}'을 삭제하시겠습니까?`))
+      return;
+
+    deleteRow(
+      { store_id: params.id.toString() },
+      {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({ queryKey: ['stores'] });
+          setIsSnackbar(true);
+          setSnackbarStatus('success');
+          setSnackbarTitle(data.data[0].store_name + '(이)가 삭제되었습니다.');
+          setRows(rows.filter((row) => row.id !== params.id));
+        },
+        onError: (error) => {
+          setIsSnackbar(true);
+          setSnackbarStatus('error');
+          setSnackbarTitle(
+            '매물 삭제 중 문제가 발생했습니다. ' + error.message,
+          );
+        },
+      },
+    );
   };
 
   const handleCancelClick = (params: GridRowParams) => () => {
@@ -114,6 +144,7 @@ const StoreDataGrid = () => {
         setIsSnackbar(true);
         setSnackbarStatus('success');
         setSnackbarTitle(data.data[0].store_name + ' 수정에 성공했습니다.');
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       },
       onError: () => {
         setIsSnackbar(true);
@@ -121,7 +152,7 @@ const StoreDataGrid = () => {
         setSnackbarTitle('매물 수정에 문제가 발생했습니다.');
       },
     });
-    setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+
     return newRow;
   };
 
@@ -174,7 +205,7 @@ const StoreDataGrid = () => {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label='Delete'
-            onClick={handleDeleteClick(params.id)}
+            onClick={handleDeleteClick(params)}
             color='inherit'
             key={'store-edit-delete'}
           />,
