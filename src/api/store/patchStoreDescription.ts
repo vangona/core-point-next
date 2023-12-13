@@ -6,7 +6,10 @@ export interface PatchStoreDescriptionBody {
 export const patchStoreDescription = async (
   reqBody: PatchStoreDescriptionBody,
 ) => {
-  const reqUrl = new URL('/api/store', process.env.NEXT_PUBLIC_BASE_URL);
+  const reqUrl = new URL(
+    '/api/store/description',
+    process.env.NEXT_PUBLIC_BASE_URL,
+  );
 
   const res = await fetch(reqUrl, {
     method: 'PATCH',
