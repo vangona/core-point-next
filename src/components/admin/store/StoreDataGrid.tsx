@@ -5,6 +5,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import {
   DataGrid,
   GridActionsCellItem,
@@ -13,23 +15,26 @@ import {
   GridToolbar,
   koKR,
 } from '@mui/x-data-grid';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Store, getStore } from '@/api/store';
 import { PatchStoreBody, patchStore } from '@/api/store/patchStore';
 import { StoreState } from '@/app/api/types';
 import { StoreCategoy, StoreLocation } from '@/components/store/constants';
 import { StoreColumnDef } from './constants';
 import StoreEditDialog from './edit-dialog/EditDialog';
+import type { AlertProps } from '@mui/material';
 import type {
   GridColDef,
   GridEventListener,
   GridRowId,
   GridRowModesModel,
+  GridRowParams,
   GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
 
 const StoreDataGrid = () => {
+  const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
   const [editedId, setEditedId] = useState<string | undefined>(undefined);
   const [rows, setRows] = useState<GridRowsProp>([]);
@@ -38,6 +43,10 @@ const StoreDataGrid = () => {
     page: 0,
     pageSize: 20,
   });
+  const [snackbarTitle, setSnackbarTitle] = useState('');
+  const [snackbarStatus, setSnackbarStatus] =
+    useState<AlertProps['severity']>('success');
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ['stores', paginationModel.page],
@@ -49,7 +58,7 @@ const StoreDataGrid = () => {
   });
   const [totalRowCount, setTotalRowCount] = useState(data?.count || 0);
 
-  const { mutate } = useMutation<{ data: Store }, Error, PatchStoreBody>({
+  const { mutate } = useMutation<{ data: Store[] }, Error, PatchStoreBody>({
     mutationFn: (variables: PatchStoreBody) => patchStore(variables),
   });
 
@@ -74,35 +83,46 @@ const StoreDataGrid = () => {
     setRows(rows.filter((row) => row.id !== id));
   };
 
-  const handleCancelClick = (id: GridRowId) => () => {
+  const handleCancelClick = (params: GridRowParams) => () => {
+    if (
+      !confirm(
+        '수정중인 내용이 있을 경우 초기화됩니다. 수정을 취소하시겠습니까?',
+      )
+    )
+      return;
+
     setRowModesModel({
       ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+      [params.id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = rows.find((row) => row.id === id);
+    const editedRow = rows.find((row) => row.id === params.id);
     if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+      setRows(rows.filter((row) => row.id !== params.id));
     }
   };
 
   const processRowUpdate = (
-    updatedRow: PatchStoreBody,
+    newRow: PatchStoreBody,
     originRow: GridValidRowModel,
   ) => {
-    if (JSON.stringify(updatedRow) === JSON.stringify(originRow))
-      return originRow; // 값이 수정되지 않았으면 그대로 return;
+    if (JSON.stringify(newRow) === JSON.stringify(originRow)) return originRow; // 값이 수정되지 않았으면 그대로 return;
 
-    mutate(updatedRow, {
-      onSuccess: () => {
-        console.log('success');
+    mutate(newRow, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({ queryKey: ['stores'] });
+        setIsSnackbar(true);
+        setSnackbarStatus('success');
+        setSnackbarTitle(data.data[0].store_name + ' 수정에 성공했습니다.');
       },
-      onError: (error) => {
-        console.log(error);
+      onError: () => {
+        setIsSnackbar(true);
+        setSnackbarStatus('error');
+        setSnackbarTitle('매물 수정에 문제가 발생했습니다.');
       },
     });
-    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
-    return updatedRow;
+    setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+    return newRow;
   };
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
@@ -116,8 +136,9 @@ const StoreDataGrid = () => {
       headerName: '수정 / 삭제',
       width: 100,
       cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+      getActions: (params) => {
+        const isInEditMode =
+          rowModesModel[params.id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
           return [
@@ -127,14 +148,14 @@ const StoreDataGrid = () => {
               sx={{
                 color: 'primary.main',
               }}
-              onClick={handleSaveClick(id)}
+              onClick={handleSaveClick(params.id)}
               key={'store-edit-save'}
             />,
             <GridActionsCellItem
               icon={<CancelIcon />}
               label='Cancel'
               className='textPrimary'
-              onClick={handleCancelClick(id)}
+              onClick={handleCancelClick(params)}
               color='inherit'
               key={'store-edit-cancel'}
             />,
@@ -146,14 +167,14 @@ const StoreDataGrid = () => {
             icon={<EditIcon />}
             label='Edit'
             className='textPrimary'
-            onClick={handleEditClick(id)}
+            onClick={handleEditClick(params.id)}
             color='inherit'
             key={'store-edit-edit'}
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label='Delete'
-            onClick={handleDeleteClick(id)}
+            onClick={handleDeleteClick(params.id)}
             color='inherit'
             key={'store-edit-delete'}
           />,
@@ -388,6 +409,15 @@ const StoreDataGrid = () => {
 
   return (
     <>
+      {/* Dialog와 zIndex가 다른 Snackbar라서 그냥 따로 렌더링함 */}
+      <Snackbar
+        open={isSnackbar}
+        onClose={() => setIsSnackbar(false)}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={snackbarStatus}>{snackbarTitle}</Alert>
+      </Snackbar>
       <DataGrid
         rows={rows}
         rowCount={totalRowCount}

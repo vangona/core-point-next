@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PatchStoreBody } from '@/api/store/patchStore';
-import { PatchStoreDescriptionBody } from '@/api/store/patchStoreDescription';
 import { supabase } from '@/app/api/supabase';
 import { StoresColumn, SupabaseTable } from '@/app/api/types';
 import { StoreCategoy } from '@/components/store/constants';
