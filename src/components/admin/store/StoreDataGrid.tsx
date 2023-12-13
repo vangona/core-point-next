@@ -376,6 +376,10 @@ const StoreDataGrid = () => {
         columns={columns}
         loading={isLoading}
         onRowDoubleClick={(params) => {
+          const isInEditMode =
+            rowModesModel[params.id]?.mode === GridRowModes.Edit;
+          if (isInEditMode) return;
+
           setEditedId(String(params.id));
           setIsEdit(true);
         }}
