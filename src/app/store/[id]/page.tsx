@@ -66,7 +66,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     ? [
         ['인건비', isValidData ? storeDetailData.data![0].personal_cost : 0], // isValidData에서 검증하기 때문에 ! 사용
         ['재료비', isValidData ? storeDetailData.data![0].material_cost : 0],
-        ['임대료', isValidData ? storeDetailData.data![0].rent_cost : 0],
+        ['월 비용', isValidData ? storeDetailData.data![0].rent_cost : 0],
         ['공과금', isValidData ? storeDetailData.data![0].dues_cost : 0],
         ['기타잡비', isValidData ? storeDetailData.data![0].etc_cost : 0],
         ['월 수익', isValidData ? storeDetailData.data![0].monthly_revenue : 0],
