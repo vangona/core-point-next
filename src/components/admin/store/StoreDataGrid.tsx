@@ -65,10 +65,24 @@ const StoreDataGrid = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [editedId, setEditedId] = useState<string | undefined>(undefined);
   const [rows, setRows] = useState<StoreRow>([]);
-  const { data } = useQuery({
-    queryKey: ['stores'],
-    queryFn: () => getStore({}),
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 20,
   });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['stores', paginationModel.page],
+    queryFn: () =>
+      getStore({
+        page: (paginationModel.page + 1).toString(),
+        limit: paginationModel.pageSize.toString(),
+      }),
+  });
+  const [totalRowCount, setTotalRowCount] = useState(data?.count || 0);
+
+  useEffect(() => {
+    setTotalRowCount((prev) => (data?.count === undefined ? prev : data.count));
+  }, [data?.count]);
 
   useEffect(() => {
     if (!data) return;
@@ -94,16 +108,19 @@ const StoreDataGrid = () => {
   return (
     <>
       <DataGrid
-        autoHeight
         rows={rows}
+        rowCount={totalRowCount}
         columns={columns}
+        loading={isLoading}
         onRowDoubleClick={(params) => {
           setEditedId(String(params.id));
           setIsEdit(true);
         }}
-        initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
         slots={{ toolbar: GridToolbar }}
         localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
+        paginationModel={paginationModel}
+        paginationMode='server'
+        onPaginationModelChange={setPaginationModel}
       />
       <StoreEditDialog
         open={isEdit}
