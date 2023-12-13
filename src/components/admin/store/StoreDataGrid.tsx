@@ -17,21 +17,82 @@ const columns: GridColDef[] = [
     width: 150,
   },
   {
-    field: StoreColumnDef.STORE_LOCATION,
-    headerName: '매물 위치',
-    width: 150,
+    field: StoreColumnDef.STORE_STATE,
+    headerName: '매물 상태',
+    width: 100,
   },
   {
     field: StoreColumnDef.STORE_CATEGORY,
     headerName: '업종',
     type: 'string',
-    width: 150,
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.STORE_LOCATION,
+    headerName: '매물 위치',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.STORE_COST,
+    headerName: '창업 비용',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.STORE_SIZE,
+    headerName: '매장 면적(평)',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.STORE_SIZE_M2,
+    headerName: '매장 면적(m²)',
+    width: 100,
+  },
+
+  {
+    field: StoreColumnDef.MONTHLY_SALES,
+    headerName: '월 매출',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.MONTHLY_REVENUE,
+    headerName: '월 수익',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.MONTHLY_COST,
+    headerName: '월 지출',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.PERSONAL_COST,
+    headerName: '인건비',
+    width: 75,
+  },
+  {
+    field: StoreColumnDef.MATERIAL_COST,
+    headerName: '재료비',
+    width: 75,
+  },
+  {
+    field: StoreColumnDef.RENT_COST,
+    headerName: '월 비용(임대료)',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.DUES_COST,
+    headerName: '공과금',
+    width: 75,
+  },
+  {
+    field: StoreColumnDef.ETC_COST,
+    headerName: '기타 비용',
+    width: 75,
   },
   {
     field: StoreColumnDef.MANAGER,
     headerName: '담당자',
     type: 'string',
-    width: 150,
+    width: 100,
   },
   {
     field: StoreColumnDef.MANAGER_CONTACT,
@@ -43,24 +104,30 @@ const columns: GridColDef[] = [
     field: StoreColumnDef.DESCRIPTION,
     headerName: '설명 유무',
     type: 'boolean',
-    width: 150,
+    width: 100,
   },
   {
     field: StoreColumnDef.MOBILE_DESCRIPTION,
     headerName: '모바일 설명 유무',
     type: 'boolean',
-    width: 150,
+    width: 100,
   },
   {
     field: StoreColumnDef.STORE_TAGS,
     headerName: '매물 태그 유무',
     type: 'boolean',
-    width: 150,
+    width: 100,
   },
   {
     field: StoreColumnDef.HAS_IMG,
     headerName: '이미지 유무',
     type: 'boolean',
+    width: 100,
+  },
+  {
+    field: StoreColumnDef.CREATED_AT,
+    headerName: '생성 일자',
+    type: 'dateTime',
     width: 150,
   },
 ];
@@ -96,9 +163,22 @@ const StoreDataGrid = () => {
     const parsedStore = data?.data.map((storeData) => ({
       [StoreColumnDef.ID]: storeData.store_id,
       [StoreColumnDef.STORE_NUMBER]: storeData.store_number,
+      [StoreColumnDef.STORE_STATE]: storeData.store_state,
       [StoreColumnDef.STORE_NAME]: storeData.store_name,
-      [StoreColumnDef.STORE_LOCATION]: storeData.store_location,
       [StoreColumnDef.STORE_CATEGORY]: storeData.store_category,
+      [StoreColumnDef.STORE_LOCATION]: storeData.store_location,
+      [StoreColumnDef.SALES_REASON]: storeData.sales_reason,
+      [StoreColumnDef.STORE_COST]: storeData.store_cost,
+      [StoreColumnDef.STORE_SIZE]: storeData.store_size,
+      [StoreColumnDef.STORE_SIZE_M2]: storeData.store_size_m2,
+      [StoreColumnDef.MONTHLY_SALES]: storeData.monthly_sales,
+      [StoreColumnDef.MONTHLY_REVENUE]: storeData.monthly_revenue,
+      [StoreColumnDef.MONTHLY_COST]: storeData.monthly_cost,
+      [StoreColumnDef.PERSONAL_COST]: storeData.personal_cost,
+      [StoreColumnDef.MATERIAL_COST]: storeData.material_cost,
+      [StoreColumnDef.RENT_COST]: storeData.rent_cost,
+      [StoreColumnDef.DUES_COST]: storeData.dues_cost,
+      [StoreColumnDef.ETC_COST]: storeData.etc_cost,
       [StoreColumnDef.MANAGER]: storeData.manager,
       [StoreColumnDef.MANAGER_CONTACT]: storeData.manager_contact,
       [StoreColumnDef.DESCRIPTION]: !!storeData.description,
@@ -109,6 +189,7 @@ const StoreDataGrid = () => {
       [StoreColumnDef.HAS_IMG]: !!(
         storeData.store_img_src_arr && storeData.store_img_src_arr.length > 0
       ),
+      [StoreColumnDef.CREATED_AT]: new Date(storeData.created_at),
     }));
 
     setRows(parsedStore);
