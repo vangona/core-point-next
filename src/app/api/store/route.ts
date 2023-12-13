@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PatchStoreBody } from '@/api/store/patchStore';
 import { PatchStoreDescriptionBody } from '@/api/store/patchStoreDescription';
 import { supabase } from '@/app/api/supabase';
 import { StoresColumn, SupabaseTable } from '@/app/api/types';
@@ -48,14 +49,15 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const body = (await req.json()) as PatchStoreDescriptionBody;
+  const body = (await req.json()) as PatchStoreBody;
 
   const query = await supabase
     .from(SupabaseTable.STORES)
     .update({
-      [StoresColumn.DESCRIPTION]: body.description,
+      [StoresColumn.STORE_NAME]: body.storeName,
     })
-    .eq(StoresColumn.STORE_ID, body.id);
+    .eq(StoresColumn.STORE_ID, body.id)
+    .select();
 
   return NextResponse.json({ data: query.data });
 }

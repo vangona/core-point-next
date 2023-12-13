@@ -13,8 +13,9 @@ import {
   GridToolbar,
   koKR,
 } from '@mui/x-data-grid';
-import { useQuery } from '@tanstack/react-query';
-import { getStore } from '@/api/store';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Store, getStore } from '@/api/store';
+import { PatchStoreBody, patchStore } from '@/api/store/patchStore';
 import { StoreState } from '@/app/api/types';
 import { StoreCategoy, StoreLocation } from '@/components/store/constants';
 import { StoreColumnDef } from './constants';
@@ -23,9 +24,9 @@ import type {
   GridColDef,
   GridEventListener,
   GridRowId,
-  GridRowModel,
   GridRowModesModel,
   GridRowsProp,
+  GridValidRowModel,
 } from '@mui/x-data-grid';
 
 const StoreDataGrid = () => {
@@ -47,6 +48,10 @@ const StoreDataGrid = () => {
       }),
   });
   const [totalRowCount, setTotalRowCount] = useState(data?.count || 0);
+
+  const { mutate } = useMutation<{ data: Store }, Error, PatchStoreBody>({
+    mutationFn: (variables: PatchStoreBody) => patchStore(variables),
+  });
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (
     params,
@@ -81,9 +86,22 @@ const StoreDataGrid = () => {
     }
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+  const processRowUpdate = (
+    updatedRow: PatchStoreBody,
+    originRow: GridValidRowModel,
+  ) => {
+    if (JSON.stringify(updatedRow) === JSON.stringify(originRow))
+      return originRow; // 값이 수정되지 않았으면 그대로 return;
+
+    mutate(updatedRow, {
+      onSuccess: () => {
+        console.log('success');
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
@@ -145,19 +163,19 @@ const StoreDataGrid = () => {
     { field: StoreColumnDef.ID, headerName: 'ID', width: 90 },
     { field: StoreColumnDef.STORE_NUMBER, headerName: '매물 번호', width: 90 },
     {
-      field: StoreColumnDef.STORE_NAME,
-      headerName: '매물 이름',
-      type: 'string',
-      editable: true,
-      width: 150,
-    },
-    {
       field: StoreColumnDef.STORE_STATE,
       headerName: '매물 상태',
       type: 'singleSelect',
       valueOptions: [StoreState.PROGRESS, StoreState.MANAGED, StoreState.WAIT],
       editable: true,
       width: 100,
+    },
+    {
+      field: StoreColumnDef.STORE_NAME,
+      headerName: '매물 이름',
+      type: 'string',
+      editable: true,
+      width: 150,
     },
     {
       field: StoreColumnDef.STORE_CATEGORY,
@@ -232,15 +250,15 @@ const StoreDataGrid = () => {
       width: 100,
     },
     {
-      field: StoreColumnDef.MONTHLY_REVENUE,
-      headerName: '월 수익',
+      field: StoreColumnDef.MONTHLY_COST,
+      headerName: '월 지출',
       type: 'number',
       editable: true,
       width: 100,
     },
     {
-      field: StoreColumnDef.MONTHLY_COST,
-      headerName: '월 지출',
+      field: StoreColumnDef.MONTHLY_REVENUE,
+      headerName: '월 수익',
       type: 'number',
       editable: true,
       width: 100,
