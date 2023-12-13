@@ -52,6 +52,12 @@ const columns: GridColDef[] = [
     width: 150,
   },
   {
+    field: StoreColumnDef.STORE_TAGS,
+    headerName: '매물 태그 유무',
+    type: 'boolean',
+    width: 150,
+  },
+  {
     field: StoreColumnDef.HAS_IMG,
     headerName: '이미지 유무',
     type: 'boolean',
@@ -97,6 +103,9 @@ const StoreDataGrid = () => {
       [StoreColumnDef.MANAGER_CONTACT]: storeData.manager_contact,
       [StoreColumnDef.DESCRIPTION]: !!storeData.description,
       [StoreColumnDef.MOBILE_DESCRIPTION]: !!storeData.mobile_description,
+      [StoreColumnDef.STORE_TAGS]: !!(
+        storeData.store_tags && storeData.store_tags.length !== 0
+      ),
       [StoreColumnDef.HAS_IMG]: !!(
         storeData.store_img_src_arr && storeData.store_img_src_arr.length > 0
       ),

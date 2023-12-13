@@ -6,6 +6,7 @@ export enum StoreColumnDef {
   STORE_CATEGORY = 'storeCategory',
   DESCRIPTION = 'description',
   MOBILE_DESCRIPTION = 'mobileDescription',
+  STORE_TAGS = 'storeTags',
   MANAGER = 'manager',
   MANAGER_CONTACT = 'managerContact',
   HAS_IMG = 'hasImg',
