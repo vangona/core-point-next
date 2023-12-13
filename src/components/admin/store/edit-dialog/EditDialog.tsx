@@ -1,6 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -68,43 +72,70 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
           {isLoading && <CircularProgress />}
           {!isLoading && data && (
             <>
-              <DialogTitle>{data.store_name}</DialogTitle>
+              <DialogTitle>
+                &#39;{data.store_name}&#39; 상세 정보 수정
+              </DialogTitle>
               <DialogContent sx={{ flexGrow: 1, width: '100%' }}>
                 <ListItem>
-                  {data.store_category} ﹒ {data.store_location} ﹒{' '}
+                  개요 : {data.store_category} ﹒ {data.store_location} ﹒{' '}
                   {convertMoneyString(data.store_cost)}
                 </ListItem>
                 <Divider sx={{ my: 1 }} />
-                <StoreDescription
-                  data={data}
-                  setIsSnackbar={setIsSnackbar}
-                  setSnackbarStatus={setSnackbarStatus}
-                  setSnackbarTitle={setSnackbarTitle}
-                />
-                <Divider sx={{ my: 1 }} />
-                <StoreMobileDescription
-                  data={data}
-                  setIsSnackbar={setIsSnackbar}
-                  setSnackbarStatus={setSnackbarStatus}
-                  setSnackbarTitle={setSnackbarTitle}
-                />
-                <Divider sx={{ my: 1 }} />
-                <StoreHashTag
-                  tagData={data.store_tags}
-                  storeId={data.store_id}
-                  setIsSnackbar={setIsSnackbar}
-                  setSnackbarStatus={setSnackbarStatus}
-                  setSnackbarTitle={setSnackbarTitle}
-                />
-                <Divider sx={{ my: 1 }} />
-                <StoreImgSrc
-                  data={data}
-                  editedId={editedId}
-                  open={props.open}
-                  setIsSnackbar={setIsSnackbar}
-                  setSnackbarStatus={setSnackbarStatus}
-                  setSnackbarTitle={setSnackbarTitle}
-                />
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    상세 설명 수정
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <StoreDescription
+                      data={data}
+                      setIsSnackbar={setIsSnackbar}
+                      setSnackbarStatus={setSnackbarStatus}
+                      setSnackbarTitle={setSnackbarTitle}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    모바일 전용 상세 설명 수정
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <StoreMobileDescription
+                      data={data}
+                      setIsSnackbar={setIsSnackbar}
+                      setSnackbarStatus={setSnackbarStatus}
+                      setSnackbarTitle={setSnackbarTitle}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    매물 태그 정보 추가
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <StoreHashTag
+                      tagData={data.store_tags}
+                      storeId={data.store_id}
+                      setIsSnackbar={setIsSnackbar}
+                      setSnackbarStatus={setSnackbarStatus}
+                      setSnackbarTitle={setSnackbarTitle}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    매물 이미지 수정
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <StoreImgSrc
+                      data={data}
+                      editedId={editedId}
+                      open={props.open}
+                      setIsSnackbar={setIsSnackbar}
+                      setSnackbarStatus={setSnackbarStatus}
+                      setSnackbarTitle={setSnackbarTitle}
+                    />
+                  </AccordionDetails>
+                </Accordion>
               </DialogContent>
             </>
           )}

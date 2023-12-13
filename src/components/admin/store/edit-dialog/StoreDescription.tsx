@@ -80,7 +80,7 @@ const StoreDescription = ({
           });
         }}
       >
-        설명 저장
+        상세 설명 저장
       </Button>
     </Box>
   );
