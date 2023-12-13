@@ -270,7 +270,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                   {data.store_category} ﹒ {data.store_location} ﹒{' '}
                   {convertMoneyString(data.store_cost)}
                 </ListItem>
-                <Divider />
+                <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <TextField
                     label='설명'
@@ -292,7 +292,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     설명 저장
                   </Button>
                 </Box>
-                <Divider />
+                <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <TextField
                     label='모바일 설명'
@@ -314,9 +314,15 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     모바일 설명 저장
                   </Button>
                 </Box>
-                <Divider />
-                <StoreHashTag storeId={data.store_id} />
-                <Divider />
+                <Divider sx={{ my: 1 }} />
+                <StoreHashTag
+                  tagData={data.store_tags}
+                  storeId={data.store_id}
+                  setIsSnackbar={setIsSnackbar}
+                  setSnackbarStatus={setSnackbarStatus}
+                  setSnackbarTitle={setSnackbarTitle}
+                />
+                <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <ImageList
                     sx={{ height: '300px', overflow: 'auto' }}

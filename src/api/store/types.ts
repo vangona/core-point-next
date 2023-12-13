@@ -19,6 +19,7 @@ export interface Store {
   store_img_src_arr?: string[];
   mobile_description?: string;
   description?: string;
+  store_tags?: string[];
   personal_cost: number;
   material_cost: number;
   rent_cost: number;
