@@ -39,6 +39,7 @@ import {
   patchStoreMobileDescription,
 } from '@/api/store/patchStoreMobileDescription';
 import { convertMoneyString } from '@/utils';
+import StoreDescription from './StoreDescription';
 import StoreHashTag from './StoreHashTag';
 import type { AlertProps, ModalProps } from '@mui/material';
 
@@ -53,7 +54,6 @@ export interface ImgData {
 const StoreEditDialog = (props: StoreEditDialogProps) => {
   const { editedId, ...rest } = props;
   const queryClient = useQueryClient();
-  const [editedDescription, setEditedDescription] = useState<string>('');
   const [editedMobileDescription, setEditedMobileDescription] =
     useState<string>('');
   const [imgSrcArr, setImgSrcArr] = useState<string[]>([]);
@@ -69,22 +69,6 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     queryFn: () => getStoreDetail({ id: editedId }),
     select: (data) => data.data?.[0],
     enabled: !!editedId,
-  });
-
-  const { mutate } = useMutation<unknown, Error, PatchStoreDescriptionBody>({
-    mutationKey: ['stores'],
-    mutationFn: (variables) => patchStoreDescription(variables),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stores'] });
-      setIsSnackbar(true);
-      setSnackbarStatus('success');
-      setSnackbarTitle('설명 수정에 성공했습니다.');
-    },
-    onError: () => {
-      setIsSnackbar(true);
-      setSnackbarStatus('error');
-      setSnackbarTitle('설명 수정에 문제가 발생했습니다.');
-    },
   });
 
   const { mutate: updateMobileDescription } = useMutation<
@@ -182,13 +166,6 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
     });
   };
 
-  const handleDescriptionSubmit = (
-    descriptionBody: PatchStoreDescriptionBody,
-  ) => {
-    if (descriptionBody.description === data?.description) return;
-    mutate(descriptionBody);
-  };
-
   const handleMobileDescriptionSubmit = (
     descriptionBody: PatchStoreMobileDescriptionBody,
   ) => {
@@ -216,7 +193,6 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
   useEffect(() => {
     if (!data) return;
     setImgSrcArr(data.store_img_src_arr ?? []);
-    setEditedDescription(data.description ?? '');
     setEditedMobileDescription(data.mobile_description ?? '');
   }, [data]);
 
@@ -271,27 +247,12 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                   {convertMoneyString(data.store_cost)}
                 </ListItem>
                 <Divider sx={{ my: 1 }} />
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  <TextField
-                    label='설명'
-                    multiline
-                    sx={{ mt: 2, width: '100%' }}
-                    minRows={10}
-                    onChange={(e) => setEditedDescription(e.target.value)}
-                    value={editedDescription}
-                  />
-                  <Button
-                    sx={{ alignSelf: 'flex-end' }}
-                    onClick={() =>
-                      handleDescriptionSubmit({
-                        id: data.store_id,
-                        description: editedDescription,
-                      })
-                    }
-                  >
-                    설명 저장
-                  </Button>
-                </Box>
+                <StoreDescription
+                  data={data}
+                  setIsSnackbar={setIsSnackbar}
+                  setSnackbarStatus={setSnackbarStatus}
+                  setSnackbarTitle={setSnackbarTitle}
+                />
                 <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <TextField

@@ -5,7 +5,7 @@ import { DataGrid, GridToolbar, koKR } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
 import { getStore } from '@/api/store';
 import { StoreColumnDef } from './constants';
-import StoreEditDialog from './EditDialog';
+import StoreEditDialog from './edit-dialog/EditDialog';
 import type { GridColDef } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
