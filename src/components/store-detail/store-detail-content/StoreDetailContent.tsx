@@ -39,6 +39,8 @@ const StoreDetailContent = ({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  console.log(storeDetailData);
+
   const containerSx: SxProps = isDownLarge
     ? {
         width: '100%',
@@ -102,7 +104,9 @@ const StoreDetailContent = ({
               )}
             </Box>
           </Box>
-          {storeDetailData?.description && (
+          {(storeDetailData?.description ||
+            storeDetailData?.mobile_description ||
+            storeDetailData?.store_tags) && (
             <DescriptionSection storeDetailData={storeDetailData} />
           )}
           {isDownLarge && (

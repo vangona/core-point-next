@@ -34,6 +34,14 @@ const DescriptionSection = ({ storeDetailData }: DescriptionSectionProps) => {
           {isDownMedium && storeDetailData?.mobile_description
             ? storeDetailData.mobile_description
             : storeDetailData?.description}
+
+          {storeDetailData?.store_tags && (
+            <Box sx={{ marginTop: 2 }}>
+              {storeDetailData?.store_tags?.map((tag, index) => (
+                <span key={'store-detail-tag-' + index}>#{tag} </span>
+              ))}
+            </Box>
+          )}
         </Box>
       </Box>
     </>
