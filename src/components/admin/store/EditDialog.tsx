@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -38,6 +39,7 @@ import {
   patchStoreMobileDescription,
 } from '@/api/store/patchStoreMobileDescription';
 import { convertMoneyString } from '@/utils';
+import StoreHashTag from './StoreHashTag';
 import type { AlertProps, ModalProps } from '@mui/material';
 
 type StoreEditDialogProps = Omit<ModalProps, 'children'> & {
@@ -268,6 +270,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                   {data.store_category} ﹒ {data.store_location} ﹒{' '}
                   {convertMoneyString(data.store_cost)}
                 </ListItem>
+                <Divider />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <TextField
                     label='설명'
@@ -289,6 +292,7 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     설명 저장
                   </Button>
                 </Box>
+                <Divider />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <TextField
                     label='모바일 설명'
@@ -310,6 +314,9 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
                     모바일 설명 저장
                   </Button>
                 </Box>
+                <Divider />
+                <StoreHashTag storeId={data.store_id} />
+                <Divider />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <ImageList
                     sx={{ height: '300px', overflow: 'auto' }}
