@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
-import { Store, getStoreDetail } from '@/api/store';
+import { useRouter } from 'next/navigation';
+import { getStoreDetail } from '@/api/store';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
@@ -46,6 +47,7 @@ interface StoreDetailPageProps {
 const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   const { id } = params;
   const theme = useTheme();
+  const router = useRouter();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -54,21 +56,20 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   );
 
   const { data: storeDetailData } = useSuspenseQuery({
-    queryKey: ['store-detail', id],
-    queryFn: async (): Promise<Store | undefined> => {
-      const data = await getStoreDetail({ id });
-      return data.data ? data.data[0] : undefined;
-    },
+    queryKey: ['stores', id],
+    queryFn: () => getStoreDetail({ id }),
   });
+
+  const isValidData = storeDetailData.data && storeDetailData.data.length > 0;
 
   const parsedExpenditureData: [string, number][] = storeDetailData
     ? [
-        ['인건비', storeDetailData.personal_cost],
-        ['재료비', storeDetailData.material_cost],
-        ['임대료', storeDetailData.rent_cost],
-        ['공과금', storeDetailData.dues_cost],
-        ['기타잡비', storeDetailData.etc_cost],
-        ['월 수익', storeDetailData.monthly_revenue],
+        ['인건비', isValidData ? storeDetailData.data![0].personal_cost : 0], // isValidData에서 검증하기 때문에 ! 사용
+        ['재료비', isValidData ? storeDetailData.data![0].material_cost : 0],
+        ['임대료', isValidData ? storeDetailData.data![0].rent_cost : 0],
+        ['공과금', isValidData ? storeDetailData.data![0].dues_cost : 0],
+        ['기타잡비', isValidData ? storeDetailData.data![0].etc_cost : 0],
+        ['월 수익', isValidData ? storeDetailData.data![0].monthly_revenue : 0],
       ]
     : [];
 
@@ -111,6 +112,13 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     }
   }, [params.id]);
 
+  useEffect(() => {
+    if (storeDetailData.data?.length === 0) {
+      alert('삭제된 매물입니다.');
+      router.push('/store');
+    }
+  }, [storeDetailData, router]);
+
   return (
     <Box
       sx={{
@@ -122,11 +130,15 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      <TitleSection storeDetailData={storeDetailData} />
-      <StoreDetailContent
-        storeDetailData={storeDetailData}
-        parsedExpenditureData={parsedExpenditureData}
-      />
+      {storeDetailData.data?.[0] && parsedExpenditureData && (
+        <>
+          <TitleSection storeDetailData={storeDetailData.data?.[0]} />
+          <StoreDetailContent
+            storeDetailData={storeDetailData.data?.[0]}
+            parsedExpenditureData={parsedExpenditureData}
+          />
+        </>
+      )}
     </Box>
   );
 };
