@@ -8,6 +8,7 @@ import {
   PatchStoreDescriptionBody,
   patchStoreDescription,
 } from '@/api/store/patchStoreDescription';
+import { DIMMED_GRAY } from '@/constants/color';
 import type { AlertColor } from '@mui/material';
 
 interface StoreDescriptionProps {
@@ -59,7 +60,12 @@ const StoreDescription = ({
       <TextField
         label='설명'
         multiline
-        sx={{ mt: 2, width: '100%' }}
+        sx={{
+          mt: 2,
+          width: '650px',
+          backgroundColor: DIMMED_GRAY,
+        }}
+        InputProps={{ sx: { fontFamily: 'Noto Sans KR' } }}
         minRows={10}
         onChange={(e) => setEditedDescription(e.target.value)}
         value={editedDescription}

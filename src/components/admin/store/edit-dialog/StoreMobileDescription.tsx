@@ -8,6 +8,7 @@ import {
   patchStoreMobileDescription,
 } from '@/api/store/patchStoreMobileDescription';
 import { Store } from '@/api/store/types';
+import { DIMMED_GRAY } from '@/constants/color';
 import type { AlertColor } from '@mui/material';
 
 interface StoreMobileDescriptionProps {
@@ -63,7 +64,8 @@ const StoreMobileDescription = ({
       <TextField
         label='모바일 설명'
         multiline
-        sx={{ mt: 2, width: '100%' }}
+        sx={{ mt: 2, width: '350px', backgroundColor: DIMMED_GRAY }}
+        InputProps={{ sx: { fontFamily: 'Noto Sans KR' } }}
         minRows={10}
         onChange={(e) => setEditedMobileDescription(e.target.value)}
         value={editedMobileDescription}

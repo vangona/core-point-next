@@ -51,10 +51,13 @@ const StoreEditDialog = (props: StoreEditDialogProps) => {
       >
         <Alert severity={snackbarStatus}>{snackbarTitle}</Alert>
       </Snackbar>
-      <Dialog {...rest}>
+      <Dialog
+        {...rest}
+        PaperProps={{ sx: { width: '100%', maxWidth: '80vw' } }}
+      >
         <Box
           sx={{
-            width: '600px',
+            width: '800px',
             minHeight: '100px',
             display: 'flex',
             flexDirection: 'column',
