@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { TypographyVariant } from '@mui/material';
 
-export const LARGE_HERO_HEIGHT = '400px';
+export const LARGE_HERO_HEIGHT = '500px';
 export const SMALL_HERO_HEIGHT = '250px';
 
 const LARGE_TITLE_SIZE = 'h3';

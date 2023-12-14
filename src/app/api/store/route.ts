@@ -40,8 +40,8 @@ export async function GET(req: NextRequest) {
 
   query = query
     .eq('deleted', 'FALSE')
-    .range(page * limit, (page + 1) * limit - 1)
-    .order('store_id', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+    .range(page * limit, (page + 1) * limit - 1) // 시작이 0부터 이기 때문에 1을 빼줌
+    .order('created_at', { ascending: false });
 
   const { data, count } = await query;
 
@@ -54,7 +54,23 @@ export async function PATCH(req: NextRequest) {
   const query = await supabase
     .from(SupabaseTable.STORES)
     .update({
+      [StoresColumn.STORE_STATE]: body.storeState,
       [StoresColumn.STORE_NAME]: body.storeName,
+      [StoresColumn.STORE_CATEGORY]: body.storeCategory,
+      [StoresColumn.STORE_LOCATION]: body.storeLocation,
+      [StoresColumn.STORE_COST]: body.storeCost,
+      [StoresColumn.STORE_SIZE]: body.storeSize,
+      [StoresColumn.STORE_SIZE_M2]: body.storeSizeM2,
+      [StoresColumn.MONTHLY_SALES]: body.monthlySales,
+      [StoresColumn.MONTHLY_COST]: body.monthlyCost,
+      [StoresColumn.MONTHLY_REVENUE]: body.monthlyRevenue,
+      [StoresColumn.PERSONAL_COST]: body.personalCost,
+      [StoresColumn.MATERIAL_COST]: body.meterialCost,
+      [StoresColumn.RENT_COST]: body.rentCost,
+      [StoresColumn.DUES_COST]: body.duesCost,
+      [StoresColumn.ETC_COST]: body.etcCost,
+      [StoresColumn.MANAGER]: body.manager,
+      [StoresColumn.MANAGER_CONTACT]: body.managerContact,
     })
     .eq(StoresColumn.STORE_ID, body.id)
     .select();

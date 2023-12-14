@@ -10,8 +10,8 @@ import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBack
 import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
 
-const LARGE_SLIDE_PER_VIEW = 5;
-const MEDIUM_SLIDE_PER_VIEW = 3;
+const LARGE_SLIDE_PER_VIEW = 4;
+const MEDIUM_SLIDE_PER_VIEW = 2;
 const SMALL_SLIDE_PER_VIEW = 1;
 
 const NewlyAddedStoreSwiper = () => {
@@ -64,11 +64,7 @@ const NewlyAddedStoreSwiper = () => {
       >
         {newStores.data.map((store, index) => (
           <SwiperSlide key={'newly-added-store' + index}>
-            <VerticalStoreCard
-              storeData={store}
-              size={isDownMedium ? 'md' : 'sm'}
-              onCardClick={onCardClick}
-            />
+            <VerticalStoreCard storeData={store} onCardClick={onCardClick} />
           </SwiperSlide>
         ))}
       </Swiper>

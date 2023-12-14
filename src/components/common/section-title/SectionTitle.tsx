@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 interface SectionTitleProps {
@@ -8,16 +7,13 @@ interface SectionTitleProps {
 const SectionTitle = (props: SectionTitleProps) => {
   const { label } = props;
   return (
-    <Box sx={{ margin: 4 }}>
-      <Typography
-        variant='h6'
-        component='h2'
-        sx={{ display: 'inline' }}
-        fontWeight='bold'
-      >
-        {label}
-      </Typography>
-    </Box>
+    <Typography
+      variant='h5'
+      component='h2'
+      sx={{ margin: 5, fontWeight: 'bold' }}
+    >
+      {label}
+    </Typography>
   );
 };
 

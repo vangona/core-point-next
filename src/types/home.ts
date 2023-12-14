@@ -8,17 +8,6 @@ export interface RecommendedStoreData {
   limit: number;
 }
 
-export interface SuccessExample {
-  title: string;
-  content: string;
-  imgSrc: string;
-}
-
-export interface SuccessExampleData {
-  successExampleData: SuccessExample[];
-  limit: number;
-}
-
 export interface LatestStoreData {
   latestStoreData: Store[];
   limit: number;

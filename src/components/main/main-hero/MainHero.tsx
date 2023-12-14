@@ -23,7 +23,7 @@ const MainIntroduceSlide = dynamic(
   },
 );
 
-export const LARGE_HERO_HEIGHT = '400px';
+export const LARGE_HERO_HEIGHT = '500px';
 export const SMALL_HERO_HEIGHT = '250px';
 
 const MainHero = () => {

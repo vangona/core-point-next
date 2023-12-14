@@ -2,5 +2,5 @@
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://www.core-point.kr',
   generateRobotsTxt: false,
-  exclude: ['/admin', '/admin/*'],
+  exclude: ['/admin', '/admin/*', '/api', '/api/*'],
 };
