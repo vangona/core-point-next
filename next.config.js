@@ -14,6 +14,9 @@ const nextConfig = {
       {
         hostname: 'kxaspmdxzvafhksqyboo.supabase.co',
       },
+      {
+        hostname: 'postfiles.pstatic.net',
+      },
     ],
   },
 };
