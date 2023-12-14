@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { SuccessExample } from '@/types';
+import { SuccessExample } from '@/api/success-example/types';
 import type { SxProps } from '@mui/material';
 
 interface SuccessExampleCardProps {
@@ -47,7 +47,7 @@ const SuccessExampleCard = ({
     <Card raised sx={containerSx}>
       <CardMedia
         component='img'
-        image={successExampleData?.imgSrc ?? ''}
+        image={successExampleData?.img_src ?? ''}
         alt='success example image'
         width='400px'
         sx={{ aspectRatio: '1/1', objectFit: 'cover', ...smallMediaSx }}

@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import { getSuccessExample } from '@/api/success-example';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import { SuccessExampleCard } from '@/components/common/success-example-card';
-import { dummySuccessExample } from '@/components/common/success-example-card/dummySuccessExample';
 import { SwiperNextButton, SwiperPrevButton } from '@/components/common/swiper';
 import {
   LARGE_LAYOUT_WIDTH,
@@ -27,6 +28,11 @@ const SuccessExampleStore = () => {
   const [layoutWidth, setLayoutWidth] = useState<string | number>(
     LARGE_LAYOUT_WIDTH,
   );
+
+  const { data: successExamples } = useSuspenseQuery({
+    queryKey: ['success_examples'],
+    queryFn: () => getSuccessExample(),
+  });
 
   const swiperRef = useRef<SwiperClass>();
 
@@ -82,20 +88,15 @@ const SuccessExampleStore = () => {
             pagination={{ clickable: true }}
             effect='fade'
           >
-            <SwiperSlide>
-              <SuccessExampleCard
-                successExampleData={dummySuccessExample[0]}
-                width={cardWidth}
-                height={cardHeight}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SuccessExampleCard
-                successExampleData={dummySuccessExample[1]}
-                width={cardWidth}
-                height={cardHeight}
-              />
-            </SwiperSlide>
+            {successExamples.data?.map((successExample, index) => (
+              <SwiperSlide key={'success-example-' + index}>
+                <SuccessExampleCard
+                  successExampleData={successExample}
+                  width={cardWidth}
+                  height={cardHeight}
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
           <SwiperNextButton swiperRef={swiperRef} />
         </Box>
