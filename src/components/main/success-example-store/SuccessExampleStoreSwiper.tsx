@@ -3,9 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import Pagination from '@mui/material/Pagination';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Navigation, EffectFade } from 'swiper/modules';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getSuccessExample } from '@/api/success-example';
 import { SuccessExampleCard } from '@/components/common/success-example-card';
