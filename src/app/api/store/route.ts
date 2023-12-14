@@ -40,8 +40,8 @@ export async function GET(req: NextRequest) {
 
   query = query
     .eq('deleted', 'FALSE')
-    .range(page * limit, (page + 1) * limit - 1)
-    .order('store_id', { ascending: false }); // 시작이 0부터 이기 때문에 1을 빼줌
+    .range(page * limit, (page + 1) * limit - 1) // 시작이 0부터 이기 때문에 1을 빼줌
+    .order('created_at', { ascending: false });
 
   const { data, count } = await query;
 
