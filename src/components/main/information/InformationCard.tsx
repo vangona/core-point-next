@@ -12,12 +12,16 @@ export interface StoreInformation {
 
 interface InformationCardProps {
   informationData: StoreInformation;
+  isSmall?: boolean;
 }
-const InformationCard = ({ informationData }: InformationCardProps) => {
+const InformationCard = ({
+  informationData,
+  isSmall,
+}: InformationCardProps) => {
   return (
     <Card
       sx={{
-        width: '200px',
+        width: isSmall ? '150px' : '200px',
         margin: 1,
       }}
     >
@@ -34,13 +38,25 @@ const InformationCard = ({ informationData }: InformationCardProps) => {
       >
         <CardMedia>
           <Image
-            width='200'
-            height='200'
+            width={isSmall ? 150 : 200}
+            height={isSmall ? 150 : 200}
             src={informationData.imgSrc}
             alt={informationData.title}
           />
         </CardMedia>
-        <CardContent sx={{ px: 2, py: 1 }}>{informationData.title}</CardContent>
+        {!isSmall && (
+          <CardContent
+            sx={{
+              px: 2,
+              py: 1,
+              fontWeight: 'bold',
+              fontSize: '0.9rem',
+              wordBreak: 'keep-all',
+            }}
+          >
+            {informationData.title}
+          </CardContent>
+        )}
       </CardActionArea>
     </Card>
   );
