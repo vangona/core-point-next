@@ -31,6 +31,7 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
   const containerSx: SxProps = {
     width: isSmall ? '180px' : '240px',
     height: isSmall ? '240px' : '320px',
+    margin: 3,
   };
 
   const actionAreaSx: SxProps = {

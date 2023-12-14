@@ -7,14 +7,15 @@ import ContainedListItem from '@/components/common/contained-list/ContainedList'
 import { convertMoneyString } from '@/utils';
 
 interface OverviewSectionProps {
+  title?: string;
   storeDetailData?: Store;
 }
-const OverviewSection = ({ storeDetailData }: OverviewSectionProps) => {
+const OverviewSection = ({ title, storeDetailData }: OverviewSectionProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <Box>
         <Typography variant='h5' fontWeight='bold'>
-          개요
+          {title ?? '개요'}
         </Typography>
         <Divider sx={{ my: 1 }} />
       </Box>

@@ -6,12 +6,14 @@ import NewlyAddedStore from '@/components/main/newly-added-store/NewlyAddedStore
 import RecommendedBrand from '@/components/main/recommended-brand/RecommendedBrand';
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
 import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
+import { InformationSection } from '../information';
 
 const MainContent = () => {
   return (
     <>
       <MainHero />
       <RecommendedStore />
+      <InformationSection />
       <SuccessExample />
       <NewlyAddedStore />
       <RecommendedBrand />
