@@ -106,6 +106,7 @@ const SuccessExampleCard = ({
           sx={{
             width: '100%',
             overflow: 'auto',
+            wordBreak: 'keep-all',
             whiteSpace: 'pre-line',
           }}
         >
