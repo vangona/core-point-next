@@ -1,40 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import {
-  Autoplay,
-  EffectFlip,
-  Mousewheel,
-  Navigation,
-  Pagination,
-} from 'swiper/modules';
+import { Autoplay, EffectCards, Mousewheel, Navigation } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getRecommendedStore } from '@/api/store/getRecommendedStore';
 import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import { VerticalStoreCard } from '@/components/common/vertical-store-card';
-import {
-  LARGE_LAYOUT_WIDTH,
-  MEDIUM_LAYOUT_WIDTH,
-  SMALL_LAYOUT_WIDTH,
-} from '@/components/layout/general-layout/constants';
+import { OverviewSection } from '@/components/store-detail/overview';
 
-const LARGE_SWIPER_WRAPPER_WIDTH = 500;
-const SMALL_SWIPER_WRAPPER_WIDTH = 350;
+const SWIPER_WRAPPER_WIDTH = '300px';
 
 const RecommendedStoreSwiper = () => {
   const theme = useTheme();
-  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const [slideWrapperWidth, setSliderWrapperWidth] = useState(
-    LARGE_SWIPER_WRAPPER_WIDTH,
-  );
-  const [layoutWidth, setLayoutWidth] = useState<string | number>(
-    LARGE_LAYOUT_WIDTH,
-  );
+  const [currentStoreIndex, setCurrentStoreIndex] = useState(0);
+  const progressLineRef = useRef<SVGSVGElement>(null);
 
   const [isBackdrop, setIsBackdrop] = useState(false);
 
@@ -49,71 +32,106 @@ const RecommendedStoreSwiper = () => {
 
   const swiperRef = useRef<SwiperClass>();
 
-  useEffect(() => {
-    if (isUpLarge) {
-      setSliderWrapperWidth(LARGE_SWIPER_WRAPPER_WIDTH);
-      setLayoutWidth(LARGE_LAYOUT_WIDTH);
-      return;
-    }
-
-    if (isMedium) {
-      setLayoutWidth(MEDIUM_LAYOUT_WIDTH);
-      return;
-    }
-
-    setSliderWrapperWidth(SMALL_SWIPER_WRAPPER_WIDTH);
-    setLayoutWidth(SMALL_LAYOUT_WIDTH);
-  }, [isUpLarge, isMedium]);
+  const handleAutoplayTimeLeft = (
+    s: SwiperClass,
+    timeLeft: number,
+    percentage: number,
+  ) => {
+    progressLineRef.current?.style.setProperty(
+      '--progress',
+      percentage.toString(),
+    );
+  };
 
   return (
     <Box
       sx={{
-        width: layoutWidth,
+        width: '100%',
+        maxWidth: '800px',
         display: 'flex',
-        gap: 2,
+        flexDirection: isDownMedium ? 'column-reverse' : 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
       }}
     >
-      <Box>data box</Box>
+      <Box sx={{ flexShrink: 0 }}>
+        <OverviewSection
+          title={recommendedStores.data[currentStoreIndex]?.store_name}
+          storeDetailData={recommendedStores.data[currentStoreIndex]}
+        />
+      </Box>
       <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          alignItems: 'center',
-          '& .swiper-wrapper': {
-            width: slideWrapperWidth,
-          },
-        }}
+        sx={{ position: 'relative', display: 'flex', flexDirection: 'column' }}
       >
-        {!isDownMedium && <SwiperPrevButton swiperRef={swiperRef} />}
-        <Swiper
-          className='main-swiper'
-          effect={'flip'}
-          onBeforeInit={(swiper) => {
-            swiperRef.current = swiper;
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            alignItems: 'center',
+            '& .swiper': {
+              width: SWIPER_WRAPPER_WIDTH,
+              display: 'flex',
+              justifyContent: 'center',
+            },
+            '& .swiper-wrapper': {
+              maxWidth: isDownMedium ? '240px' : '300px',
+            },
           }}
-          grabCursor
-          centeredSlides
-          modules={[Autoplay, Mousewheel, Navigation, Pagination, EffectFlip]}
-          autoplay
-          mousewheel
-          loop
-          pagination={{ clickable: true }}
         >
-          {isLoading && <Skeleton width='100%' height='100%' />}
-          {!isLoading &&
-            recommendedStores?.data.map((storeData, index) => (
-              <SwiperSlide key={'recommended-store-' + index}>
-                <VerticalStoreCard
-                  storeData={storeData}
-                  onCardClick={onCardClick}
-                />
-              </SwiperSlide>
-            ))}
-        </Swiper>
-        {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
-        <ProgressBackdrop open={isBackdrop} />
+          {!isDownMedium && <SwiperPrevButton swiperRef={swiperRef} />}
+          <Swiper
+            className='main-swiper'
+            effect={'cards'}
+            onSlideChange={(swiper) => setCurrentStoreIndex(swiper.activeIndex)}
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            cardsEffect={{
+              slideShadows: false,
+            }}
+            onAutoplayTimeLeft={handleAutoplayTimeLeft}
+            slidesPerView={1}
+            grabCursor
+            centeredSlides
+            modules={[Autoplay, Mousewheel, Navigation, EffectCards]}
+            autoplay={{ pauseOnMouseEnter: true }}
+            mousewheel
+            rewind
+          >
+            {isLoading && <Skeleton width='100%' height='100%' />}
+            {!isLoading &&
+              recommendedStores?.data.map((storeData, index) => (
+                <SwiperSlide key={'recommended-store-' + index}>
+                  <VerticalStoreCard
+                    storeData={storeData}
+                    onCardClick={onCardClick}
+                    size={isDownMedium ? 'sm' : 'md'}
+                  />
+                </SwiperSlide>
+              ))}
+          </Swiper>
+          {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
+          <ProgressBackdrop open={isBackdrop} />
+        </Box>
+        <Box>
+          <Box className='autoplay-progress'>
+            <svg
+              className='progress-bar'
+              width='100%'
+              xmlns='http://www.w3.org/2000/svg'
+              ref={progressLineRef}
+            >
+              <line x1='0' y1='5' x2='200' y2='5' strokeWidth='5' />
+            </svg>
+            <svg
+              className='progress-track'
+              width='100%'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <line x1='0' y1='5' x2='200' y2='5' strokeWidth='5' />
+            </svg>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
