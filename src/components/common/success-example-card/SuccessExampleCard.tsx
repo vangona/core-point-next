@@ -6,7 +6,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { SuccessExample } from '@/api/success-example/types';
+import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { SxProps } from '@mui/material';
+
+const SUCCESS_EXAMPLE_TRANSITION_DURATION = '200ms';
 
 interface SuccessExampleCardProps {
   successExampleData?: SuccessExample;
@@ -27,6 +30,16 @@ const SuccessExampleCard = ({
     display: 'flex',
     width,
     height,
+    transitionDuration: SUCCESS_EXAMPLE_TRANSITION_DURATION,
+    transitionProperty: 'height',
+    transitionTimingFunction: 'ease-in-out',
+    '&:hover': { height: '60vh' },
+    '&:hover img': { position: 'absolute' },
+    '&:hover .MuiCardContent-root': {
+      color: OFF_WHITE_COLOR,
+      backgroundColor: 'rgba(0,0,0,0.75)',
+      zIndex: 9,
+    },
   };
 
   const smallMediaSx: SxProps = isDownMedium
@@ -50,15 +63,27 @@ const SuccessExampleCard = ({
         image={successExampleData?.img_src ?? ''}
         alt='success example image'
         width='400px'
-        sx={{ aspectRatio: '1/1', objectFit: 'cover', ...smallMediaSx }}
+        height='100%'
+        sx={{
+          aspectRatio: '1/1',
+          objectFit: 'cover',
+          ...smallMediaSx,
+          transitionDuration: SUCCESS_EXAMPLE_TRANSITION_DURATION,
+          transitionProperty: 'all',
+          transitionTimingFunction: 'ease-in-out',
+        }}
       />
       <CardContent
         sx={{
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: 2,
-          padding: 3,
+          padding: 4,
+          transitionDuration: SUCCESS_EXAMPLE_TRANSITION_DURATION,
+          transitionProperty: 'all',
+          transitionTimingFunction: 'ease-in-out',
           ...smallContentSx,
         }}
       >
@@ -73,7 +98,17 @@ const SuccessExampleCard = ({
         >
           {successExampleData?.title}
         </Typography>
-        <Typography variant='body1' sx={{ width: '100%', overflow: 'auto' }}>
+        <Typography variant='subtitle2' sx={{ alignSelf: 'flex-end' }}>
+          {successExampleData?.customer_name}
+        </Typography>
+        <Typography
+          variant='body1'
+          sx={{
+            width: '100%',
+            overflow: 'auto',
+            whiteSpace: 'pre-line',
+          }}
+        >
           {successExampleData?.content}
         </Typography>
       </CardContent>
