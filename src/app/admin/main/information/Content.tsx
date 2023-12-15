@@ -5,8 +5,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { getAllOpeningInformation } from '@/api/opening-information/getAllOpeningInformation copy';
 import InformationCrawler from '@/components/admin/main/information/InformationCrawler';
 import MainInformationDataGrid from '@/components/admin/main/information/MainInformationDataGrid';
+import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 
 enum TabType {
   DATA = 0,
@@ -15,6 +18,11 @@ enum TabType {
 
 export default function Content() {
   const [tab, setTab] = useState(TabType.DATA);
+
+  const { data, isLoading } = useSuspenseQuery({
+    queryKey: ['opening-information'],
+    queryFn: () => getAllOpeningInformation(),
+  });
 
   return (
     <Paper
@@ -31,8 +39,11 @@ export default function Content() {
           <Tab label='블로그 웹 크롤링' sx={{ margin: 1 }} />
         </Tabs>
       </Box>
-      {tab === TabType.DATA && <MainInformationDataGrid />}
-      {tab === TabType.CRAWL && <InformationCrawler />}
+      {data && tab === TabType.DATA && <MainInformationDataGrid data={data} />}
+      {data && tab === TabType.CRAWL && (
+        <InformationCrawler originData={data.data} />
+      )}
+      <ProgressBackdrop open={isLoading} />
     </Paper>
   );
 }

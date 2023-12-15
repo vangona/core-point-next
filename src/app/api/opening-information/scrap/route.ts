@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await response.text();
     const $ = cheerio.load(body);
     const data = $('ul.thumblist li.item').map((i, el) => {
-      const url = $(el).find('a.link').attr('href');
+      const url = 'https://blog.naver.com' + $(el).find('a.link').attr('href');
       const imgSrc = $(el).find('div.area_thumb img.thumb').attr('src');
       const title = $(el).find('div.area_text .title').text();
       return { url, imgSrc, title };

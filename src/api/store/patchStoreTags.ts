@@ -6,8 +6,6 @@ export interface PatchStoreTagsBody {
 export const patchStoreTags = async (reqBody: PatchStoreTagsBody) => {
   const reqUrl = new URL('/api/store/tags', process.env.NEXT_PUBLIC_BASE_URL);
 
-  console.log(reqBody);
-
   const res = await fetch(reqUrl, {
     method: 'PATCH',
     body: JSON.stringify(reqBody),

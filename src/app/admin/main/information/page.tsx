@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: '코어창업 관리자 페이지',
 };
 
-export default function AdminStorePage() {
+export default function AdminMainInformationPage() {
   return <Content />;
 }

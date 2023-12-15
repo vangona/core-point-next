@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { DataGrid } from '@mui/x-data-grid';
 import { useMutation } from '@tanstack/react-query';
 import {
+  OpeningInformation,
   ScrapOpeningInformationResponse,
   ScrappedOpeningInformation,
   scrapOpeningInformation,
@@ -15,7 +16,11 @@ import {
 import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
 import type { GridColDef } from '@mui/x-data-grid';
 
-const InformationCrawler = () => {
+const InformationCrawler = ({
+  originData,
+}: {
+  originData?: OpeningInformation[];
+}) => {
   const [pageNumber, setPageNumber] = useState(7);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -33,8 +38,17 @@ const InformationCrawler = () => {
   >({
     mutationFn: (variables) => scrapOpeningInformation(variables.pageNumber),
     onSuccess: (data) => {
+      const filteredData = data?.data.filter(
+        (information) =>
+          originData?.findIndex(
+            (origin) =>
+              origin.title === information.title &&
+              origin.url === information.url,
+          ) === -1,
+      );
+
       setIsModalOpen(true);
-      setScrappedData(data?.data);
+      setScrappedData(filteredData);
     },
   });
 
