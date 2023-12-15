@@ -1,8 +1,10 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getOpeningInformation } from '@/api/opening-information';
 import InformationCard from './InformationCard';
 
@@ -22,13 +24,13 @@ const InformationCards = () => {
   const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const [pageCount, setPageCount] = useState(1);
 
-  const { data, refetch } = useSuspenseQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['main-opening-information', page, limit],
     queryFn: () => getOpeningInformation({ page, limit }),
+    placeholderData: keepPreviousData,
   });
-
-  const pageCount = Math.ceil(data.count / limit);
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -38,6 +40,12 @@ const InformationCards = () => {
     if (isDownSmall) {
       setLimit(SMALL_LIMIT);
       setGridSize(SMALL_GRID_SIZE);
+
+      if (!data?.count) return;
+      const caculatedCount = Math.ceil(data.count / SMALL_LIMIT) || 1;
+      caculatedCount < pageCount && setPage(caculatedCount);
+      setPageCount(caculatedCount);
+
       return;
     }
 
@@ -45,17 +53,38 @@ const InformationCards = () => {
 
     if (isDownLarge) {
       setLimit(MEDIUM_LIMIT);
+
+      if (!data?.count) return;
+      const caculatedCount = Math.ceil(data.count / MEDIUM_LIMIT) || 1;
+      caculatedCount < pageCount && setPage(caculatedCount);
+      setPageCount(caculatedCount);
+
       return;
     }
 
     if (isUpLarge) {
       setLimit(LARGE_LIMIT);
+
+      if (!data?.count) return;
+      const caculatedCount = Math.ceil(data.count / LARGE_LIMIT) || 1;
+      caculatedCount < pageCount && setPage(caculatedCount);
+      setPageCount(caculatedCount);
+
       return;
     }
-  }, [isUpLarge, isDownLarge, isDownMedium, isDownSmall, data.count]);
+  }, [
+    isUpLarge,
+    isDownLarge,
+    isDownMedium,
+    isDownSmall,
+    data?.count,
+    pageCount,
+  ]);
 
   useEffect(() => {
     refetch();
+    // 여긴 limit 때 refetch가 맞음. refetch는 함수라서 의존성 배열에 추가하면 일날 수 있음.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit]);
 
   return (
@@ -78,7 +107,7 @@ const InformationCards = () => {
           placeItems: 'center',
         }}
       >
-        {data.data.map((data, index) => {
+        {data?.data.map((data, index) => {
           if (data.url && data.title && data.imgSrc) {
             return (
               <InformationCard
@@ -94,7 +123,9 @@ const InformationCards = () => {
       </Box>
       <Pagination
         count={pageCount}
+        page={page}
         onChange={(_, page) => handlePageChange(page)}
+        size={isDownSmall ? 'small' : 'medium'}
       />
     </Box>
   );

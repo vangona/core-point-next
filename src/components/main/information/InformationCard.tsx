@@ -49,7 +49,7 @@ const InformationCard = ({
           {!isSmall && (
             <CardContent
               sx={{
-                height: '4rem',
+                height: '5rem',
                 px: 2,
                 py: 1,
                 fontWeight: 'bold',
