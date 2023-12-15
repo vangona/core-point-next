@@ -44,7 +44,6 @@ export default function Header(props: HeaderProps) {
             aria-label='open drawer'
             onClick={onDrawerToggle}
             edge='start'
-            sx={{ display: { sm: 'none', xs: 'block' } }}
           >
             <MenuIcon />
           </IconButton>
