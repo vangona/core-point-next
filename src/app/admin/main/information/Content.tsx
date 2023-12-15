@@ -9,6 +9,9 @@ import MainInformationDataGrid from '@/components/admin/main/information/MainHer
 export default function Content() {
   const { mutate } = useMutation({
     mutationFn: () => scrapOpeningInformation(),
+    onSuccess: (data) => {
+      console.log(data);
+    },
   });
 
   return (

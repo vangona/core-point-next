@@ -1,5 +1,7 @@
+import { OpeningInformation } from './types';
+
 export interface ScrapOpeningInformationResponse {
-  data: string;
+  data: Pick<OpeningInformation, 'title' | 'url' | 'imgSrc'>[];
 }
 
 export const scrapOpeningInformation =
