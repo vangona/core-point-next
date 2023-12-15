@@ -12,8 +12,7 @@ export async function GET() {
     .from(SupabaseTable.STORES)
     .select()
     .eq(StoresColumn.DELETED, SupabaseBoolean.FALSE)
-    .eq(StoresColumn.STORE_STATE, StoreState.PROGRESS)
-    .range(0, 10);
+    .eq(StoresColumn.STORE_STATE, StoreState.PROGRESS);
 
   return NextResponse.json({ data: query.data });
 }
