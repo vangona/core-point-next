@@ -40,22 +40,22 @@ const categories = [
         href: ADMIN_PATH.MAIN_HERO,
       },
       {
-        id: '메인 페이지 창업 정보',
+        id: '창업 정보 데이터 관리',
         icon: <Info />,
         href: ADMIN_PATH.MAIN_INFORMATION,
       },
       {
-        id: '메인 페이지 창업 성공 사례',
+        id: '창업 성공 사례  데이터 관리',
         icon: <ThumbUp />,
         href: ADMIN_PATH.MAIN_SUCCESS_EXAMPLE,
       },
       {
-        id: '메인 페이지 매니저 소개',
+        id: '매니저 소개  데이터 관리',
         icon: <AssignmentInd />,
         href: ADMIN_PATH.MAIN_MANAGER,
       },
       {
-        id: '메인 페이지 창업 추천 브랜드',
+        id: '창업 추천 브랜드  데이터 관리',
         icon: <Diamond />,
         href: ADMIN_PATH.MAIN_BRAND,
       },

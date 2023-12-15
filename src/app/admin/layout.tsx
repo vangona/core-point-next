@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { AdminHeader } from '@/components/admin/header';
 import { AdminNavigator } from '@/components/admin/navigator';
 
@@ -175,12 +174,24 @@ theme = {
 const drawerWidth = 256;
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const [navigatorOpen, setNavigatorOpen] = React.useState(true);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setNavigatorOpen(!navigatorOpen);
   };
+
+  useEffect(() => {
+    if (!navigatorOpen) return;
+
+    const handleEscapedown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && navigatorOpen) {
+        setNavigatorOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscapedown);
+
+    return () => window.removeEventListener('keydown', handleEscapedown);
+  }, [navigatorOpen]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -188,19 +199,17 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <CssBaseline />
         <Box
           component='nav'
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          sx={{
+            width: navigatorOpen ? drawerWidth : 0,
+            flexShrink: 0,
+            transition: 'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+          }}
         >
-          {isSmUp ? null : (
-            <AdminNavigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant='temporary'
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          )}
           <AdminNavigator
             PaperProps={{ style: { width: drawerWidth } }}
-            sx={{ display: { sm: 'block', xs: 'none' } }}
+            variant='persistent'
+            open={navigatorOpen}
+            onClose={handleDrawerToggle}
           />
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
