@@ -1,4 +1,3 @@
-import Pagination from '@mui/material/Pagination';
 import Skeleton from '@mui/material/Skeleton';
 import dynamic from 'next/dynamic';
 import { ParagraphDivider } from '@/components/common/paragraph-divider';
@@ -19,13 +18,11 @@ const InformationSection = () => {
         flexDirection: 'column',
         width: 1100,
         alignSelf: 'center',
-        alignItems: 'center',
       }}
     >
       <SectionTitle label='창업 정보' />
       <ParagraphDivider />
       <InformationCards />
-      <Pagination />
     </SectionLayout>
   );
 };

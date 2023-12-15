@@ -13,6 +13,7 @@ export enum SupabaseTable {
   PARTNERSHIP_BRANDS = 'partnership_brands',
   TRANSFER_REQUEST = 'transfer_request',
   SUCCESS_EXAMPLE = 'success_examples',
+  OPENING_INFORMATIONS = 'opening_informations',
 }
 
 export enum StoresColumn {
