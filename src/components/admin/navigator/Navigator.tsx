@@ -1,7 +1,13 @@
+import AssignmentInd from '@mui/icons-material/AssignmentInd';
+import Business from '@mui/icons-material/Business';
+import Description from '@mui/icons-material/Description';
+import Diamond from '@mui/icons-material/Diamond';
 import HomeIcon from '@mui/icons-material/Home';
+import Info from '@mui/icons-material/Info';
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import PublicIcon from '@mui/icons-material/Public';
 import StoreMallDirectoryRounded from '@mui/icons-material/StoreMallDirectoryRounded';
+import ThumbUp from '@mui/icons-material/ThumbUp';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -26,17 +32,52 @@ const categories = [
     ],
   },
   {
+    id: '메인 페이지 정보',
+    children: [
+      {
+        id: '메인 페이지 히어로 영역',
+        icon: <PermMediaOutlinedIcon />,
+        href: ADMIN_PATH.MAIN_HERO,
+      },
+      {
+        id: '창업 정보 데이터 관리',
+        icon: <Info />,
+        href: ADMIN_PATH.MAIN_INFORMATION,
+      },
+      {
+        id: '창업 성공 사례  데이터 관리',
+        icon: <ThumbUp />,
+        href: ADMIN_PATH.MAIN_SUCCESS_EXAMPLE,
+      },
+      {
+        id: '매니저 소개  데이터 관리',
+        icon: <AssignmentInd />,
+        href: ADMIN_PATH.MAIN_MANAGER,
+      },
+      {
+        id: '창업 추천 브랜드  데이터 관리',
+        icon: <Diamond />,
+        href: ADMIN_PATH.MAIN_BRAND,
+      },
+    ],
+  },
+  {
     id: '사이트 정보',
     children: [
       {
-        id: '메인 페이지 관리',
-        icon: <PermMediaOutlinedIcon />,
-        href: ADMIN_PATH.MAIN,
+        id: '탭 별 히어로 섹션 수정',
+        icon: <PublicIcon />,
+        href: ADMIN_PATH.PAGE_HERO,
       },
       {
-        id: '사이트 하단 정보 관리',
-        icon: <PublicIcon />,
+        id: '사이트 하단 회사 정보 관리',
+        icon: <Business />,
         href: ADMIN_PATH.FOOTER,
+      },
+      {
+        id: '개인 정보 처리 방침 수정',
+        icon: <Description />,
+        href: ADMIN_PATH.PRIVATE_RULE,
       },
     ],
   },
@@ -61,7 +102,7 @@ export default function Navigator(props: DrawerProps) {
   const { ...other } = props;
 
   return (
-    <Drawer variant='permanent' {...other}>
+    <Drawer variant='persistent' anchor='left' {...other}>
       <List disablePadding>
         <ListItem
           sx={{ ...item, ...itemCategory, fontSize: 18, color: '#fff' }}

@@ -13,6 +13,7 @@ export enum SupabaseTable {
   PARTNERSHIP_BRANDS = 'partnership_brands',
   TRANSFER_REQUEST = 'transfer_request',
   SUCCESS_EXAMPLE = 'success_examples',
+  OPENING_INFORMATIONS = 'opening_informations',
 }
 
 export enum StoresColumn {
@@ -98,6 +99,15 @@ export enum PartnershipBrandsColumn {
   CREATED_AT = 'created_at',
   UPDATED_AT = 'updated_at',
   DELETED = 'deleted',
+}
+
+export enum OpeningInformationsColumn {
+  ID = 'id',
+  TITLE = 'title',
+  IMG_SRC = 'imgSrc',
+  URL = 'url',
+  DELETED = 'deleted',
+  CREATED_AT = 'created_at',
 }
 
 export enum StoreState {

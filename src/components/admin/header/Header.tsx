@@ -25,11 +25,29 @@ export default function Header(props: HeaderProps) {
       case ADMIN_PATH.STORE:
         setTitle(ADMIN_PAGE_NAME.STORE);
         break;
-      case ADMIN_PATH.MAIN:
-        setTitle(ADMIN_PAGE_NAME.MAIN);
+      case ADMIN_PATH.MAIN_HERO:
+        setTitle(ADMIN_PAGE_NAME.MAIN_HERO);
+        break;
+      case ADMIN_PATH.MAIN_INFORMATION:
+        setTitle(ADMIN_PAGE_NAME.MAIN_INFORMATION);
+        break;
+      case ADMIN_PATH.MAIN_SUCCESS_EXAMPLE:
+        setTitle(ADMIN_PAGE_NAME.MAIN_SUCCESS_EXAMPLE);
+        break;
+      case ADMIN_PATH.MAIN_MANAGER:
+        setTitle(ADMIN_PAGE_NAME.MAIN_MANAGER);
+        break;
+      case ADMIN_PATH.MAIN_BRAND:
+        setTitle(ADMIN_PAGE_NAME.MAIN_BRAND);
+        break;
+      case ADMIN_PATH.PAGE_HERO:
+        setTitle(ADMIN_PAGE_NAME.PAGE_HERO);
         break;
       case ADMIN_PATH.FOOTER:
         setTitle(ADMIN_PAGE_NAME.FOOTER);
+        break;
+      case ADMIN_PATH.PRIVATE_RULE:
+        setTitle(ADMIN_PAGE_NAME.PRIVATE_RULE);
         break;
     }
     return () => {}; // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +62,6 @@ export default function Header(props: HeaderProps) {
             aria-label='open drawer'
             onClick={onDrawerToggle}
             edge='start'
-            sx={{ display: { sm: 'none', xs: 'block' } }}
           >
             <MenuIcon />
           </IconButton>
