@@ -6,3 +6,9 @@ export interface OpeningInformation {
   created_at: string;
   deleted: boolean;
 }
+
+export interface ScrappedOpeningInformation {
+  title?: string;
+  imgSrc?: string;
+  url?: string;
+}
