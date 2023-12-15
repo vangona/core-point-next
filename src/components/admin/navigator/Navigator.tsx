@@ -37,27 +37,27 @@ const categories = [
       {
         id: '메인 페이지 히어로 영역',
         icon: <PermMediaOutlinedIcon />,
-        href: ADMIN_PATH.MAIN,
+        href: ADMIN_PATH.MAIN_HERO,
       },
       {
         id: '메인 페이지 창업 정보',
         icon: <Info />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.MAIN_INFORMATION,
       },
       {
         id: '메인 페이지 창업 성공 사례',
         icon: <ThumbUp />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.MAIN_SUCCESS_EXAMPLE,
       },
       {
         id: '메인 페이지 매니저 소개',
         icon: <AssignmentInd />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.MAIN_MANAGER,
       },
       {
         id: '메인 페이지 창업 추천 브랜드',
         icon: <Diamond />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.MAIN_BRAND,
       },
     ],
   },
@@ -67,7 +67,7 @@ const categories = [
       {
         id: '탭 별 히어로 섹션 수정',
         icon: <PublicIcon />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.PAGE_HERO,
       },
       {
         id: '사이트 하단 회사 정보 관리',
@@ -77,7 +77,7 @@ const categories = [
       {
         id: '개인 정보 처리 방침 수정',
         icon: <Description />,
-        href: ADMIN_PATH.FOOTER,
+        href: ADMIN_PATH.PRIVATE_RULE,
       },
     ],
   },

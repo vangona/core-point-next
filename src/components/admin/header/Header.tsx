@@ -25,7 +25,11 @@ export default function Header(props: HeaderProps) {
       case ADMIN_PATH.STORE:
         setTitle(ADMIN_PAGE_NAME.STORE);
         break;
-      case ADMIN_PATH.MAIN:
+      case ADMIN_PATH.MAIN_HERO:
+      case ADMIN_PATH.MAIN_INFORMATION:
+      case ADMIN_PATH.MAIN_SUCCESS_EXAMPLE:
+      case ADMIN_PATH.MAIN_MANAGER:
+      case ADMIN_PATH.MAIN_BRAND:
         setTitle(ADMIN_PAGE_NAME.MAIN);
         break;
       case ADMIN_PATH.FOOTER:
