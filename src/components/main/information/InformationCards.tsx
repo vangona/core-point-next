@@ -3,31 +3,23 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import InformationCard from './InformationCard';
 
-const LARGE_COLUMN_NUMBER = 4;
-const MEDIUM_COLUMN_NUMBER = 3;
-const SMALL_COLUMN_NUMBER = 2;
+const LARGE_GRID_SIZE = '200px';
+const SMALL_GRID_SIZE = '150px';
 
 const InformationCards = () => {
   const theme = useTheme();
-  const [columnNumber, setColumnNumber] = useState(4);
-  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
+  const [gridSize, setGridSize] = useState(LARGE_GRID_SIZE);
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
-    if (isUpLarge) {
-      setColumnNumber(LARGE_COLUMN_NUMBER);
+    if (isDownSmall) {
+      setGridSize(SMALL_GRID_SIZE);
       return;
     }
 
-    if (isMedium) {
-      setColumnNumber(MEDIUM_COLUMN_NUMBER);
-      return;
-    }
-
-    setColumnNumber(SMALL_COLUMN_NUMBER);
+    setGridSize(LARGE_GRID_SIZE);
     return;
-  }, [isUpLarge, isMedium, isDownSmall]);
+  }, [isDownSmall]);
 
   return (
     <Box
@@ -35,8 +27,9 @@ const InformationCards = () => {
         margin: 5,
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: `repeat(${columnNumber}, 1fr)`,
-        gap: 1,
+        gridTemplateColumns: `repeat(auto-fill, ${gridSize})`,
+        columnGap: 2,
+        justifyContent: 'center',
         placeItems: 'center',
       }}
     >

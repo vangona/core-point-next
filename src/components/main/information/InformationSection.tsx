@@ -13,6 +13,7 @@ const InformationCards = dynamic(() => import('./InformationCards'), {
 const InformationSection = () => {
   return (
     <SectionLayout
+      color='white'
       sx={{
         display: 'flex',
         flexDirection: 'column',
