@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import Content from './Content';
+import dynamic from 'next/dynamic';
+const Content = dynamic(() => import('./Content'), { ssr: false });
 
 export const metadata: Metadata = {
   title: '코어창업 | 관리자 페이지',
