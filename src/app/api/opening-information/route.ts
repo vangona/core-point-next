@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PostOpeningInformationBody } from '@/api/opening-information/postOpeningInformation';
 import { supabase } from '@/app/api/supabase';
 import { SupabaseTable } from '@/app/api/types';
 
@@ -18,4 +19,14 @@ export async function GET(req: NextRequest) {
     .eq('deleted', 'FALSE');
 
   return NextResponse.json({ data, count });
+}
+
+export async function POST(req: NextRequest) {
+  const body = (await req.json()) as PostOpeningInformationBody;
+
+  const query = await supabase
+    .from(SupabaseTable.OPENING_INFORMATIONS)
+    .insert(body.openingInformations);
+
+  return NextResponse.json({ data: query.data });
 }

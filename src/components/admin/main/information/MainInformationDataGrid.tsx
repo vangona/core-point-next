@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, koKR } from '@mui/x-data-grid';
 import { GetAllOpeningInformationResponse } from '@/api/opening-information/getAllOpeningInformation copy';
 import type { GridColDef } from '@mui/x-data-grid';
 
@@ -23,6 +23,8 @@ const MainInformationDataGrid = ({
   return (
     <Box sx={{ padding: 2 }}>
       <DataGrid
+        slots={{ toolbar: GridToolbar }}
+        localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
         rows={

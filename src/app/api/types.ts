@@ -101,6 +101,15 @@ export enum PartnershipBrandsColumn {
   DELETED = 'deleted',
 }
 
+export enum OpeningInformationsColumn {
+  ID = 'id',
+  TITLE = 'title',
+  IMG_SRC = 'imgSrc',
+  URL = 'url',
+  DELETED = 'deleted',
+  CREATED_AT = 'created_at',
+}
+
 export enum StoreState {
   PROGRESS = '추진',
   MANAGED = '관리',

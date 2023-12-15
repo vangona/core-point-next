@@ -1,19 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DataGrid } from '@mui/x-data-grid';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   OpeningInformation,
+  PostOpeningInformationBody,
   ScrapOpeningInformationResponse,
   ScrappedOpeningInformation,
+  postOpeningInformation,
   scrapOpeningInformation,
 } from '@/api/opening-information';
 import ProgressBackdrop from '@/components/common/progress-backdrop/ProgressBackdrop';
+import type { AlertProps } from '@mui/material';
 import type { GridColDef } from '@mui/x-data-grid';
 
 const InformationCrawler = ({
@@ -21,6 +26,7 @@ const InformationCrawler = ({
 }: {
   originData?: OpeningInformation[];
 }) => {
+  const queryClient = useQueryClient();
   const [pageNumber, setPageNumber] = useState(7);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -30,6 +36,11 @@ const InformationCrawler = ({
   const [scrappedData, setScrappedData] = useState<
     ScrappedOpeningInformation[] | undefined
   >(undefined);
+
+  const [snackbarTitle, setSnackbarTitle] = useState('');
+  const [snackbarStatus, setSnackbarStatus] =
+    useState<AlertProps['severity']>('success');
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
   const { mutate, isPending } = useMutation<
     ScrapOpeningInformationResponse,
@@ -52,6 +63,15 @@ const InformationCrawler = ({
     },
   });
 
+  const { mutate: insertInformations } = useMutation<
+    PostOpeningInformationBody,
+    Error,
+    ScrappedOpeningInformation[]
+  >({
+    mutationFn: () =>
+      postOpeningInformation({ openingInformations: scrappedData ?? [] }),
+  });
+
   const scrappedDataColumns: GridColDef[] = [
     { field: 'title', type: 'string', headerName: '제목', width: 300 },
     { field: 'url', type: 'string', headerName: '포스팅 주소', width: 200 },
@@ -60,6 +80,14 @@ const InformationCrawler = ({
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Snackbar
+        open={isSnackbar}
+        onClose={() => setIsSnackbar(false)}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={snackbarStatus}>{snackbarTitle}</Alert>
+      </Snackbar>
       <Box sx={{ alignSelf: 'flex-end', display: 'flex', margin: 2, gap: 2 }}>
         <TextField
           value={pageNumber}
@@ -109,7 +137,37 @@ const InformationCrawler = ({
             >
               취소
             </Button>
-            <Button variant='contained'>
+            <Button
+              variant='contained'
+              onClick={() => {
+                if (
+                  !confirm(
+                    scrappedData?.length + '개의 데이터를 추가하시겠습니까?',
+                  )
+                )
+                  return;
+                insertInformations(scrappedData ?? [], {
+                  onSuccess: () => {
+                    queryClient.invalidateQueries({
+                      queryKey: ['opening-information'],
+                    });
+                    setScrappedData([]);
+                    setIsSnackbar(true);
+                    setSnackbarStatus('success');
+                    setSnackbarTitle(
+                      scrappedData?.length + '개의 데이터가 추가되었습니다.',
+                    );
+                  },
+                  onError: (error) => {
+                    setIsSnackbar(true);
+                    setSnackbarStatus('error');
+                    setSnackbarTitle(
+                      '정보 추가 중 문제가 발생했습니다. ' + error.message,
+                    );
+                  },
+                });
+              }}
+            >
               {scrappedData?.length}개의 데이터 추가
             </Button>
           </Box>
