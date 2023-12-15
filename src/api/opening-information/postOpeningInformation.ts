@@ -1,7 +1,7 @@
-import { OpeningInformation } from '.';
+import { ScrappedOpeningInformation } from '.';
 
 export interface PostOpeningInformationBody {
-  openingInformations: OpeningInformation[];
+  openingInformations: ScrappedOpeningInformation[];
 }
 
 export const postOpeningInformation = async (
