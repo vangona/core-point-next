@@ -23,8 +23,7 @@ const RecommendedBrand = () => {
           mb: 10,
           display: 'flex',
           width: '100%',
-          gap: 10,
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
         }}
       >

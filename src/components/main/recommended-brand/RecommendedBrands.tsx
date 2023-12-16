@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 
-const MEDIUM_LOGO_SIZE = '150px';
-const SMALL_LOGO_SIZE = '100px';
+const MEDIUM_LOGO_SIZE = 50;
+const SMALL_LOGO_SIZE = 25;
 
 const RecommendedBrands = () => {
   const theme = useTheme();
@@ -31,21 +31,32 @@ const RecommendedBrands = () => {
 
   return (
     <>
-      {data.data?.map((brand, index) => (
-        <Tooltip title={brand.brand_name} key={'recommended-brand-' + index}>
-          <Box
-            sx={{
-              position: 'relative',
-              width: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
-              height: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
-              '&:hover': { cursor: 'pointer' },
-            }}
-            onClick={(e) => handleBrandClick(e, brand.brand_name)}
-          >
-            <Image src={brand.brand_img_src} alt={brand.brand_name} fill />
-          </Box>
-        </Tooltip>
-      ))}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          rowGap: 3,
+          columnGap: 5,
+        }}
+      >
+        {data.data?.map((brand, index) => (
+          <Tooltip title={brand.brand_name} key={'recommended-brand-' + index}>
+            <Box
+              sx={{
+                position: 'relative',
+                width: isDownMedium
+                  ? SMALL_LOGO_SIZE * 2.5
+                  : MEDIUM_LOGO_SIZE * 2.5,
+                height: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
+                '&:hover': { cursor: 'pointer' },
+              }}
+              onClick={(e) => handleBrandClick(e, brand.brand_name)}
+            >
+              <Image src={brand.brand_img_src} alt={brand.brand_name} fill />
+            </Box>
+          </Tooltip>
+        ))}
+      </Box>
       {/* 후에 추천 브랜드 섹션의 재사용이 있을 수 있으므로 Modal을 별도로 두었음. */}
       <ConsultingModal
         open={isModalOpen}
