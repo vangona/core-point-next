@@ -29,8 +29,9 @@ const VerticalStoreCard = (props: VerticalStoreCardProps) => {
   const cardTypo: TypographyVariant = isSmall ? 'subtitle2' : 'subtitle1';
 
   const containerSx: SxProps = {
+    flexShrink: 0,
     width: isSmall ? '180px' : '240px',
-    height: isSmall ? '240px' : '320px',
+    height: isSmall ? '240px' : '350px',
     margin: 3,
   };
 

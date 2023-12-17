@@ -63,7 +63,10 @@ const NewlyAddedStoreSwiper = () => {
         pagination={{ clickable: true }}
       >
         {newStores.data.map((store, index) => (
-          <SwiperSlide key={'newly-added-store' + index}>
+          <SwiperSlide
+            key={'newly-added-store' + index}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
             <VerticalStoreCard storeData={store} onCardClick={onCardClick} />
           </SwiperSlide>
         ))}
