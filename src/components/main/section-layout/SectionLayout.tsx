@@ -14,11 +14,12 @@ import type { SxProps } from '@mui/system';
 interface SectionLayoutProps {
   height?: string;
   color?: 'white' | 'beige';
+  disableLayout?: boolean;
   children?: React.ReactNode;
   sx?: SxProps;
 }
 const SectionLayout = (props: SectionLayoutProps) => {
-  const { height, color, children, sx } = props;
+  const { height, color, disableLayout, children, sx } = props;
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -53,7 +54,7 @@ const SectionLayout = (props: SectionLayoutProps) => {
       <Box
         component='section'
         sx={{
-          maxWidth: layoutWidth,
+          maxWidth: disableLayout ? '100%' : layoutWidth,
           height: height,
           flexGrow: 1,
           display: 'flex',

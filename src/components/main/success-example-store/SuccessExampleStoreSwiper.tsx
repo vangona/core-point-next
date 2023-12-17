@@ -83,7 +83,10 @@ const SuccessExampleStoreSwiper = () => {
           effect='fade'
         >
           {successExamples.data?.map((successExample, index) => (
-            <SwiperSlide key={'success-example-' + index}>
+            <SwiperSlide
+              key={'success-example-' + index}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
               <SuccessExampleCard
                 successExampleData={successExample}
                 width={cardWidth}
