@@ -14,7 +14,7 @@ const RecommendedBrands = dynamic(() => import('./RecommendedBrands'), {
 
 const RecommendedBrand = () => {
   return (
-    <SectionLayout color='white'>
+    <SectionLayout color='white' disableLayout>
       <SectionTitle label='창업 추천 브랜드' />
       <ParagraphDivider />
       <Box
