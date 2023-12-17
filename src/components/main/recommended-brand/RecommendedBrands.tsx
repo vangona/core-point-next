@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
-import '@/styles/rolling-banner.css';
 import RollingBanner from './RollingBanner';
 
 const RecommendedBrands = () => {
@@ -13,20 +12,6 @@ const RecommendedBrands = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBrandName, setCurrentBrandName] = useState('');
-
-  const [isFirstRolling, setIsFirstRolling] = useState(true);
-  const [isSecondRolling, setIsSecondRolling] = useState(true);
-  const [isThirdRolling, setIsThirdRolling] = useState(true);
-  const onStop = (index: number) => {
-    index === 0 && setIsFirstRolling(false);
-    index === 1 && setIsSecondRolling(false);
-    index === 2 && setIsThirdRolling(false);
-  };
-  const onRun = (index: number) => {
-    index === 0 && setIsFirstRolling(true);
-    index === 1 && setIsSecondRolling(true);
-    index === 2 && setIsThirdRolling(true);
-  };
 
   const { data } = useSuspenseQuery({
     queryKey: ['recommended-brands'],
@@ -47,31 +32,22 @@ const RecommendedBrands = () => {
 
   return (
     <>
-      <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <RollingBanner
           rolledData={rolledData}
           index={0}
-          isRunning={isFirstRolling}
-          handleStop={onStop}
-          handleRun={onRun}
           isDownMedium={isDownMedium}
           handleBrandClick={handleBrandClick}
         />
         <RollingBanner
           rolledData={rolledData}
           index={1}
-          isRunning={isSecondRolling}
-          handleStop={onStop}
-          handleRun={onRun}
           isDownMedium={isDownMedium}
           handleBrandClick={handleBrandClick}
         />
         <RollingBanner
           rolledData={rolledData}
           index={2}
-          isRunning={isThirdRolling}
-          handleStop={onStop}
-          handleRun={onRun}
           isDownMedium={isDownMedium}
           handleBrandClick={handleBrandClick}
         />
