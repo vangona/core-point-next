@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 
-const MEDIUM_LOGO_SIZE = 50;
+const MEDIUM_LOGO_SIZE = 30;
 const SMALL_LOGO_SIZE = 25;
 
 const RecommendedBrands = () => {
@@ -33,10 +33,9 @@ const RecommendedBrands = () => {
     <>
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          rowGap: 3,
-          columnGap: 5,
+          width: '100%',
+          display: 'flex',
+          gap: 2,
         }}
       >
         {data.data?.map((brand, index) => (
@@ -44,15 +43,20 @@ const RecommendedBrands = () => {
             <Box
               sx={{
                 position: 'relative',
-                width: isDownMedium
-                  ? SMALL_LOGO_SIZE * 2.5
-                  : MEDIUM_LOGO_SIZE * 2.5,
-                height: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
                 '&:hover': { cursor: 'pointer' },
               }}
               onClick={(e) => handleBrandClick(e, brand.brand_name)}
             >
-              <Image src={brand.brand_img_src} alt={brand.brand_name} fill />
+              {/* 로고의 용량이 작고 롤링 배너이기 때문에 next/image 대신 img 태그를 사용해도 괜찮다고 판단함. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={brand.brand_img_src}
+                alt={brand.brand_name}
+                style={{
+                  height: isDownMedium ? SMALL_LOGO_SIZE : MEDIUM_LOGO_SIZE,
+                  width: 'auto',
+                }}
+              />
             </Box>
           </Tooltip>
         ))}
