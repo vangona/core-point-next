@@ -58,10 +58,15 @@ const MainHero = () => {
           <GeneralHero
             title='베스킨라빈스 창업 컨설팅'
             description='시원한 아이스크림'
+            imgSrc='/hero-test-1.jpeg'
           />
         </SwiperSlide>
         <SwiperSlide>
-          <GeneralHero title='BBQ 창업 컨설팅' description='맛있는 치킨' />
+          <GeneralHero
+            title='BBQ 창업 컨설팅'
+            description='맛있는 치킨'
+            imgSrc='/hero-test-2.jpeg'
+          />
         </SwiperSlide>
       </Swiper>
     </Box>
