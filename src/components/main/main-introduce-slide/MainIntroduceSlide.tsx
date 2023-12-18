@@ -1,11 +1,41 @@
-import { useMediaQuery, useTheme } from '@mui/material';
+import { keyframes, useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 
+const INTRO_ANIMATION_DURATION = '1s';
+const FONT_SIZE_DURATION = '300ms';
+const INTRO_ANIMATION_DURATION_AFTER = '1.3s';
+
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+`;
+
+const zoomIn = keyframes`
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+`;
+
+const slideRightIn = keyframes`
+  0% { opacity: 0; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(-10px); }
+`;
+
+const slideLeftIn = keyframes`
+  0% { opacity: 0; transform: translateX(0); }
+  100% { opacity: 1; transform: translateX(10px); }
+`;
+
 const MainIntroduceSlide = () => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const titleSize = (() => {
+    if (isDownSmall) return 'h6';
+    if (isDownMedium) return 'h5';
+    return 'h4';
+  })();
 
   return (
     <Box
@@ -26,46 +56,63 @@ const MainIntroduceSlide = () => {
           alignItems: 'center',
           zIndex: 9,
           color: 'primary.contrastText',
-          gap: 2,
+          gap: 8,
           padding: isDownMedium ? 3 : undefined,
         }}
       >
-        {isDownMedium ? (
-          <Typography
-            variant={'h5'}
-            component='p'
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
-            gap={1}
+        <Box display='flex' alignItems='center' flexDirection='column' gap={2}>
+          <Box
+            sx={{
+              display: 'flex',
+              animation: `${slideRightIn} ${INTRO_ANIMATION_DURATION} ease-in-out forwards`,
+            }}
           >
-            <Box>
-              코어창업이{' '}
-              <Box display='inline' color='primary.main' fontWeight='bold'>
-                창업의 문
-              </Box>
-              을 여는{' '}
-            </Box>
-            <Box>
-              <Box display='inline' color='primary.main' fontWeight='bold'>
-                열쇠
-              </Box>
-              가 되어 드리겠습니다.
-            </Box>
-          </Typography>
-        ) : (
-          <Typography variant={'h4'} component='p'>
-            코어창업이{' '}
-            <Box display='inline' color='primary.main' fontWeight='bold'>
+            <Typography variant={titleSize} component='h5' mr={1}>
+              코어창업이
+            </Typography>
+            <Typography
+              display='inline'
+              color='primary.main'
+              fontWeight='bold'
+              variant={titleSize}
+              component='h5'
+              sx={{
+                mx: 1,
+                animation: `${zoomIn} ${FONT_SIZE_DURATION} ease-in-out forwards`,
+                animationDelay: INTRO_ANIMATION_DURATION,
+              }}
+            >
               창업의 문
-            </Box>
-            을 여는{' '}
-            <Box display='inline' color='primary.main' fontWeight='bold'>
+            </Typography>
+            <Typography mr={1} variant={titleSize} component='h5'>
+              을 여는{' '}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              animation: `${slideLeftIn} ${INTRO_ANIMATION_DURATION} ease-in-out forwards`,
+            }}
+          >
+            <Typography
+              display='inline'
+              color='primary.main'
+              fontWeight='bold'
+              variant={titleSize}
+              component='h5'
+              sx={{
+                mx: 1,
+                animation: `${zoomIn} ${FONT_SIZE_DURATION} ease-in-out forwards`,
+                animationDelay: INTRO_ANIMATION_DURATION_AFTER,
+              }}
+            >
               열쇠
-            </Box>
-            가 되어 드리겠습니다.
-          </Typography>
-        )}
+            </Typography>
+            <Typography variant={titleSize} component='h5'>
+              가 되어 드리겠습니다.
+            </Typography>
+          </Box>
+        </Box>
       </Box>
       <Box
         sx={{
@@ -79,7 +126,10 @@ const MainIntroduceSlide = () => {
             bottom: 0,
             left: 0,
             content: '""',
-            background: 'rgba(0, 0, 0, 0.5)',
+            opacity: 0.8,
+            background: 'linear-gradient(45deg, #FFFFFF 30%, #000000 90%)',
+            backgroundSize: '200% 200%',
+            animation: `${gradientAnimation} 3s ease forwards`,
           },
         }}
       >
