@@ -45,10 +45,10 @@ const MainHero = () => {
       }}
     >
       <Swiper
-        modules={[Autoplay, Pagination, Autoplay]}
+        modules={[Autoplay, Pagination]}
         loop
         grabCursor
-        autoplay
+        autoplay={{ delay: 5000 }}
         pagination={{ clickable: true }}
       >
         <SwiperSlide>
