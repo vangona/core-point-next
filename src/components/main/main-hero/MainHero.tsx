@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -56,9 +58,54 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <GeneralHero
-            title='베스킨라빈스 창업 컨설팅'
-            description='시원한 아이스크림'
+            typoComponent={
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 7,
+                }}
+              >
+                <Box
+                  color='white'
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 5,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: 1,
+                    }}
+                  >
+                    <Typography variant='h6'>아이스크림</Typography>
+                    <Typography variant='h4' fontWeight='bold'>
+                      베스킨라빈스 창업
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography>성공적인 아이스크림 창업을 ~~</Typography>
+                  </Box>
+                </Box>
+                <Box>
+                  <Button size='large' variant='contained' color='primary'>
+                    상담 신청하기
+                  </Button>
+                </Box>
+              </Box>
+            }
             imgSrc='/hero-test-1.jpeg'
+            imageBgSx={{
+              opacity: 0.8,
+              background:
+                'linear-gradient(to right, #000000 30%, #FFFFFF 100%)',
+            }}
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -66,6 +113,11 @@ const MainHero = () => {
             title='BBQ 창업 컨설팅'
             description='맛있는 치킨'
             imgSrc='/hero-test-2.jpeg'
+            imageBgSx={{
+              opacity: 0.8,
+              background:
+                'linear-gradient(to right, #000000 30%, #FFFFFF 100%)',
+            }}
           />
         </SwiperSlide>
       </Swiper>

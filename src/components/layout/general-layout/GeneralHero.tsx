@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { TypographyVariant } from '@mui/material';
+import type { SystemStyleObject } from '@mui/system';
 
 export const LARGE_HERO_HEIGHT = '500px';
 export const SMALL_HERO_HEIGHT = '250px';
@@ -20,10 +21,19 @@ interface GeneralHeroProps {
   description?: React.ReactNode;
   imgSrc?: string;
   heroComponent?: React.ReactNode;
+  typoComponent?: React.ReactNode;
   disableImg?: boolean;
+  imageBgSx?: SystemStyleObject;
 }
 const GeneralHero = (props: GeneralHeroProps) => {
-  const { heroComponent, description, imgSrc, title, disableImg } = props;
+  const {
+    heroComponent,
+    typoComponent,
+    description,
+    imgSrc,
+    title,
+    disableImg,
+  } = props;
   const theme = useTheme();
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
@@ -69,21 +79,27 @@ const GeneralHero = (props: GeneralHeroProps) => {
               zIndex: 9,
             }}
           >
-            <Typography
-              variant={titleSize}
-              component='h2'
-              color={OFF_WHITE_COLOR}
-              align='center'
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant='body1'
-              color={OFF_WHITE_COLOR}
-              sx={{ wordBreak: 'keep-all' }}
-            >
-              {description}
-            </Typography>
+            {typoComponent ? (
+              typoComponent
+            ) : (
+              <>
+                <Typography
+                  variant={titleSize}
+                  component='h2'
+                  color={OFF_WHITE_COLOR}
+                  align='center'
+                >
+                  {title}
+                </Typography>
+                <Typography
+                  variant='body1'
+                  color={OFF_WHITE_COLOR}
+                  sx={{ wordBreak: 'keep-all' }}
+                >
+                  {description}
+                </Typography>
+              </>
+            )}
           </Box>
           <Box
             sx={{
@@ -95,6 +111,7 @@ const GeneralHero = (props: GeneralHeroProps) => {
                 left: 0,
                 content: '""',
                 background: 'rgba(0, 0, 0, 0.5)',
+                ...props.imageBgSx,
               },
             }}
           >
