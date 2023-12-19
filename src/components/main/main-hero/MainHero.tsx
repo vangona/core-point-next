@@ -9,7 +9,11 @@ import Typography from '@mui/material/Typography';
 import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { DEFAULT_HEADER_HEIGHT } from '@/components/layout/general-layout/constants';
+import GeneralHeader from '@/components/layout/general-layout/GeneralHeader';
 import GeneralHero from '@/components/layout/general-layout/GeneralHero';
+import { OFF_WHITE_COLOR } from '@/constants/color';
+import MainHeroItem from './MainHeroItem';
 
 const MainIntroduceSlide = dynamic(
   () => import('../main-introduce-slide/MainIntroduceSlide'),
@@ -25,7 +29,7 @@ const MainIntroduceSlide = dynamic(
   },
 );
 
-export const LARGE_HERO_HEIGHT = '500px';
+export const LARGE_HERO_HEIGHT = '600px';
 export const SMALL_HERO_HEIGHT = '250px';
 
 const MainHero = () => {
@@ -42,10 +46,18 @@ const MainHero = () => {
       sx={{
         '& .swiper': {
           width: '100%',
-          height: heroHeight,
+          height: `calc(${heroHeight} + ${DEFAULT_HEADER_HEIGHT})`,
         },
       }}
     >
+      <GeneralHeader
+        sx={{
+          position: 'absolute',
+          color: OFF_WHITE_COLOR,
+          '& a': { color: OFF_WHITE_COLOR },
+          '& hr': { borderColor: OFF_WHITE_COLOR },
+        }}
+      />
       <Swiper
         modules={[Autoplay, Pagination]}
         loop
@@ -57,7 +69,7 @@ const MainHero = () => {
           <MainIntroduceSlide />
         </SwiperSlide>
         <SwiperSlide>
-          <GeneralHero
+          <MainHeroItem
             typoComponent={
               <Box
                 sx={{
@@ -109,7 +121,7 @@ const MainHero = () => {
           />
         </SwiperSlide>
         <SwiperSlide>
-          <GeneralHero
+          <MainHeroItem
             title='BBQ 창업 컨설팅'
             description='맛있는 치킨'
             imgSrc='/hero-test-2.jpeg'
