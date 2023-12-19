@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 import { Mousewheel, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
@@ -28,7 +29,7 @@ const NewlyAddedStoreSwiper = () => {
     setIsBackdrop(true);
   };
 
-  const { data: newStores } = useQuery({
+  const { data: newStores, isLoading } = useQuery({
     queryKey: ['store-new'],
     queryFn: () => getNewStore(),
   });
@@ -62,14 +63,21 @@ const NewlyAddedStoreSwiper = () => {
         mousewheel
         pagination={{ clickable: true }}
       >
-        {newStores?.data.map((store, index) => (
-          <SwiperSlide
-            key={'newly-added-store' + index}
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            <VerticalStoreCard storeData={store} onCardClick={onCardClick} />
-          </SwiperSlide>
-        ))}
+        {isLoading && (
+          <Skeleton
+            slot='wrapper-start'
+            sx={{ width: '100%', height: '300px' }}
+          />
+        )}
+        {!isLoading &&
+          newStores?.data.map((store, index) => (
+            <SwiperSlide
+              key={'newly-added-store' + index}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <VerticalStoreCard storeData={store} onCardClick={onCardClick} />
+            </SwiperSlide>
+          ))}
       </Swiper>
       {!isDownMedium && <SwiperNextButton swiperRef={swiperRef} />}
       <ProgressBackdrop open={isBackdrop} />

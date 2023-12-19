@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
+import Skeleton from '@mui/material/Skeleton';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getOpeningInformation } from '@/api/opening-information';
 import InformationCard from './InformationCard';
@@ -26,7 +27,7 @@ const InformationCards = () => {
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const [pageCount, setPageCount] = useState(1);
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ['main-opening-information', page, limit],
     queryFn: () => getOpeningInformation({ page, limit }),
     placeholderData: keepPreviousData,
@@ -96,31 +97,36 @@ const InformationCards = () => {
         alignItems: 'center',
       }}
     >
-      <Box
-        sx={{
-          margin: 5,
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: `repeat(auto-fill, ${gridSize})`,
-          columnGap: 2,
-          justifyContent: 'center',
-          placeItems: 'center',
-        }}
-      >
-        {data?.data.map((data, index) => {
-          if (data.url && data.title && data.imgSrc) {
-            return (
-              <InformationCard
-                key={'information-card-' + data.title + index}
-                informationData={data}
-                isSmall={isDownSmall}
-              />
-            );
-          } else {
-            return undefined;
-          }
-        })}
-      </Box>
+      {isLoading && (
+        <Skeleton sx={{ margin: 5, width: '100%', height: '300px' }} />
+      )}
+      {!isLoading && (
+        <Box
+          sx={{
+            margin: 5,
+            width: '100%',
+            display: 'grid',
+            gridTemplateColumns: `repeat(auto-fill, ${gridSize})`,
+            columnGap: 2,
+            justifyContent: 'center',
+            placeItems: 'center',
+          }}
+        >
+          {data?.data.map((data, index) => {
+            if (data.url && data.title && data.imgSrc) {
+              return (
+                <InformationCard
+                  key={'information-card-' + data.title + index}
+                  informationData={data}
+                  isSmall={isDownSmall}
+                />
+              );
+            } else {
+              return undefined;
+            }
+          })}
+        </Box>
+      )}
       <Pagination
         count={pageCount}
         page={page}

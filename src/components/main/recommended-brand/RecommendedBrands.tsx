@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
@@ -13,7 +14,7 @@ const RecommendedBrands = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBrandName, setCurrentBrandName] = useState('');
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['recommended-brands'],
     queryFn: () => getPartnershipBrand(),
   });
@@ -34,26 +35,30 @@ const RecommendedBrands = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <RollingBanner
-          rolledData={rolledData}
-          index={0}
-          isDownMedium={isDownMedium}
-          handleBrandClick={handleBrandClick}
-        />
-        <RollingBanner
-          rolledData={rolledData}
-          index={1}
-          isDownMedium={isDownMedium}
-          handleBrandClick={handleBrandClick}
-        />
-        <RollingBanner
-          rolledData={rolledData}
-          index={2}
-          isDownMedium={isDownMedium}
-          handleBrandClick={handleBrandClick}
-        />
-      </Box>
+      {isLoading ? (
+        <Skeleton width='100%' height='100px' />
+      ) : (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <RollingBanner
+            rolledData={rolledData}
+            index={0}
+            isDownMedium={isDownMedium}
+            handleBrandClick={handleBrandClick}
+          />
+          <RollingBanner
+            rolledData={rolledData}
+            index={1}
+            isDownMedium={isDownMedium}
+            handleBrandClick={handleBrandClick}
+          />
+          <RollingBanner
+            rolledData={rolledData}
+            index={2}
+            isDownMedium={isDownMedium}
+            handleBrandClick={handleBrandClick}
+          />
+        </Box>
+      )}
       {/* 후에 추천 브랜드 섹션의 재사용이 있을 수 있으므로 Modal을 별도로 두었음. */}
       <ConsultingModal
         open={isModalOpen}

@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import { usePathname } from 'next/navigation';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 import FabGroup from '@/components/common/fab-group/FabGroup';
 import { OFF_WHITE_COLOR } from '@/constants/color';
@@ -11,6 +14,9 @@ interface GeneralLayoutInterface {
 }
 const GeneralLayout = (props: GeneralLayoutInterface) => {
   const { children } = props;
+  const pathname = usePathname();
+  const isMain = pathname === '/';
+
   const [isConsultingModalOpen, setIsConsultingModalOpen] = useState(false);
   const onConsultingModalClose = () => {
     setIsConsultingModalOpen(false);
@@ -28,7 +34,7 @@ const GeneralLayout = (props: GeneralLayoutInterface) => {
         backgroundColor: OFF_WHITE_COLOR,
       }}
     >
-      <GeneralHeader />
+      {!isMain && <GeneralHeader />}
       <FabGroup onMessageClick={() => setIsConsultingModalOpen(true)} />
       <ConsultingModal
         open={isConsultingModalOpen}

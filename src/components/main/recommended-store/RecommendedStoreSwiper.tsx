@@ -47,21 +47,33 @@ const RecommendedStoreSwiper = () => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: '800px',
         display: 'flex',
         flexDirection: isDownMedium ? 'column-reverse' : 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        gap: 2,
+        px: 1,
       }}
     >
-      <Box sx={{ flexShrink: 0 }}>
+      <Box sx={{ flexShrink: 0, width: isDownMedium ? '90%' : '40%' }}>
         <OverviewSection
-          title={recommendedStores?.data[currentStoreIndex]?.store_name}
+          title={
+            isLoading ? (
+              <Skeleton width='100%' />
+            ) : (
+              recommendedStores?.data[currentStoreIndex]?.store_name
+            )
+          }
           storeDetailData={recommendedStores?.data[currentStoreIndex]}
         />
       </Box>
       <Box
-        sx={{ position: 'relative', display: 'flex', flexDirection: 'column' }}
+        sx={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          width: isDownMedium ? '100%' : '50%',
+        }}
       >
         <Box
           sx={{
@@ -98,7 +110,9 @@ const RecommendedStoreSwiper = () => {
             mousewheel
             rewind
           >
-            {isLoading && <Skeleton width='100%' height='100%' />}
+            {isLoading && (
+              <Skeleton slot='wrapper-start' width='100%' height='300px' />
+            )}
             {!isLoading &&
               recommendedStores?.data.map((storeData, index) => (
                 <SwiperSlide key={'recommended-store-' + index}>

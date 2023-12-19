@@ -13,7 +13,7 @@ const RecommendedBrands = dynamic(() => import('./RecommendedBrands'), {
 
 const RecommendedBrand = () => {
   return (
-    <SectionLayout color='white' disableLayout>
+    <SectionLayout color='white'>
       <SectionTitle label='창업 추천 브랜드' />
       <Box
         sx={{
