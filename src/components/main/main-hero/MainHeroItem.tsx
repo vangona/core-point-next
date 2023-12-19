@@ -24,6 +24,7 @@ interface MainHeroItemProps {
   heroComponent?: React.ReactNode;
   typoComponent?: React.ReactNode;
   disableImg?: boolean;
+  containerSx?: SystemStyleObject;
   imageBgSx?: SystemStyleObject;
 }
 const MainHeroItem = (props: MainHeroItemProps) => {
@@ -67,6 +68,7 @@ const MainHeroItem = (props: MainHeroItemProps) => {
         width: '100%',
         height: `calc(${heroHeight} + ${DEFAULT_HEADER_HEIGHT})`,
         position: 'relative',
+        ...props.containerSx,
       }}
     >
       {heroComponent ?? (
