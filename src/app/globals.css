@@ -35,6 +35,8 @@ body {
 }
 
 .swiper.main-swiper {
+  display: flex;
+  align-items: center;
   padding-top: 30px;
   padding-bottom: 30px;
 }
