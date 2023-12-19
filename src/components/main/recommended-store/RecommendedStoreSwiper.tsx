@@ -47,14 +47,15 @@ const RecommendedStoreSwiper = () => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: '800px',
         display: 'flex',
         flexDirection: isDownMedium ? 'column-reverse' : 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        gap: 2,
+        px: 1,
       }}
     >
-      <Box sx={{ flexShrink: 0, flexGrow: 1 }}>
+      <Box sx={{ flexShrink: 0, width: isDownMedium ? '90%' : '40%' }}>
         <OverviewSection
           title={
             isLoading ? (
@@ -67,7 +68,12 @@ const RecommendedStoreSwiper = () => {
         />
       </Box>
       <Box
-        sx={{ position: 'relative', display: 'flex', flexDirection: 'column' }}
+        sx={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          width: isDownMedium ? '100%' : '50%',
+        }}
       >
         <Box
           sx={{
