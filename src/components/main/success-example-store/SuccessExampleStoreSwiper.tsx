@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
@@ -26,7 +27,7 @@ const SuccessExampleStoreSwiper = () => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const { data: successExamples } = useQuery({
+  const { data: successExamples, isLoading } = useQuery({
     queryKey: ['success_examples'],
     queryFn: () => getSuccessExample(),
   });
@@ -82,18 +83,25 @@ const SuccessExampleStoreSwiper = () => {
           pagination={{ clickable: true }}
           effect='fade'
         >
-          {successExamples?.data?.map((successExample, index) => (
-            <SwiperSlide
-              key={'success-example-' + index}
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <SuccessExampleCard
-                successExampleData={successExample}
-                width={cardWidth}
-                height={cardHeight}
-              />
-            </SwiperSlide>
-          ))}
+          {isLoading && (
+            <Skeleton
+              slot='wrapper-start'
+              sx={{ width: '100%', height: '300px' }}
+            />
+          )}
+          {!isLoading &&
+            successExamples?.data?.map((successExample, index) => (
+              <SwiperSlide
+                key={'success-example-' + index}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <SuccessExampleCard
+                  successExampleData={successExample}
+                  width={cardWidth}
+                  height={cardHeight}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
         <SwiperNextButton swiperRef={swiperRef} />
       </Box>
