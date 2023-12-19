@@ -1,7 +1,6 @@
 import React from 'react';
 import Marquee from 'react-fast-marquee';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import Tooltip from '@mui/material/Tooltip';
 import { PartnershipBrand } from '@/app/api/supabase';
 
@@ -21,7 +20,7 @@ const RollingBanner = ({
   handleBrandClick,
 }: RollingBannerProps) => {
   return (
-    <Box sx={{ width: '100vw' }}>
+    <Box sx={{ width: '80vw' }}>
       <Marquee
         autoFill
         pauseOnHover
