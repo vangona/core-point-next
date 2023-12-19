@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { getStoreDetail } from '@/api/store';
@@ -55,12 +55,12 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const { data: storeDetailData } = useSuspenseQuery({
+  const { data: storeDetailData } = useQuery({
     queryKey: ['stores', id],
     queryFn: () => getStoreDetail({ id }),
   });
 
-  const isValidData = storeDetailData.data && storeDetailData.data.length > 0;
+  const isValidData = storeDetailData?.data && storeDetailData?.data.length > 0;
 
   const parsedExpenditureData: [string, number][] = storeDetailData
     ? [
@@ -113,7 +113,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
   }, [params.id]);
 
   useEffect(() => {
-    if (storeDetailData.data?.length === 0) {
+    if (storeDetailData?.data?.length === 0) {
       alert('삭제된 매물입니다.');
       router.push('/store');
     }
@@ -130,11 +130,11 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      {storeDetailData.data?.[0] && parsedExpenditureData && (
+      {storeDetailData?.data?.[0] && parsedExpenditureData && (
         <>
-          <TitleSection storeDetailData={storeDetailData.data?.[0]} />
+          <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
           <StoreDetailContent
-            storeDetailData={storeDetailData.data?.[0]}
+            storeDetailData={storeDetailData?.data?.[0]}
             parsedExpenditureData={parsedExpenditureData}
           />
         </>

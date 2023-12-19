@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Mousewheel, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getNewStore } from '@/api/store';
@@ -28,7 +28,7 @@ const NewlyAddedStoreSwiper = () => {
     setIsBackdrop(true);
   };
 
-  const { data: newStores } = useSuspenseQuery({
+  const { data: newStores } = useQuery({
     queryKey: ['store-new'],
     queryFn: () => getNewStore(),
   });
@@ -62,7 +62,7 @@ const NewlyAddedStoreSwiper = () => {
         mousewheel
         pagination={{ clickable: true }}
       >
-        {newStores.data.map((store, index) => (
+        {newStores?.data.map((store, index) => (
           <SwiperSlide
             key={'newly-added-store' + index}
             style={{ display: 'flex', justifyContent: 'center' }}

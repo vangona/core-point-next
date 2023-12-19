@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getPartnershipBrand } from '@/api/partnership/getPartnershipBrands';
 import { ConsultingModal } from '@/components/common/consulting-modal';
 import RollingBanner from './RollingBanner';
@@ -13,13 +13,15 @@ const RecommendedBrands = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBrandName, setCurrentBrandName] = useState('');
 
-  const { data } = useSuspenseQuery({
+  const { data } = useQuery({
     queryKey: ['recommended-brands'],
     queryFn: () => getPartnershipBrand(),
   });
 
   const rolledData =
-    data.data?.length > 10 ? data.data : data.data.concat(data.data);
+    data?.data && data?.data?.length > 10
+      ? data?.data
+      : data?.data.concat(data?.data);
 
   const handleBrandClick = (_: React.MouseEvent, brandName: string) => {
     setIsModalOpen(true);

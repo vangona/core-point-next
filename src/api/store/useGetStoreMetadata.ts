@@ -1,4 +1,4 @@
-import { QueryKey, useSuspenseQuery } from '@tanstack/react-query';
+import { QueryKey, useQuery } from '@tanstack/react-query';
 
 export interface GetStoreMetadataResponse {
   data: number;
@@ -17,7 +17,7 @@ const getStoreMetadata = async (): Promise<GetStoreMetadataResponse> => {
 
 export const useGetStoreMetadata = () => {
   const queryKey: QueryKey = ['store-metadata'];
-  const query = useSuspenseQuery({
+  const query = useQuery({
     queryKey,
     queryFn: () => getStoreMetadata(),
   });

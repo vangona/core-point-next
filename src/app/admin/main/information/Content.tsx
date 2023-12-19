@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getAllOpeningInformation } from '@/api/opening-information/getAllOpeningInformation copy';
 import InformationCrawler from '@/components/admin/main/information/InformationCrawler';
 import MainInformationDataGrid from '@/components/admin/main/information/MainInformationDataGrid';
@@ -19,7 +19,7 @@ enum TabType {
 export default function Content() {
   const [tab, setTab] = useState(TabType.DATA);
 
-  const { data, isLoading } = useSuspenseQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['opening-information'],
     queryFn: () => getAllOpeningInformation(),
   });

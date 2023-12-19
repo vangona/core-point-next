@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getSuccessExample } from '@/api/success-example';
@@ -26,7 +26,7 @@ const SuccessExampleStoreSwiper = () => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const { data: successExamples } = useSuspenseQuery({
+  const { data: successExamples } = useQuery({
     queryKey: ['success_examples'],
     queryFn: () => getSuccessExample(),
   });
@@ -82,7 +82,7 @@ const SuccessExampleStoreSwiper = () => {
           pagination={{ clickable: true }}
           effect='fade'
         >
-          {successExamples.data?.map((successExample, index) => (
+          {successExamples?.data?.map((successExample, index) => (
             <SwiperSlide
               key={'success-example-' + index}
               style={{ display: 'flex', justifyContent: 'center' }}

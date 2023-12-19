@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Autoplay, EffectCards, Mousewheel, Navigation } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getRecommendedStore } from '@/api/store/getRecommendedStore';
@@ -25,7 +25,7 @@ const RecommendedStoreSwiper = () => {
     setIsBackdrop(true);
   };
 
-  const { data: recommendedStores, isLoading } = useSuspenseQuery({
+  const { data: recommendedStores, isLoading } = useQuery({
     queryKey: ['store-recommended'],
     queryFn: () => getRecommendedStore(),
   });
@@ -56,8 +56,8 @@ const RecommendedStoreSwiper = () => {
     >
       <Box sx={{ flexShrink: 0 }}>
         <OverviewSection
-          title={recommendedStores.data[currentStoreIndex]?.store_name}
-          storeDetailData={recommendedStores.data[currentStoreIndex]}
+          title={recommendedStores?.data[currentStoreIndex]?.store_name}
+          storeDetailData={recommendedStores?.data[currentStoreIndex]}
         />
       </Box>
       <Box

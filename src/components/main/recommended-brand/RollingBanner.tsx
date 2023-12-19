@@ -8,7 +8,7 @@ const MEDIUM_LOGO_SIZE = 30;
 const SMALL_LOGO_SIZE = 25;
 
 interface RollingBannerProps {
-  rolledData: PartnershipBrand[];
+  rolledData?: PartnershipBrand[];
   index: number;
   handleBrandClick: (event: React.MouseEvent, brandName: string) => void;
   isDownMedium: boolean;
