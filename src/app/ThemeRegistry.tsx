@@ -6,7 +6,6 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useServerInsertedHTML } from 'next/navigation';
-import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { Options } from '@emotion/cache';
 
 // This implementation is from emotion-js
@@ -19,9 +18,6 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
   const { options = { key: 'core-point-theme-cache' }, children } = props;
   const theme = createTheme({
     palette: {
-      offWhite: {
-        main: OFF_WHITE_COLOR,
-      },
       primary: {
         main: '#01B2EA',
         light: '#85D9FF',
