@@ -147,9 +147,9 @@ const GeneralHeader = (props: GeneralHeaderProps) => {
           {/* center area */}
           <Box sx={logoSx} onClick={onLogoClick}>
             <Image
-              width={isSmall ? 100 : 60}
-              height={isSmall ? 50 : 60}
-              src={isSmall ? '/logo.png' : '/core-icon.png'}
+              width={60}
+              height={60}
+              src={'/core-icon.png'}
               alt='열쇠 모양에 Core Company라는 글자가 적혀있는 코어 창업 로고'
             />
             {!isSmall && (

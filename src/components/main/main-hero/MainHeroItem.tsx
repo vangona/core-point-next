@@ -5,7 +5,6 @@ import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { DEFAULT_HEADER_HEIGHT } from '@/components/layout/general-layout/constants';
 import { OFF_WHITE_COLOR } from '@/constants/color';
 import type { TypographyVariant } from '@mui/material';
 import type { SystemStyleObject } from '@mui/system';
@@ -40,13 +39,11 @@ const MainHeroItem = (props: MainHeroItemProps) => {
   const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
   const isMedium = useMediaQuery(theme.breakpoints.only('md'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('sm'));
-  const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
   const [titleSize, setTitleSize] =
     useState<TypographyVariant>(LARGE_TITLE_SIZE);
 
   useEffect(() => {
     if (isUpLarge) {
-      setHeroHeight(LARGE_HERO_HEIGHT);
       setTitleSize(LARGE_TITLE_SIZE);
       return;
     }
@@ -56,7 +53,6 @@ const MainHeroItem = (props: MainHeroItemProps) => {
     }
 
     if (isDownMedium) {
-      setHeroHeight(SMALL_HERO_HEIGHT);
       setTitleSize(SMALL_TITLE_SIZE);
       return;
     }
@@ -66,7 +62,7 @@ const MainHeroItem = (props: MainHeroItemProps) => {
     <Box
       sx={{
         width: '100%',
-        height: `calc(${heroHeight} + ${DEFAULT_HEADER_HEIGHT})`,
+        height: '100%',
         position: 'relative',
         ...props.containerSx,
       }}
@@ -100,13 +96,15 @@ const MainHeroItem = (props: MainHeroItemProps) => {
                 >
                   {title}
                 </Typography>
-                <Typography
-                  variant='body1'
-                  color={OFF_WHITE_COLOR}
-                  sx={{ wordBreak: 'keep-all' }}
-                >
-                  {description}
-                </Typography>
+                {!isDownMedium && (
+                  <Typography
+                    variant='body1'
+                    color={OFF_WHITE_COLOR}
+                    sx={{ wordBreak: 'keep-all' }}
+                  >
+                    {description}
+                  </Typography>
+                )}
               </>
             )}
           </Box>
