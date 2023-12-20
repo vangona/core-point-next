@@ -139,14 +139,14 @@ const MainIntroduceSlide = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 200,
-            height: 200,
+            width: '100%',
+            height: '100%',
           }}
         >
           <Image
-            width={200}
-            height={200}
-            src={'/core-icon.png'}
+            fill
+            objectFit='cover'
+            src={'/main-hero.webp'}
             alt='hero image'
           />
         </Box>
