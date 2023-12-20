@@ -5,16 +5,21 @@ import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import { useQuery } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { getSuccessExample } from '@/api/success-example';
-import { SuccessExampleCard } from '@/components/common/success-example-card';
 import { SwiperPrevButton, SwiperNextButton } from '@/components/common/swiper';
 import {
   LARGE_LAYOUT_WIDTH,
   MEDIUM_LAYOUT_WIDTH,
   SMALL_LAYOUT_WIDTH,
 } from '@/components/layout/general-layout/constants';
+
+const SuccessExampleCard = dynamic(
+  () => import('@/components/common/success-example-card/SuccessExampleCard'),
+  { ssr: false },
+);
 
 const SuccessExampleStoreSwiper = () => {
   const theme = useTheme();

@@ -7,6 +7,7 @@ import RecommendedBrand from '@/components/main/recommended-brand/RecommendedBra
 import RecommendedStore from '@/components/main/recommended-store/RecommendedStore';
 import SuccessExample from '@/components/main/success-example-store/SuccessExampleStore';
 import { InformationSection } from '../information';
+import ManagerSection from '../manager/ManagerSection';
 
 const MainContent = () => {
   return (
@@ -15,6 +16,7 @@ const MainContent = () => {
       <RecommendedStore />
       <InformationSection />
       <SuccessExample />
+      <ManagerSection />
       <NewlyAddedStore />
       <RecommendedBrand />
       <BottomSection />

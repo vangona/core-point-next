@@ -100,27 +100,33 @@ const MainHero = () => {
                       gap: 1,
                     }}
                   >
-                    <Typography variant='h5'>아이스크림</Typography>
-                    <Typography variant='h3'>베스킨라빈스 창업</Typography>
-                  </Box>
-                  <Box sx={{ maxWidth: isDownLarge ? '100%' : '60%' }}>
-                    <Typography variant='h6' component='p'>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Necessitatibus, rem praesentium sint, deserunt porro
-                      molestias ab a tenetur sunt blanditiis cum cumque odit
-                      repudiandae amet. Amet quia esse blanditiis quidem.
+                    <Typography variant={isDownMedium ? 'h6' : 'h5'}>
+                      아이스크림
+                    </Typography>
+                    <Typography variant={isDownMedium ? 'h5' : 'h3'}>
+                      베스킨라빈스 창업
                     </Typography>
                   </Box>
+                  {!isDownMedium && (
+                    <Box sx={{ maxWidth: isDownLarge ? '100%' : '60%' }}>
+                      <Typography variant='h6' component='p'>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Necessitatibus, rem praesentium sint, deserunt porro
+                        molestias ab a tenetur sunt blanditiis cum cumque odit
+                        repudiandae amet. Amet quia esse blanditiis quidem.
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
                 <Box>
                   <Button
-                    size='large'
+                    size={isDownMedium ? 'medium' : 'large'}
                     variant='outlined'
                     sx={{
                       color: 'white',
                       borderColor: 'white',
                       borderRadius: 0,
-                      padding: '11px 27px',
+                      padding: isDownMedium ? '9px 21px' : '11px 27px',
                     }}
                   >
                     상담 신청하기
@@ -145,7 +151,7 @@ const MainHero = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 7,
+                  gap: isDownMedium ? 3 : 7,
                 }}
               >
                 <Box
@@ -154,7 +160,7 @@ const MainHero = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 6,
+                    gap: isDownMedium ? 2 : 6,
                   }}
                 >
                   <Box
@@ -165,25 +171,31 @@ const MainHero = () => {
                       gap: 1,
                     }}
                   >
-                    <Typography variant='h5'>치킨</Typography>
-                    <Typography variant='h3'>BBQ 창업</Typography>
+                    <Typography variant={isDownMedium ? 'h6' : 'h5'}>
+                      치킨
+                    </Typography>
+                    <Typography variant={isDownMedium ? 'h5' : 'h3'}>
+                      BBQ 창업
+                    </Typography>
                   </Box>
                   <Box
                     sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
                   >
-                    <Box>
-                      <Typography
-                        variant='h6'
-                        component='p'
-                        sx={{ wordBreak: 'keep-all' }}
-                      >
-                        Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Necessitatibus eos sit omnis eligendi hic non
-                        molestiae cum et maiores nesciunt ad eius tenetur,
-                        impedit reiciendis sequi. Provident dolorum nobis
-                        laborum?
-                      </Typography>
-                    </Box>
+                    {!isDownMedium && (
+                      <Box>
+                        <Typography
+                          variant='h6'
+                          component='p'
+                          sx={{ wordBreak: 'keep-all' }}
+                        >
+                          Lorem ipsum, dolor sit amet consectetur adipisicing
+                          elit. Necessitatibus eos sit omnis eligendi hic non
+                          molestiae cum et maiores nesciunt ad eius tenetur,
+                          impedit reiciendis sequi. Provident dolorum nobis
+                          laborum?
+                        </Typography>
+                      </Box>
+                    )}
                     <Box
                       sx={{
                         display: 'flex',
@@ -205,7 +217,7 @@ const MainHero = () => {
                       color: 'white',
                       borderColor: 'white',
                       borderRadius: 0,
-                      padding: '11px 27px',
+                      padding: isDownMedium ? undefined : '11px 27px',
                     }}
                   >
                     상담 신청하기
