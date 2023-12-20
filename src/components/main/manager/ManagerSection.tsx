@@ -22,7 +22,6 @@ const ManagerSection = () => {
     cardRef.current!.style.transform = `perspective(650px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     overlayRef.current!.style.backgroundPositionX = `${x / 4}%`;
     overlayRef.current!.style.backgroundPositionY = `${y / 6}%`;
-    console.log(x / 4, y / 6, x, y);
   };
 
   const handleMouseOut = () => {
@@ -100,7 +99,14 @@ const ManagerSection = () => {
               src='/manager-test.png'
               alt='manager image'
             />
-            <Box sx={{ position: 'absolute', top: '30px' }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '30px',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            >
               <Rating value={4} />
               <Typography
                 color='white'
@@ -111,7 +117,14 @@ const ManagerSection = () => {
                 김관경 매니저
               </Typography>
             </Box>
-            <Box sx={{ position: 'absolute', bottom: '50px' }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: '50px',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            >
               <Typography
                 color='white'
                 sx={{ userSelect: 'none', pointerEvents: 'none' }}
