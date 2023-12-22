@@ -1,4 +1,4 @@
-import { QueryKey, useSuspenseQuery } from '@tanstack/react-query';
+import { QueryKey, useQuery } from '@tanstack/react-query';
 import { Store } from '@/api/store';
 import { StoreSearchParams } from '@/app/store/page';
 
@@ -36,7 +36,7 @@ export const getStore = async (
 
 export const useGetStore = (searchParams: StoreSearchParams) => {
   const queryKey: QueryKey = ['store', searchParams];
-  const query = useSuspenseQuery({
+  const query = useQuery({
     queryKey,
     queryFn: () => getStore(searchParams),
   });
