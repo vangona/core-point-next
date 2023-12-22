@@ -32,7 +32,7 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
     location: storeDetailData?.store_location,
   });
 
-  const filteredData = data.data.filter(
+  const filteredData = data?.data.filter(
     (storeData) => storeData.store_id !== storeDetailData?.store_id,
   );
 
@@ -70,12 +70,13 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
   }, [pathname]);
 
   return (
+    filteredData &&
     filteredData.length > 0 && (
       <Box>
         <Box>
           <Typography variant='h5' fontWeight='bold' sx={{ mt: 10 }}>
             {storeDetailData?.store_location} 지역 매물
-            {/* {filteredData.length + '개'} */}
+            {/* {filteredData?.length + '개'} */}
           </Typography>
           <Divider sx={{ my: 2 }} />
         </Box>
@@ -99,15 +100,16 @@ const LocalStoreSection = ({ storeDetailData }: LocalStoreSectionProps) => {
             modules={[Pagination]}
             pagination={{ clickable: true }}
           >
-            {filteredData.map((storeData, index) => (
-              <SwiperSlide key={'store-detail-local-store--' + index}>
-                <VerticalStoreCard
-                  storeData={storeData}
-                  size='sm'
-                  onCardClick={onCardClick}
-                />
-              </SwiperSlide>
-            ))}
+            {filteredData &&
+              filteredData.map((storeData, index) => (
+                <SwiperSlide key={'store-detail-local-store--' + index}>
+                  <VerticalStoreCard
+                    storeData={storeData}
+                    size='sm'
+                    onCardClick={onCardClick}
+                  />
+                </SwiperSlide>
+              ))}
           </Swiper>
           <SwiperNextButton swiperRef={swiperRef} />
         </Box>
