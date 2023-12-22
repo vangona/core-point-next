@@ -53,7 +53,7 @@ export async function PATCH(req: NextRequest) {
 
   const query = await supabase
     .from(SupabaseTable.STORES)
-    .update({
+    .upsert({
       [StoresColumn.STORE_STATE]: body.storeState,
       [StoresColumn.STORE_NAME]: body.storeName,
       [StoresColumn.STORE_CATEGORY]: body.storeCategory,

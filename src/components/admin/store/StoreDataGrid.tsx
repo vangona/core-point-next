@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Add from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import {
   DataGrid,
@@ -13,9 +15,11 @@ import {
   GridRowEditStopReasons,
   GridRowModes,
   GridToolbar,
+  GridToolbarContainer,
   koKR,
 } from '@mui/x-data-grid';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { v4 as uuidv4 } from 'uuid';
 import { Store, getStore } from '@/api/store';
 import { DeleteStoreBody, deleteStore } from '@/api/store/deleteStore';
 import { PatchStoreBody, patchStore } from '@/api/store/patchStore';
@@ -33,6 +37,41 @@ import type {
   GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
+
+interface EditToolbarProps {
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (
+    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
+  ) => void;
+}
+
+function EditToolbar(props: EditToolbarProps) {
+  const { setRows, setRowModesModel } = props;
+
+  const handleClick = () => {
+    const id = uuidv4();
+    setRows((oldRows) => [{ id, name: '', age: '', isNew: true }, ...oldRows]);
+    setRowModesModel((oldModel) => ({
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+      ...oldModel,
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button
+        size='small'
+        color='primary'
+        startIcon={<Add />}
+        onClick={handleClick}
+        sx={{ pt: 1, pl: 1 }}
+      >
+        매물 추가
+      </Button>
+      <GridToolbar />
+    </GridToolbarContainer>
+  );
+}
 
 const StoreDataGrid = () => {
   const queryClient = useQueryClient();
@@ -462,7 +501,10 @@ const StoreDataGrid = () => {
           setEditedId(String(params.id));
           setIsEdit(true);
         }}
-        slots={{ toolbar: GridToolbar }}
+        slots={{ toolbar: EditToolbar }}
+        slotProps={{
+          toolbar: { setRows, setRowModesModel },
+        }}
         localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
         paginationModel={paginationModel}
         paginationMode='server'
