@@ -34,8 +34,12 @@ const MainHeroItem = (props: MainHeroItemProps) => {
   const handleMouseEnter = () => {
     setIsIn(true);
   };
-  const handleMouseOut = () => {
-    setIsIn(false);
+  const handleMouseOut = (e: React.MouseEvent) => {
+    if (
+      e.relatedTarget instanceof Node &&
+      !e.currentTarget.contains(e.relatedTarget)
+    )
+      setIsIn(false);
   };
 
   return (
