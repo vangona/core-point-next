@@ -1,6 +1,6 @@
 'use client';
 
-import {
+import React, {
   useState,
   useEffect,
   useCallback,
@@ -118,6 +118,10 @@ const StoreSearch = () => {
     router.push(pathname + '?' + queryString);
   };
 
+  const handleEnterDown = (e: React.KeyboardEvent) => {
+    e.key === 'Enter' && handleSearchClick();
+  };
+
   useEffect(() => {
     if (isUpLarge) {
       setLayoutWidth(LARGE_LAYOUT_WIDTH);
@@ -218,6 +222,7 @@ const StoreSearch = () => {
           variant='filled'
           label='매물 이름 / 설명 / 매물 번호'
           placeholder='매물 전체'
+          onKeyDown={handleEnterDown}
         />
         <Button
           onClick={handleSearchClick}
