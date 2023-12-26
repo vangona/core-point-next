@@ -3,6 +3,7 @@
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import dynamic from 'next/dynamic';
+import { ParagraphDivider } from '@/components/common/paragraph-divider';
 import { SectionTitle } from '@/components/common/section-title';
 import { SectionLayout } from '../section-layout';
 
@@ -15,6 +16,7 @@ const RecommendedBrand = () => {
   return (
     <SectionLayout color='white'>
       <SectionTitle label='창업 추천 브랜드' />
+      <ParagraphDivider />
       <Box
         sx={{
           mt: 5,

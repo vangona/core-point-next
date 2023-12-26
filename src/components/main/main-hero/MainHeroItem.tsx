@@ -1,23 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { OFF_WHITE_COLOR } from '@/constants/color';
-import type { TypographyVariant } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { SystemStyleObject } from '@mui/system';
 
 export const LARGE_HERO_HEIGHT = '600px';
 export const SMALL_HERO_HEIGHT = '250px';
 
-const LARGE_TITLE_SIZE = 'h3';
-const MEDIUM_TITLE_SIZE = 'h4';
-const SMALL_TITLE_SIZE = 'h5';
-
-interface MainHeroItemProps {
+interface MainHeroItemProps extends Omit<BoxProps, 'title'> {
   title?: React.ReactNode;
+  subTitle?: React.ReactNode;
   description?: React.ReactNode;
   imgSrc?: string;
   heroComponent?: React.ReactNode;
@@ -25,41 +23,39 @@ interface MainHeroItemProps {
   disableImg?: boolean;
   containerSx?: SystemStyleObject;
   imageBgSx?: SystemStyleObject;
+  onButtonClick?: () => void;
 }
 const MainHeroItem = (props: MainHeroItemProps) => {
   const {
-    heroComponent,
-    typoComponent,
+    subTitle,
     description,
     imgSrc,
     title,
     disableImg,
+    onButtonClick,
+    ...rest
   } = props;
   const theme = useTheme();
-  const isUpLarge = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMedium = useMediaQuery(theme.breakpoints.only('md'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('sm'));
-  const [titleSize, setTitleSize] =
-    useState<TypographyVariant>(LARGE_TITLE_SIZE);
 
-  useEffect(() => {
-    if (isUpLarge) {
-      setTitleSize(LARGE_TITLE_SIZE);
-      return;
-    }
+  const [isIn, setIsIn] = useState(false);
 
-    if (isMedium) {
-      setTitleSize(MEDIUM_TITLE_SIZE);
-    }
-
-    if (isDownMedium) {
-      setTitleSize(SMALL_TITLE_SIZE);
-      return;
-    }
-  }, [isUpLarge, isMedium, isDownMedium]);
+  const handleMouseEnter = () => {
+    setIsIn(true);
+  };
+  const handleMouseOut = (e: React.MouseEvent) => {
+    if (
+      e.relatedTarget instanceof Node &&
+      !e.currentTarget.contains(e.relatedTarget)
+    )
+      setIsIn(false);
+  };
 
   return (
     <Box
+      onMouseEnter={handleMouseEnter}
+      onMouseOut={handleMouseOut}
+      {...rest}
       sx={{
         width: '100%',
         height: '100%',
@@ -67,73 +63,118 @@ const MainHeroItem = (props: MainHeroItemProps) => {
         ...props.containerSx,
       }}
     >
-      {heroComponent ?? (
-        <>
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '75%',
+          left: '50%',
+          top: '50%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+          justifyContent: 'center',
+          alignItems: 'center',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 9,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 5,
+          }}
+        >
           <Box
+            color='white'
             sx={{
-              position: 'absolute',
-              width: '75%',
-              left: '50%',
-              top: '50%',
               display: 'flex',
               flexDirection: 'column',
-              gap: 3,
-              justifyContent: 'center',
               alignItems: 'center',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 9,
+              gap: 4,
             }}
           >
-            {typoComponent ? (
-              typoComponent
-            ) : (
-              <>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 5,
+              }}
+            >
+              <Typography
+                variant={isDownMedium ? 'h5' : 'h4'}
+                fontFamily='ONE-Mobile-Title'
+              >
+                {title}
+              </Typography>
+              <Typography
+                variant={isDownMedium ? 'h6' : 'h5'}
+                fontFamily='KOTRA_SONGEULSSI'
+              >
+                {subTitle}
+              </Typography>
+            </Box>
+            {!isDownMedium && (
+              <Collapse in={isIn}>
                 <Typography
-                  variant={titleSize}
-                  component='h2'
-                  color={OFF_WHITE_COLOR}
-                  align='center'
+                  className='main-hero-content main-hero-content-1'
+                  variant='subtitle1'
+                  component='p'
+                  sx={{
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'keep-all',
+                    textAlign: 'center',
+                  }}
                 >
-                  {title}
+                  {description}
                 </Typography>
-                {!isDownMedium && (
-                  <Typography
-                    variant='body1'
-                    color={OFF_WHITE_COLOR}
-                    sx={{ wordBreak: 'keep-all' }}
-                  >
-                    {description}
-                  </Typography>
-                )}
-              </>
+              </Collapse>
             )}
           </Box>
-          <Box
-            sx={{
-              '&:after': {
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                content: '""',
-                background: 'rgba(0, 0, 0, 0.5)',
-                ...props.imageBgSx,
-              },
-            }}
-          >
-            {!disableImg && (
-              <Image
-                fill
-                objectFit='cover'
-                objectPosition='50% 50%'
-                alt='hero image'
-                src={imgSrc ? imgSrc : '/core-icon.png'}
-              />
-            )}
+          <Box>
+            <Button
+              onClick={onButtonClick}
+              size={isDownMedium ? 'medium' : 'large'}
+              variant='outlined'
+              sx={{
+                color: 'white',
+                borderColor: 'white',
+                borderRadius: 0,
+                padding: isDownMedium ? '9px 21px' : '11px 27px',
+              }}
+            >
+              상담 신청하기
+            </Button>
           </Box>
-        </>
-      )}
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          '&:after': {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            content: '""',
+            opacity: 0.8,
+            background: 'linear-gradient(to right, #000000 30%, #FFFFFF 100%)',
+            ...props.imageBgSx,
+          },
+        }}
+      >
+        {!disableImg && (
+          <Image
+            fill
+            objectFit='cover'
+            objectPosition='50% 50%'
+            alt='hero image'
+            src={imgSrc ? imgSrc : '/core-icon.png'}
+          />
+        )}
+      </Box>
     </Box>
   );
 };
