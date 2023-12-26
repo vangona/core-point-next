@@ -88,7 +88,12 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <MainHeroItem
-            imgSrc='/hero-test-2.jpeg'
+            title={'소자본 창업'}
+            subTitle={'작은 투자로도 큰 성과를 이룰 수 있는 소자본창업'}
+            description={`새로운 시작을 향해 꿈을 현실로 만드는 여정에서
+            당신의 성공을 위한 파트너가 되어드립니다.
+            여러분의 꿈을 현실로 만들어 나가는 데 코어 창업이 함께하겠습니다.`}
+            imgSrc='/hero-test-3.jpeg'
             imageBgSx={{
               opacity: 0.8,
               background:
