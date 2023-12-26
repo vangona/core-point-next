@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
 import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -33,7 +31,6 @@ export const SMALL_HERO_HEIGHT = '250px';
 
 const MainHero = () => {
   const theme = useTheme();
-  const isDownLarge = useMediaQuery(theme.breakpoints.down('lg'));
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
 
@@ -59,10 +56,10 @@ const MainHero = () => {
         }}
       />
       <Swiper
-        modules={[Autoplay, Pagination]}
+        modules={[Pagination]}
         loop
         grabCursor
-        autoplay={{ delay: 5000 }}
+        // autoplay={{ delay: 5000 }}
         pagination={{
           clickable: true,
           type: 'bullets',
@@ -74,66 +71,13 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <MainHeroItem
-            typoComponent={
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 7,
-                }}
-              >
-                <Box
-                  color='white'
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 6,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <Typography variant={isDownMedium ? 'h6' : 'h5'}>
-                      아이스크림
-                    </Typography>
-                    <Typography variant={isDownMedium ? 'h5' : 'h3'}>
-                      베스킨라빈스 창업
-                    </Typography>
-                  </Box>
-                  {!isDownMedium && (
-                    <Box sx={{ maxWidth: isDownLarge ? '100%' : '60%' }}>
-                      <Typography variant='h6' component='p'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Necessitatibus, rem praesentium sint, deserunt porro
-                        molestias ab a tenetur sunt blanditiis cum cumque odit
-                        repudiandae amet. Amet quia esse blanditiis quidem.
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-                <Box>
-                  <Button
-                    size={isDownMedium ? 'medium' : 'large'}
-                    variant='outlined'
-                    sx={{
-                      color: 'white',
-                      borderColor: 'white',
-                      borderRadius: 0,
-                      padding: isDownMedium ? '9px 21px' : '11px 27px',
-                    }}
-                  >
-                    상담 신청하기
-                  </Button>
-                </Box>
-              </Box>
+            title={'카페 창업'}
+            subTitle={
+              '복잡하고 어려운 카페 창업, 더 이상은 힘들게 고민하지 마세요.'
             }
+            description={`코어 창업은 모든 단계에서 여러분의 비전을 현실로 만들기 위해 전문성 있는 컨설턴트들과 협력하며, 
+            매출 향상과 운영 최적화를 비롯한 다양한 영역에서 도움을 드립니다. 
+            코어 창업이 여러분의 성공적인 카페 창업을 실현해 드립니다`}
             imgSrc='/hero-test-1.jpeg'
             imageBgSx={{
               opacity: 0.8,
@@ -144,87 +88,6 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <MainHeroItem
-            typoComponent={
-              <Box
-                sx={{
-                  maxWidth: isDownLarge ? '100%' : '60%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: isDownMedium ? 3 : 7,
-                }}
-              >
-                <Box
-                  color='white'
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: isDownMedium ? 2 : 6,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <Typography variant={isDownMedium ? 'h6' : 'h5'}>
-                      치킨
-                    </Typography>
-                    <Typography variant={isDownMedium ? 'h5' : 'h3'}>
-                      BBQ 창업
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-                  >
-                    {!isDownMedium && (
-                      <Box>
-                        <Typography
-                          variant='h6'
-                          component='p'
-                          sx={{ wordBreak: 'keep-all' }}
-                        >
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Necessitatibus eos sit omnis eligendi hic non
-                          molestiae cum et maiores nesciunt ad eius tenetur,
-                          impedit reiciendis sequi. Provident dolorum nobis
-                          laborum?
-                        </Typography>
-                      </Box>
-                    )}
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        width: '100%',
-                        justifyContent: 'flex-end',
-                      }}
-                    >
-                      <Typography variant='subtitle1' component='p'>
-                        #tag1 #tag2 #tag3
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box>
-                  <Button
-                    size='large'
-                    variant='outlined'
-                    sx={{
-                      color: 'white',
-                      borderColor: 'white',
-                      borderRadius: 0,
-                      padding: isDownMedium ? undefined : '11px 27px',
-                    }}
-                  >
-                    상담 신청하기
-                  </Button>
-                </Box>
-              </Box>
-            }
             imgSrc='/hero-test-2.jpeg'
             imageBgSx={{
               opacity: 0.8,
