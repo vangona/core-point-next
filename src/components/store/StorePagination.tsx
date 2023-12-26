@@ -30,7 +30,7 @@ const StorePagination = ({ searchParams }: StorePaginationProps) => {
   };
 
   useEffect(() => {
-    setPageCount(Math.ceil(data?.count ?? 0 / 20));
+    setPageCount(Math.ceil((data?.count ?? 0) / 20));
     setPage(parseInt(searchParams.page ?? '1'));
   }, [data?.count, searchParams]);
 

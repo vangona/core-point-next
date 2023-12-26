@@ -14,10 +14,7 @@ const RecommendedStoreSwiper = dynamic(
 const RecommendedStore = () => {
   return (
     <SectionLayout>
-      <SectionTitle
-        label={'코어창업 추천 매물'}
-        subTitle={'섹션별 설명 위치 (예시)'}
-      />
+      <SectionTitle label={'코어창업 추천 매물'} />
       <ParagraphDivider />
       <RecommendedStoreSwiper />
     </SectionLayout>
