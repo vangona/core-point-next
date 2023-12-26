@@ -57,11 +57,13 @@ const StoreSearch = () => {
       budget,
       location,
       searchKeyword,
+      page,
     }: {
       category?: string;
       budget?: string;
       location?: string;
       searchKeyword?: string;
+      page?: string;
     }) => {
       const params = new URLSearchParams(searchParams);
       category ? params.set('category', category) : params.delete('category');
@@ -70,6 +72,7 @@ const StoreSearch = () => {
       searchKeyword
         ? params.set('search', searchKeyword)
         : params.delete('search');
+      page ? params.set('page', page) : params.delete('page');
 
       return params.toString();
     },
@@ -110,6 +113,7 @@ const StoreSearch = () => {
       budget: storeBudget ?? undefined,
       location: storeLocation ?? undefined,
       searchKeyword: storeSearchKeyword ?? undefined,
+      page: undefined,
     });
     router.push(pathname + '?' + queryString);
   };
