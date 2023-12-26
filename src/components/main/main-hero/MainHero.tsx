@@ -7,6 +7,7 @@ import Skeleton from '@mui/material/Skeleton';
 import dynamic from 'next/dynamic';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { ConsultingModal } from '@/components/common/consulting-modal';
 import { DEFAULT_HEADER_HEIGHT } from '@/components/layout/general-layout/constants';
 import GeneralHeader from '@/components/layout/general-layout/GeneralHeader';
 import { OFF_WHITE_COLOR } from '@/constants/color';
@@ -33,6 +34,13 @@ const MainHero = () => {
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
   const [heroHeight, setHeroHeight] = useState(LARGE_HERO_HEIGHT);
+  const [isConsultingModalOpen, setIsConsultingModalOpen] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState('');
+
+  const handleButtonClick = (title: string) => {
+    setCurrentTitle(title);
+    setIsConsultingModalOpen(true);
+  };
 
   useEffect(() => {
     setHeroHeight(isDownMedium ? SMALL_HERO_HEIGHT : LARGE_HERO_HEIGHT);
@@ -56,10 +64,10 @@ const MainHero = () => {
         }}
       />
       <Swiper
-        modules={[Pagination]}
+        modules={[Autoplay, Pagination]}
         loop
         grabCursor
-        // autoplay={{ delay: 5000 }}
+        autoplay={{ delay: 5000 }}
         pagination={{
           clickable: true,
           type: 'bullets',
@@ -71,9 +79,10 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <MainHeroItem
+            onButtonClick={() => handleButtonClick('카페 창업')}
             title={'카페 창업'}
             subTitle={
-              '복잡하고 어려운 카페 창업, 더 이상은 힘들게 고민하지 마세요.'
+              '"복잡하고 어려운 카페 창업, 더 이상은 힘들게 고민하지 마세요."'
             }
             description={`코어 창업은 모든 단계에서 여러분의 비전을 현실로 만들기 위해 전문성 있는 컨설턴트들과 협력하며, 
             매출 향상과 운영 최적화를 비롯한 다양한 영역에서 도움을 드립니다. 
@@ -88,12 +97,13 @@ const MainHero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <MainHeroItem
+            onButtonClick={() => handleButtonClick('소자본 창업')}
             title={'소자본 창업'}
-            subTitle={'작은 투자로도 큰 성과를 이룰 수 있는 소자본창업'}
+            subTitle={'"작은 투자로도 큰 성과를 이룰 수 있는 소자본창업"'}
             description={`새로운 시작을 향해 꿈을 현실로 만드는 여정에서
             당신의 성공을 위한 파트너가 되어드립니다.
             여러분의 꿈을 현실로 만들어 나가는 데 코어 창업이 함께하겠습니다.`}
-            imgSrc='/hero-test-3.jpeg'
+            imgSrc='/hero-test-3.webp'
             imageBgSx={{
               opacity: 0.8,
               background:
@@ -102,6 +112,11 @@ const MainHero = () => {
           />
         </SwiperSlide>
       </Swiper>
+      <ConsultingModal
+        open={isConsultingModalOpen}
+        onClose={() => setIsConsultingModalOpen(false)}
+        initialValue={{ additional: currentTitle + ' 관련 창업 문의' }}
+      />
     </Box>
   );
 };

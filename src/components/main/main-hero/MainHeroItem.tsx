@@ -23,9 +23,18 @@ interface MainHeroItemProps extends Omit<BoxProps, 'title'> {
   disableImg?: boolean;
   containerSx?: SystemStyleObject;
   imageBgSx?: SystemStyleObject;
+  onButtonClick?: () => void;
 }
 const MainHeroItem = (props: MainHeroItemProps) => {
-  const { subTitle, description, imgSrc, title, disableImg, ...rest } = props;
+  const {
+    subTitle,
+    description,
+    imgSrc,
+    title,
+    disableImg,
+    onButtonClick,
+    ...rest
+  } = props;
   const theme = useTheme();
   const isDownMedium = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -74,7 +83,7 @@ const MainHeroItem = (props: MainHeroItemProps) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 7,
+            gap: 5,
           }}
         >
           <Box
@@ -94,10 +103,16 @@ const MainHeroItem = (props: MainHeroItemProps) => {
                 gap: 5,
               }}
             >
-              <Typography variant={isDownMedium ? 'h5' : 'h4'}>
+              <Typography
+                variant={isDownMedium ? 'h5' : 'h4'}
+                fontFamily='ONE-Mobile-Title'
+              >
                 {title}
               </Typography>
-              <Typography variant={isDownMedium ? 'h6' : 'h5'}>
+              <Typography
+                variant={isDownMedium ? 'h6' : 'h5'}
+                fontFamily='KOTRA_SONGEULSSI'
+              >
                 {subTitle}
               </Typography>
             </Box>
@@ -120,6 +135,7 @@ const MainHeroItem = (props: MainHeroItemProps) => {
           </Box>
           <Box>
             <Button
+              onClick={onButtonClick}
               size={isDownMedium ? 'medium' : 'large'}
               variant='outlined'
               sx={{
