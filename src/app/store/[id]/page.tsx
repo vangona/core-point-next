@@ -55,7 +55,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const { data: storeDetailData } = useQuery({
+  const { data: storeDetailData, isLoading } = useQuery({
     queryKey: ['stores', id],
     queryFn: () => getStoreDetail({ id }),
   });
@@ -130,15 +130,12 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      {storeDetailData?.data?.[0] && parsedExpenditureData && (
-        <>
-          <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
-          <StoreDetailContent
-            storeDetailData={storeDetailData?.data?.[0]}
-            parsedExpenditureData={parsedExpenditureData}
-          />
-        </>
-      )}
+      <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
+      <StoreDetailContent
+        isLoading={isLoading}
+        storeDetailData={storeDetailData?.data?.[0]}
+        parsedExpenditureData={parsedExpenditureData}
+      />
     </Box>
   );
 };
