@@ -55,7 +55,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     LARGE_LAYOUT_WIDTH,
   );
 
-  const { data: storeDetailData } = useQuery({
+  const { data: storeDetailData, isLoading } = useQuery({
     queryKey: ['stores', id],
     queryFn: () => getStoreDetail({ id }),
   });
@@ -132,6 +132,7 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
     >
       <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
       <StoreDetailContent
+        isLoading={isLoading}
         storeDetailData={storeDetailData?.data?.[0]}
         parsedExpenditureData={parsedExpenditureData}
       />

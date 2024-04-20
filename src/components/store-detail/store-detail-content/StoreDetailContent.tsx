@@ -26,10 +26,12 @@ const LocalStoreSection = dynamic(
 );
 
 interface StoreDetailContentProps {
+  isLoading?: boolean;
   storeDetailData?: Store;
   parsedExpenditureData: [string, number][];
 }
 const StoreDetailContent = ({
+  isLoading,
   storeDetailData,
   parsedExpenditureData,
 }: StoreDetailContentProps) => {
