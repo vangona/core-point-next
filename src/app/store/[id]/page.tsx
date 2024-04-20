@@ -130,15 +130,11 @@ const StoreDetailPage = ({ params }: StoreDetailPageProps) => {
         px: isDownMedium ? 2 : 0,
       }}
     >
-      {storeDetailData?.data?.[0] && parsedExpenditureData && (
-        <>
-          <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
-          <StoreDetailContent
-            storeDetailData={storeDetailData?.data?.[0]}
-            parsedExpenditureData={parsedExpenditureData}
-          />
-        </>
-      )}
+      <TitleSection storeDetailData={storeDetailData?.data?.[0]} />
+      <StoreDetailContent
+        storeDetailData={storeDetailData?.data?.[0]}
+        parsedExpenditureData={parsedExpenditureData}
+      />
     </Box>
   );
 };
